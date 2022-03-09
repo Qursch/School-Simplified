@@ -50,16 +50,20 @@ export default function Home({ listing }: { listing: BlogListing[] }) {
 			<Clubs />
 			<Testimonial />
 
-			<Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+			<Modal
+				isOpen={isModalOpen}
+				onClose={() => setModalOpen(false)}
+				isCentered
+			>
 				<ModalOverlay />
 				<ModalContent>
 					<ModalHeader>Notice</ModalHeader>
 					<ModalCloseButton />
 
 					<ModalBody>
-						Our Discord servers were recently hacked, and we should
-						be back up within 48 hours. We are sorry for the
-						inconvenience.
+						Our Discord servers were recently hacked, and the School
+						Simplified server should be back up within 48 hours. We
+						are sorry for the inconvenience.
 					</ModalBody>
 
 					<ModalFooter>
