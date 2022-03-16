@@ -1,15 +1,5 @@
 import { getBlogListing } from "@api/notion";
 import {
-	Modal,
-	ModalBody,
-	ModalCloseButton,
-	ModalContent,
-	ModalFooter,
-	ModalHeader,
-	ModalOverlay,
-} from "@chakra-ui/react";
-import Button from "@components/button";
-import {
 	AcademicServices,
 	Blog,
 	Chapters,
@@ -23,11 +13,10 @@ import {
 import { fadeIn } from "@styles/animations";
 import { motion } from "framer-motion";
 import Head from "next/head";
-import { useState } from "react";
 import { BlogListing } from "types";
 
 export default function Home({ listing }: { listing: BlogListing[] }) {
-	const [isModalOpen, setModalOpen] = useState(true);
+	// const [isModalOpen, setModalOpen] = useState(true);
 	return (
 		<>
 			<Head>
@@ -50,7 +39,7 @@ export default function Home({ listing }: { listing: BlogListing[] }) {
 			<Clubs />
 			<Testimonial />
 
-			<Modal
+			{/* <Modal
 				isOpen={isModalOpen}
 				onClose={() => setModalOpen(false)}
 				isCentered
@@ -72,7 +61,7 @@ export default function Home({ listing }: { listing: BlogListing[] }) {
 						</Button>
 					</ModalFooter>
 				</ModalContent>
-			</Modal>
+			</Modal> */}
 		</>
 	);
 }
