@@ -1,21 +1,21 @@
 import {
 	Box,
 	Checkbox,
+	Divider,
 	Heading,
+	HStack,
+	Icon,
 	Image,
 	ListItem,
 	OrderedList,
 	Text,
-	Icon,
 	UnorderedList,
-	Divider,
-	HStack,
 } from "@chakra-ui/react";
 import NextLink from "@components/nextChakra";
+import TeX from "@matejmazur/react-katex";
 import "katex/dist/katex.min.css";
 import React, { cloneElement } from "react";
 import { FaPaperclip, FaRegFilePdf, FaVideo } from "react-icons/fa";
-import { InlineMath, BlockMath } from "react-katex"; // "react-latex" doesn't work for some odd reason
 import { Author, BlogPage, FileObj } from "types";
 // import SyntaxHighlighter from "react-syntax-highlighter";
 // import { atelierCaveDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
@@ -94,7 +94,8 @@ export function parseText(text: any): JSX.Element {
 
 	const plainText =
 		text.type === "equation" ? (
-			<InlineMath math={text.plain_text} />
+			// <InlineMath math={} />
+			<TeX math={text.plain_text} />
 		) : (
 			<>{replaceNewlines(text.plain_text)}</>
 		);
@@ -260,7 +261,8 @@ export function parseBlock(block: any): JSX.Element {
 		case "equation":
 			return (
 				<Box overflowX="scroll">
-					<BlockMath math={block.equation.expression} />
+					{/* <BlockMath math={} /> */}
+					<TeX math={block.equation.expression} block />
 				</Box>
 			);
 		case "file":
