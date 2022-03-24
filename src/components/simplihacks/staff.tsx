@@ -1,4 +1,4 @@
-import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
+import { Heading, SimpleGrid } from "@chakra-ui/react";
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
 import SimplihacksCard from "@components/simplihacks/simplihackscard";
@@ -92,25 +92,23 @@ export default function Staff(): JSX.Element {
 		<>
 			<Container my="50px">
 				<ContainerInside>
-					<Box align="center">
-						<Heading m={5}>Staff</Heading>
-						<SimpleGrid
-							w={{ base: "auto", md: "850px" }}
-							columns={{ base: 2, md: 4 }}
-							spacingY="15px"
-						>
-							{staff.map((member, i: number) => {
-								return (
-									<SimplihacksCard
-										title={member.title}
-										name={member.name}
-										img={member.img}
-										key={i}
-									/>
-								);
-							})}
-						</SimpleGrid>
-					</Box>
+					<Heading m={5}>Staff</Heading>
+					<SimpleGrid
+						w={{ base: "auto", md: "850px" }}
+						columns={{ base: 2, md: 4 }}
+						spacingY="15px"
+					>
+						{staff.map((member, i: number) => {
+							return (
+								<SimplihacksCard
+									title={member.title}
+									name={member.name}
+									img={member.img}
+									key={i}
+								/>
+							);
+						})}
+					</SimpleGrid>
 				</ContainerInside>
 			</Container>
 		</>

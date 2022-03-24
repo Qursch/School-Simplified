@@ -97,16 +97,15 @@ export default function Programming(): JSX.Element {
 										</Button>
 									</NextLink>
 
-									<NextLink
+									{/* <NextLink
 										isExternal
 										href="https://discord.com/invite/s6HAveWMCg"
 										_hover={{ textDecoration: "none" }}
 									>
 										<Button timmysrc="/timmy/22.png">
-											{" "}
-											Join Now{" "}
+											Join Now
 										</Button>
-									</NextLink>
+									</NextLink> */}
 								</Stack>
 							</VStack>
 							<Spacer maxW={{ md: 5, lg: 20 }} />
