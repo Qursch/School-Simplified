@@ -297,32 +297,32 @@ const corporateOfficers: Person[] = [
 	// },
 ];
 
-const divisionPresidents: Person[] = [
-	{
-		name: "Bhavyasri Suggula",
-		title: "Executive Projects Director",
-		img: "/staff/BhavyasriSuggula.jpg",
-	},
-	{
-		name: "Hazim Arafa",
-		title: "President of Programming Simplified",
-		img: "/staff/HazimArafa.jpg",
-	},
-	{
-		name: "David Sun",
-		title: "President of National Chapters",
-		img: "/staff/DavidSun.jpg",
-	},
-	{
-		name: "Aarush Goradia",
-		title: "President of Student Activities",
-		img: "/staff/AarushGoradia.jpg",
-	},
-	{
-		name: "Maya Murry",
-		title: "President of Research Simplified",
-		img: "/staff/MayaMurry.jpg",
-	},
+	// const divisionPresidents: Person[] = [
+	//	{
+	//		name: "Bhavyasri Suggula",
+	//		title: "Executive Projects Director",
+	//		img: "/staff/BhavyasriSuggula.jpg",
+	//	},
+	//	{
+	//		name: "Hazim Arafa",
+	//		title: "President of Programming Simplified",
+	//		img: "/staff/HazimArafa.jpg",
+	//	},
+	//	{
+	//		name: "David Sun",
+	//		title: "President of National Chapters",
+	//		img: "/staff/DavidSun.jpg",
+	//	},
+	//	{
+	//		name: "Aarush Goradia",
+	//		title: "President of Student Activities",
+	//		img: "/staff/AarushGoradia.jpg",
+	//	},
+	//	{
+	//		name: "Maya Murry",
+	//		title: "President of Research Simplified",
+	//		img: "/staff/MayaMurry.jpg",
+	//	},
 	// {
 	// 	name: "Jiahao Zhang",
 	// 	title: "Global Vice President of Advancement",
@@ -396,11 +396,10 @@ const divisionPresidents: Person[] = [
 	// 	title: "Vice President of Operations, Chapters",
 	// 	img: "/staff/AdrianSucahyo.jpg",
 	// },
-];
+//];
 
 const peopleGroups: PeopleGroup[] = [
-	{ name: "Corporate Officers", people: corporateOfficers },
-	{ name: "Divison Presidents", people: divisionPresidents },
+	{ name: "Corporate Officers", people: corporateOfficers }
 ];
 
 const boardOfDirectors: Person[] = [
