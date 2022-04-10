@@ -94,6 +94,10 @@ const menuItems: MenuItem[] = [
 				name: "Blog",
 				href: "/blog",
 			},
+			{
+				name: "Research",
+				href: "/research",
+			},
 		],
 	},
 	{

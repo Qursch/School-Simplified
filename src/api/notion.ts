@@ -1,3 +1,4 @@
+import { Client } from "@notionhq/client";
 import axios from "axios";
 import {
 	AllSubjects,
@@ -30,6 +31,10 @@ export const notionConfig = {
 		"Notion-Version": "2021-08-16",
 	},
 };
+
+export const notion = new Client({
+	auth: process.env.NOTION_API_KEY,
+});
 
 export async function getAllSubjects(): Promise<AllSubjects> {
 	// fetch from main database
@@ -754,4 +759,78 @@ export async function getLeadership(): Promise<ExecutiveGroup[]> {
 	}
 
 	return output;
+}
+
+type Opportunity = {
+	title: string;
+	"city (mc)": string[];
+	deadline: string[];
+	description: string;
+	grade: string[];
+	link: string;
+	"semester (mc)": string[];
+	"state (mc)": string[];
+	status: string[];
+	topic: string[];
+	type: string[];
+};
+
+export async function getResearchOpportunities(): Promise<Opportunity[]> {
+	const response = await notion.databases.query({
+		database_id: "c298fbbd933349a9a9614575d25cc1f7",
+	});
+
+	// const output: Opportunity[] = [];
+	// for (const page of response.results) {
+	// 	const opportunity: any = {};
+	// 	for (const key in page.properties) {
+	// 		if (key === "Title") {
+	// 			opportunity.title =
+	// 				page.properties.Title.title?.[0]?.plain_text?.trim() ??
+	// 				null;
+	// 		} else if (key === "Link") {
+	// 			const file0 = page.properties.Link.files?.[0];
+	// 			opportunity.link = file0 ? getFile(file0).url : null;
+	// 		} else if (key === "Description") {
+	// 			opportunity.description =
+	// 				page.properties.Description.rich_text?.[0]?.plain_text?.trim() ??
+	// 				null;
+	// 		} else {
+	// 			opportunity[key.toLowerCase()] =
+	// 				page.properties[key].multi_select?.map(
+	// 					(value: { name: string }) => value.name
+	// 				) ?? null;
+	// 		}
+	// 	}
+
+	// 	output.push(opportunity);
+	// 	// console.log();
+	// }
+
+	// return output;
+
+	return response.results.map((page) => {
+		const opportunity: any = {};
+		for (const key in page.properties) {
+			if (key === "Title") {
+				opportunity.title =
+					page.properties.Title.title?.[0]?.plain_text?.trim() ??
+					null;
+			} else if (key === "Link") {
+				const file0 = page.properties.Link.files?.[0];
+				opportunity.link = file0 ? getFile(file0).url : null;
+			} else if (key === "Description") {
+				opportunity.description =
+					page.properties.Description.rich_text?.[0]?.plain_text?.trim() ??
+					null;
+			} else {
+				opportunity[key.toLowerCase()] =
+					page.properties[key].multi_select?.map(
+						(value: { name: string }) => value.name
+					) ?? null;
+			}
+		}
+
+		return opportunity;
+	});
 }
