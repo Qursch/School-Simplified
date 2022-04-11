@@ -7,7 +7,7 @@ export default function Research({
 }: {
 	opportunities: Opportunity[];
 }): JSX.Element {
-	console.log("opportunities: ", JSON.stringify(opportunities, null, 2));
+	console.log("opportunities:", JSON.stringify(opportunities, null, 2));
 	return <UnderConstruction />;
 }
 
