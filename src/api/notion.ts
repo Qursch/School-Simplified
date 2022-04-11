@@ -780,57 +780,43 @@ export async function getResearchOpportunities(): Promise<Opportunity[]> {
 		database_id: "c298fbbd933349a9a9614575d25cc1f7",
 	});
 
-	// const output: Opportunity[] = [];
-	// for (const page of response.results) {
-	// 	const opportunity: any = {};
-	// 	for (const key in page.properties) {
-	// 		if (key === "Title") {
-	// 			opportunity.title =
-	// 				page.properties.Title.title?.[0]?.plain_text?.trim() ??
-	// 				null;
-	// 		} else if (key === "Link") {
-	// 			const file0 = page.properties.Link.files?.[0];
-	// 			opportunity.link = file0 ? getFile(file0).url : null;
-	// 		} else if (key === "Description") {
-	// 			opportunity.description =
-	// 				page.properties.Description.rich_text?.[0]?.plain_text?.trim() ??
-	// 				null;
-	// 		} else {
-	// 			opportunity[key.toLowerCase()] =
-	// 				page.properties[key].multi_select?.map(
-	// 					(value: { name: string }) => value.name
-	// 				) ?? null;
-	// 		}
-	// 	}
-
-	// 	output.push(opportunity);
-	// 	// console.log();
-	// }
-
-	// return output;
-
-	return response.results.map((page) => {
-		const opportunity: any = {};
-		for (const key in page.properties) {
-			if (key === "Title") {
-				opportunity.title =
-					page.properties.Title.title?.[0]?.plain_text?.trim() ??
-					null;
-			} else if (key === "Link") {
-				const file0 = page.properties.Link.files?.[0];
-				opportunity.link = file0 ? getFile(file0).url : null;
-			} else if (key === "Description") {
-				opportunity.description =
-					page.properties.Description.rich_text?.[0]?.plain_text?.trim() ??
-					null;
-			} else {
-				opportunity[key.toLowerCase()] =
-					page.properties[key].multi_select?.map(
-						(value: { name: string }) => value.name
-					) ?? null;
+	return response?.results?.map(
+		// @ts-ignore
+		(page: { properties: Record<string, any> }): Opportunity => {
+			const opportunity: Opportunity = {
+				title: "",
+				"city (mc)": [],
+				deadline: [],
+				description: "",
+				grade: [],
+				link: "",
+				"semester (mc)": [],
+				"state (mc)": [],
+				status: [],
+				topic: [],
+				type: [],
+			};
+			for (const key in page.properties) {
+				if (key === "Title") {
+					opportunity.title =
+						page.properties.Title.title?.[0]?.plain_text?.trim() ??
+						null;
+				} else if (key === "Link") {
+					const file0 = page.properties.Link.files?.[0];
+					opportunity.link = file0 ? getFile(file0).url : null;
+				} else if (key === "Description") {
+					opportunity.description =
+						page.properties.Description.rich_text?.[0]?.plain_text?.trim() ??
+						null;
+				} else {
+					opportunity[key.toLowerCase()] =
+						page.properties[key].multi_select?.map(
+							(value: { name: string }) => value.name
+						) ?? null;
+				}
 			}
-		}
 
-		return opportunity;
-	});
+			return opportunity;
+		}
+	);
 }
