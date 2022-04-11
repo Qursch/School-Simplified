@@ -16,6 +16,7 @@ import {
 	JobPosting,
 	LinkButtonProps,
 	NotesProps,
+	Opportunity,
 	QAPair,
 	QASection,
 	ScholarshipProps,
@@ -760,20 +761,6 @@ export async function getLeadership(): Promise<ExecutiveGroup[]> {
 
 	return output;
 }
-
-type Opportunity = {
-	title: string;
-	"city (mc)": string[];
-	deadline: string[];
-	description: string;
-	grade: string[];
-	link: string;
-	"semester (mc)": string[];
-	"state (mc)": string[];
-	status: string[];
-	topic: string[];
-	type: string[];
-};
 
 export async function getResearchOpportunities(): Promise<Opportunity[]> {
 	const response = await notion.databases.query({

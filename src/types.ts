@@ -261,3 +261,55 @@ export type ExecutiveGroup = {
 	 */
 	executives: Executive[];
 };
+
+/**
+ * A research opportunity, displayed on /research
+ */
+export type Opportunity = {
+	/**
+	 * The title given to this opportunity.
+	 */
+	title: string;
+	/**
+	 * The city that this opportunity is located in.
+	 * (Is multiple choice (?))
+	 */
+	"city (mc)": string[];
+	/**
+	 * The deadline for applying to this opportunity
+	 */
+	deadline: string[];
+	/**
+	 * A brief description of this opportunity
+	 */
+	description: string;
+	/**
+	 * The age/grade range that this opportunity is catered to
+	 */
+	grade: string[];
+	/**
+	 * A link to more information or the application for this opportunity
+	 */
+	link: string;
+	/**
+	 * A general timeframe of when this opportunity will take place
+	 */
+	"semester (mc)": string[];
+	/**
+	 * The state/region that this research opportunity will take place
+	 */
+	"state (mc)": string[];
+	/**
+	 * Tags that relate to the status of this opportunity.
+	 * e.g. in-person or virtual, cost
+	 */
+	status: string[];
+	/**
+	 * A list of topics that this opportunity falls into
+	 */
+	topic: string[];
+	/**
+	 * A list of tags that categorize this research opportunity further
+	 */
+	type: string[];
+};
