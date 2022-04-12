@@ -4,7 +4,6 @@ import {
 	Button,
 	Center,
 	Heading,
-	HStack,
 	Image,
 	Select,
 	SimpleGrid,
@@ -187,7 +186,7 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 			>
 				<ContainerInside>
 					<VStack spacing={10} align="stretch">
-						<VStack spacing={5} bg="#A8B2FF88" rounded={25} py={6}>
+						<VStack spacing={5} bg="#A8B2FF88" rounded={25} p={6}>
 							<Center>
 								<Button
 									bg="#5a60adcc"
@@ -285,36 +284,38 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 								</VStack>
 							</Stack>
 						</VStack>
-						<SimpleGrid columns={2} spacing={8}>
-							<VStack
-								// columns={{ base: 1, md: 2, xl: 3 }}
-								spacing={5}
-								align="stretch"
-							>
-								{postingsToDisplay.map(
-									(posting: JobPosting) => (
-										<VolunteerPosition
-											key={
-												posting.name +
-												posting.area +
-												posting.programs
-											}
-											posting={posting}
-											onSelected={setSelectedPosition}
-											h="100%"
-										/>
-									)
-								)}
-							</VStack>
+						<SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
+							<Box maxH="100vh" overflowY="scroll" pr={2}>
+								<VStack spacing={5} align="stretch">
+									{postingsToDisplay.map(
+										(posting: JobPosting) => (
+											<VolunteerPosition
+												key={
+													posting.name +
+													posting.area +
+													posting.programs
+												}
+												posting={posting}
+												onSelected={setSelectedPosition}
+												h="100%"
+											/>
+										)
+									)}
+								</VStack>
+							</Box>
 							{selectedPosition ? (
 								<VStack
 									spacing={8}
 									align="stretch"
 									position="sticky"
 									alignSelf="flex-start"
-									top={86}
+									top={{ base: 111, sm: 115, lg: 86 }}
 								>
-									<HStack
+									<Stack
+										direction={{
+											base: "column",
+											md: "row",
+										}}
 										bg="#858DF1"
 										rounded={25}
 										px={10}
@@ -343,11 +344,15 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 											<TimmyButton
 												timmysrc="/timmy/10.png"
 												flex={1}
+												display={{
+													base: "none",
+													md: null,
+												}}
 											>
 												Apply Now
 											</TimmyButton>
 										</NextChakraLink>
-									</HStack>
+									</Stack>
 									<Box
 										bg="#858DF1"
 										rounded={25}
@@ -402,7 +407,7 @@ function VolunteerPosition({
 	onSelected,
 	...stackProps
 }: VolunteerPositionProps): JSX.Element {
-	const { programs, image, area, name } = posting;
+	const { programs, area, name } = posting;
 	return (
 		<Stack
 			spacing={0}
@@ -412,10 +417,10 @@ function VolunteerPosition({
 			overflow="hidden"
 			bg="#5A60ADCC"
 			onClick={() => onSelected?.(posting)}
-			_hover={{ transform: "scale(1.05)", cursor: "pointer" }}
+			_hover={{ transform: "scale(0.97)", cursor: "pointer" }}
 			{...stackProps}
 		>
-			<Box h={160} p={4} overflowY="hidden" position="relative">
+			{/* <Box h={160} p={4} overflowY="hidden" position="relative">
 				<Box
 					position="absolute"
 					left={0}
@@ -426,7 +431,7 @@ function VolunteerPosition({
 					bgSize="cover"
 					bgPos="center"
 				/>
-			</Box>
+			</Box> */}
 			<Stack
 				bg="brand.darkerBlue"
 				spacing={0}
