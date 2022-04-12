@@ -11,9 +11,9 @@ import {
 	Stack,
 	StackProps,
 	Text,
-	useBoolean,
 	VStack,
 } from "@chakra-ui/react";
+import TimmyButton from "@components/button";
 import Container from "@components/container";
 import ContainerBackground from "@components/containerBackground";
 import ContainerInside from "@components/containerInside";
@@ -72,6 +72,8 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 		area: areaOptions,
 		program: programOptions,
 	});
+
+	const [selectedPosition, setSelectedPosition] = useState<JobPosting>(null);
 
 	useEffect(() => {
 		setPostingsToDisplay(
@@ -287,60 +289,76 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 							<VStack
 								// columns={{ base: 1, md: 2, xl: 3 }}
 								spacing={5}
+								align="stretch"
 							>
 								{postingsToDisplay.map(
 									(posting: JobPosting) => (
-										<NextChakraLink
+										<VolunteerPosition
 											key={
 												posting.name +
 												posting.area +
 												posting.programs
 											}
-											isExternal
-											href={posting.form ?? ""}
-										>
-											<VolunteerPosition
-												{...posting}
-												h="100%"
-											/>
-										</NextChakraLink>
+											posting={posting}
+											onSelected={setSelectedPosition}
+											h="100%"
+										/>
 									)
 								)}
 							</VStack>
-							<VStack
-								spacing={8}
-								align="stretch"
-								position="sticky"
-								alignSelf="flex-start"
-								top={86}
-							>
-								<HStack
-									bg="#858DF1"
-									rounded={25}
-									px={10}
-									py={6}
+							{selectedPosition ? (
+								<VStack
+									spacing={8}
+									align="stretch"
+									position="sticky"
+									alignSelf="flex-start"
+									top={86}
 								>
-									<VStack
-										align="stretch"
-										textAlign="left"
-										flex={1}
+									<HStack
+										bg="#858DF1"
+										rounded={25}
+										px={10}
+										py={6}
 									>
-										<Text fontSize="sm">Area</Text>
-										<Heading fontSize="lg">Name</Heading>
-										<Text fontSize="sm">Programs</Text>
-									</VStack>
-									<Button flex={1}>Apply Now</Button>
-								</HStack>
-								<Box
-									bg="#858DF1"
-									rounded={25}
-									px={10}
-									py={6}
-									textAlign="left"
-								>
-									Description
-								</Box>
-							</VStack>
+										<VStack
+											align="stretch"
+											textAlign="left"
+											flex={1}
+										>
+											<Text fontSize="sm">
+												{selectedPosition.area}
+											</Text>
+											<Heading fontSize="lg">
+												{selectedPosition.name}
+											</Heading>
+											<Text fontSize="sm">
+												{selectedPosition.programs.join(
+													", "
+												)}
+											</Text>
+										</VStack>
+										<NextChakraLink
+											href={selectedPosition.form ?? ""}
+										>
+											<TimmyButton
+												timmysrc="/timmy/10.png"
+												flex={1}
+											>
+												Apply Now
+											</TimmyButton>
+										</NextChakraLink>
+									</HStack>
+									<Box
+										bg="#858DF1"
+										rounded={25}
+										px={10}
+										py={6}
+										textAlign="left"
+									>
+										{selectedPosition.description}
+									</Box>
+								</VStack>
+							) : null}
 						</SimpleGrid>
 					</VStack>
 				</ContainerInside>
@@ -365,41 +383,39 @@ export async function getStaticProps() {
 	};
 }
 
-type VolunteerPositionProps = JobPosting & StackProps;
+type VolunteerPositionProps = {
+	posting: JobPosting;
+	onSelected?: (posting: JobPosting) => void;
+} & StackProps;
 
+/**
+ * Creates a JSX element with the given information to show a volunteer position
+ *
+ * @param {VolunteerPositionProps} props the props to pass this component
+ * @param {JobPosting} props.posting the posting information to use
+ * @param {(posting: JobPosting) => void} props.onSelected the callback to invoke
+ * when this job posting is clicked
+ * @returns a JSX element that displays the given volunteer position
+ */
 function VolunteerPosition({
-	description,
-	rank,
-	form,
-	programs,
-	image,
-	area,
-	name,
+	posting,
+	onSelected,
 	...stackProps
 }: VolunteerPositionProps): JSX.Element {
-	const [hover, setHover] = useBoolean();
-	const transition = "all 0.15s ease-in";
+	const { programs, image, area, name } = posting;
 	return (
 		<Stack
 			spacing={0}
 			textAlign="left"
-			transition={transition}
-			transform={hover ? "scale(1.05)" : null}
+			transition="all 0.15s ease-in"
 			borderRadius="lg"
 			overflow="hidden"
 			bg="#5A60ADCC"
-			onMouseEnter={setHover.on}
-			onMouseLeave={setHover.off}
+			onClick={() => onSelected?.(posting)}
+			_hover={{ transform: "scale(1.05)", cursor: "pointer" }}
 			{...stackProps}
 		>
-			<Box
-				h={160}
-				p={4}
-				overflowY="hidden"
-				position="relative"
-				color={hover ? "white" : "transparent"}
-				transition={transition}
-			>
+			<Box h={160} p={4} overflowY="hidden" position="relative">
 				<Box
 					position="absolute"
 					left={0}
@@ -409,10 +425,7 @@ function VolunteerPosition({
 					bg={image?.url ? `url(${image?.url})` : "#5A60ADCC"}
 					bgSize="cover"
 					bgPos="center"
-					opacity={hover ? 0.2 : 1}
-					transition={transition}
 				/>
-				<Text>{description}</Text>
 			</Box>
 			<Stack
 				bg="brand.darkerBlue"
