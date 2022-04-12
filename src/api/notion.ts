@@ -701,28 +701,30 @@ export async function getLinkButtons(): Promise<LinkButtonProps[]> {
 }
 
 export async function getJobPostings(): Promise<JobPosting[]> {
-	const { data } = await axios.post(
-		"https://api.notion.com/v1/databases/221eb8e2d21b4094976a1038e8e03506/query",
-		{},
-		notionConfig
-	);
-
-	return data.results.map((page: any): JobPosting => {
-		const file0 = page.properties.Image.files[0];
-		const programs = page.properties.Program.multi_select.map(
-			({ name }) => name
-		);
-		return {
-			description:
-				page.properties.Description.rich_text?.[0]?.plain_text ?? null,
-			rank: page.properties.Rank.select?.name ?? null,
-			form: page.properties.Form.url ?? null,
-			programs,
-			image: file0 ? getFile(file0) : null,
-			area: page.properties.Area.select?.name ?? null,
-			name: page.properties.Name.title?.[0]?.plain_text ?? null,
-		};
+	const response = await notion.databases.query({
+		database_id: "221eb8e2d21b4094976a1038e8e03506",
 	});
+
+	return response.results.map(
+		// @ts-ignore
+		(page: { properties: Record<string, any> }): JobPosting => {
+			const file0 = page.properties.Image.files[0];
+			const programs = page.properties.Program.multi_select.map(
+				({ name }) => name
+			);
+			return {
+				description:
+					page.properties.Description.rich_text?.[0]?.plain_text ??
+					null,
+				rank: page.properties.Rank.select?.name ?? null,
+				form: page.properties.Form.url ?? null,
+				programs,
+				image: file0 ? getFile(file0) : null,
+				area: page.properties.Area.select?.name ?? null,
+				name: page.properties.Name.title?.[0]?.plain_text ?? null,
+			};
+		}
+	);
 }
 
 export async function getLeadership(): Promise<ExecutiveGroup[]> {
@@ -767,7 +769,7 @@ export async function getResearchOpportunities(): Promise<Opportunity[]> {
 		database_id: "c298fbbd933349a9a9614575d25cc1f7",
 	});
 
-	return response?.results?.map(
+	return response.results.map(
 		// @ts-ignore
 		(page: { properties: Record<string, any> }): Opportunity => {
 			const opportunity: Opportunity = {
