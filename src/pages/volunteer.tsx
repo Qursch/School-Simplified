@@ -4,6 +4,7 @@ import {
 	Button,
 	Center,
 	Heading,
+	HStack,
 	Image,
 	Select,
 	SimpleGrid,
@@ -25,10 +26,10 @@ const defaultOption: string = "Any/All";
 /**
  * The Volunteering page!
  *
- * Mention that people can give people community service hours (!)
+ * ~~Mention that people can give people community service hours (!)
  * Needs information about the different positions (e.g. tutoring, technical, marketing, HR, etc.) (images from Mossa, alsdkfjadlskfj, aisdfhalj) [in one box, same layout for each]
  * Needs a clear button that lets users sign up, which takes them to the Discord to reinforce call to action
- * Needs a couple Undraw images
+ * Needs a couple Undraw images~~
  * @returns the Volunteering page
  */
 export default function Volunteering({ postings }: { postings: JobPosting[] }) {
@@ -183,113 +184,165 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 				bg="linear-gradient(180deg, #7683E7 0%, #A8B2FF 100%)"
 			>
 				<ContainerInside>
-					<Center>
-						<Button
-							bg="#5a60adcc"
-							disabled={!rank && !area && !program}
-							onClick={() => {
-								setRank("");
-								setArea("");
-								setProgram("");
-							}}
-						>
-							Reset Filters
-						</Button>
-					</Center>
-					<Stack
-						direction={{ base: "column", md: "row" }}
-						spacing={5}
-						mt={5}
-						mb={10}
-					>
-						<VStack flex={1}>
-							<Heading size="sm">Rank</Heading>
-							<Select
-								placeholder={defaultOption}
-								bg="#5a60adcc"
-								border="none"
-								value={rank}
-								onChange={(e) => setRank(e.target.value)}
+					<VStack spacing={10} align="stretch">
+						<VStack spacing={5} bg="#A8B2FF88" rounded={25} py={6}>
+							<Center>
+								<Button
+									bg="#5a60adcc"
+									disabled={!rank && !area && !program}
+									onClick={() => {
+										setRank("");
+										setArea("");
+										setProgram("");
+									}}
+								>
+									Reset Filters
+								</Button>
+							</Center>
+							<Stack
+								direction={{ base: "column", md: "row" }}
+								spacing={5}
 							>
-								{rankOptions.map((option) => (
-									<option
-										key={option}
-										value={option}
-										disabled={
-											!enabledOptions.rank.includes(
-												option
-											)
+								<VStack flex={1}>
+									<Heading size="sm">Rank</Heading>
+									<Select
+										placeholder={defaultOption}
+										bg="#5a60adcc"
+										border="none"
+										value={rank}
+										onChange={(e) =>
+											setRank(e.target.value)
 										}
 									>
-										{option}
-									</option>
-								))}
-							</Select>
-						</VStack>
-						<VStack flex={1}>
-							<Heading size="sm">Area of Work</Heading>
-							<Select
-								placeholder={defaultOption}
-								bg="#5a60adcc"
-								border="none"
-								value={area}
-								onChange={(e) => setArea(e.target.value)}
-							>
-								{areaOptions.map((option) => (
-									<option
-										key={option}
-										value={option}
-										disabled={
-											!enabledOptions.area.includes(
-												option
-											)
+										{rankOptions.map((option) => (
+											<option
+												key={option}
+												value={option}
+												disabled={
+													!enabledOptions.rank.includes(
+														option
+													)
+												}
+											>
+												{option}
+											</option>
+										))}
+									</Select>
+								</VStack>
+								<VStack flex={1}>
+									<Heading size="sm">Area of Work</Heading>
+									<Select
+										placeholder={defaultOption}
+										bg="#5a60adcc"
+										border="none"
+										value={area}
+										onChange={(e) =>
+											setArea(e.target.value)
 										}
 									>
-										{option}
-									</option>
-								))}
-							</Select>
-						</VStack>
-						<VStack flex={1}>
-							<Heading size="sm">Program</Heading>
-							<Select
-								placeholder={defaultOption}
-								bg="#5a60adcc"
-								border="none"
-								value={program}
-								onChange={(e) => setProgram(e.target.value)}
-							>
-								{programOptions.map((option) => (
-									<option
-										key={option}
-										value={option}
-										disabled={
-											!enabledOptions.program.includes(
-												option
-											)
+										{areaOptions.map((option) => (
+											<option
+												key={option}
+												value={option}
+												disabled={
+													!enabledOptions.area.includes(
+														option
+													)
+												}
+											>
+												{option}
+											</option>
+										))}
+									</Select>
+								</VStack>
+								<VStack flex={1}>
+									<Heading size="sm">Program</Heading>
+									<Select
+										placeholder={defaultOption}
+										bg="#5a60adcc"
+										border="none"
+										value={program}
+										onChange={(e) =>
+											setProgram(e.target.value)
 										}
 									>
-										{option}
-									</option>
-								))}
-							</Select>
+										{programOptions.map((option) => (
+											<option
+												key={option}
+												value={option}
+												disabled={
+													!enabledOptions.program.includes(
+														option
+													)
+												}
+											>
+												{option}
+											</option>
+										))}
+									</Select>
+								</VStack>
+							</Stack>
 						</VStack>
-					</Stack>
-					<SimpleGrid columns={{ base: 1, md: 2, xl: 3 }} spacing={5}>
-						{postingsToDisplay.map((posting: JobPosting) => (
-							<NextChakraLink
-								key={
-									posting.name +
-									posting.area +
-									posting.programs
-								}
-								isExternal
-								href={posting.form ?? ""}
+						<SimpleGrid columns={2} spacing={8}>
+							<VStack
+								// columns={{ base: 1, md: 2, xl: 3 }}
+								spacing={5}
 							>
-								<VolunteerPosition {...posting} h="100%" />
-							</NextChakraLink>
-						))}
-					</SimpleGrid>
+								{postingsToDisplay.map(
+									(posting: JobPosting) => (
+										<NextChakraLink
+											key={
+												posting.name +
+												posting.area +
+												posting.programs
+											}
+											isExternal
+											href={posting.form ?? ""}
+										>
+											<VolunteerPosition
+												{...posting}
+												h="100%"
+											/>
+										</NextChakraLink>
+									)
+								)}
+							</VStack>
+							<VStack
+								spacing={8}
+								align="stretch"
+								position="sticky"
+								alignSelf="flex-start"
+								top={86}
+							>
+								<HStack
+									bg="#858DF1"
+									rounded={25}
+									px={10}
+									py={6}
+								>
+									<VStack
+										align="stretch"
+										textAlign="left"
+										flex={1}
+									>
+										<Text fontSize="sm">Area</Text>
+										<Heading fontSize="lg">Name</Heading>
+										<Text fontSize="sm">Programs</Text>
+									</VStack>
+									<Button flex={1}>Apply Now</Button>
+								</HStack>
+								<Box
+									bg="#858DF1"
+									rounded={25}
+									px={10}
+									py={6}
+									textAlign="left"
+								>
+									Description
+								</Box>
+							</VStack>
+						</SimpleGrid>
+					</VStack>
 				</ContainerInside>
 			</Container>
 			<Box
