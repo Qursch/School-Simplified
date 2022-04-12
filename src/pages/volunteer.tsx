@@ -149,7 +149,7 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const isAnimated = useBreakpointValue({ base: true, md: false });
-	console.log("isAnimated:", isAnimated);
+	// console.log("isAnimated:", isAnimated);
 
 	return (
 		<>
