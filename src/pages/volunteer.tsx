@@ -10,6 +10,8 @@ import {
 	Stack,
 	StackProps,
 	Text,
+	useBreakpointValue,
+	useDisclosure,
 	VStack,
 } from "@chakra-ui/react";
 import TimmyButton from "@components/button";
@@ -17,10 +19,16 @@ import Container from "@components/container";
 import ContainerBackground from "@components/containerBackground";
 import ContainerInside from "@components/containerInside";
 import NextChakraLink from "@components/nextChakra";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { JobPosting } from "types";
 
 const defaultOption: string = "Any/All";
+
+const transition = {
+	x: { type: "spring", stiffness: 300, damping: 30 },
+	opacity: { duration: 0.2 },
+};
 
 /**
  * The Volunteering page!
@@ -138,6 +146,10 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 
 		setEnabledOptions(tempOptions);
 	}, [rank, area, program]);
+
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	const isAnimated = useBreakpointValue({ base: true, md: false });
+	console.log("isAnimated:", isAnimated);
 
 	return (
 		<>
@@ -284,86 +296,153 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 								</VStack>
 							</Stack>
 						</VStack>
-						<SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
-							<Box maxH="100vh" overflowY="scroll" pr={2}>
-								<VStack spacing={5} align="stretch">
-									{postingsToDisplay.map(
-										(posting: JobPosting) => (
-											<VolunteerPosition
-												key={
-													posting.name +
-													posting.area +
-													posting.programs
-												}
-												posting={posting}
-												onSelected={setSelectedPosition}
-												h="100%"
-											/>
-										)
-									)}
-								</VStack>
-							</Box>
-							{selectedPosition ? (
-								<VStack
-									spacing={8}
-									align="stretch"
-									position="sticky"
-									alignSelf="flex-start"
-									top={{ base: 111, sm: 115, lg: 86 }}
-								>
-									<Stack
-										direction={{
-											base: "column",
-											md: "row",
+
+						<SimpleGrid
+							columns={{ base: 1, md: 2 }}
+							spacing={8}
+							h="100vh"
+							maxW="100%"
+							overflowX={{ base: "hidden", md: null }}
+							position="relative"
+						>
+							<AnimatePresence initial={false}>
+								{!isOpen || !isAnimated ? (
+									<motion.div
+										key="left"
+										style={{
+											overflowY: "scroll",
+											paddingRight: "0.5rem",
 										}}
-										bg="#858DF1"
-										rounded={25}
-										px={10}
-										py={6}
+										variants={{
+											enter: { x: -1000, opacity: 0 },
+											center: {
+												zIndex: 1,
+												x: 0,
+												opacity: 1,
+											},
+											exit: {
+												zIndex: 0,
+												x: -1000,
+												opacity: 0,
+												position: "absolute",
+											},
+										}}
+										initial="enter"
+										animate="center"
+										exit="exit"
+										transition={transition}
 									>
-										<VStack
-											align="stretch"
-											textAlign="left"
-											flex={1}
-										>
-											<Text fontSize="sm">
-												{selectedPosition.area}
-											</Text>
-											<Heading fontSize="lg">
-												{selectedPosition.name}
-											</Heading>
-											<Text fontSize="sm">
-												{selectedPosition.programs.join(
-													", "
-												)}
-											</Text>
+										<VStack spacing={5} align="stretch">
+											{postingsToDisplay.map(
+												(posting: JobPosting) => (
+													<VolunteerPosition
+														key={
+															posting.name +
+															posting.area +
+															posting.programs
+														}
+														posting={posting}
+														onSelected={(
+															posting
+														) => {
+															setSelectedPosition(
+																posting
+															);
+															onOpen();
+														}}
+														h="100%"
+													/>
+												)
+											)}
 										</VStack>
-										<NextChakraLink
-											href={selectedPosition.form ?? ""}
-										>
-											<TimmyButton
-												timmysrc="/timmy/10.png"
-												flex={1}
-												display={{
-													base: "none",
-													md: null,
-												}}
-											>
-												Apply Now
-											</TimmyButton>
-										</NextChakraLink>
-									</Stack>
-									<Box
-										bg="#858DF1"
-										rounded={25}
-										px={10}
-										py={6}
-										textAlign="left"
+									</motion.div>
+								) : null}
+								{selectedPosition && (isOpen || !isAnimated) ? (
+									<motion.div
+										key="right"
+										variants={{
+											enter: { x: 1000, opacity: 0 },
+											center: {
+												zIndex: 1,
+												x: 0,
+												opacity: 1,
+											},
+											exit: {
+												zIndex: 0,
+												x: 1000,
+												opacity: 0,
+												position: "absolute",
+											},
+										}}
+										initial="enter"
+										animate="center"
+										exit="exit"
+										transition={transition}
 									>
-										{selectedPosition.description}
-									</Box>
-								</VStack>
-							) : null}
+										<VStack spacing={8} align="stretch">
+											{isAnimated ? (
+												<TimmyButton onClick={onClose}>
+													Back
+												</TimmyButton>
+											) : null}
+											<Stack
+												direction={{
+													base: "column",
+													md: "row",
+												}}
+												bg="#858DF1"
+												rounded={25}
+												px={10}
+												py={6}
+											>
+												<VStack
+													align="stretch"
+													textAlign="left"
+													flex={1}
+												>
+													<Text fontSize="sm">
+														{selectedPosition.area}
+													</Text>
+													<Heading fontSize="lg">
+														{selectedPosition.name}
+													</Heading>
+													<Text fontSize="sm">
+														{selectedPosition.programs.join(
+															", "
+														)}
+													</Text>
+												</VStack>
+												<NextChakraLink
+													href={
+														selectedPosition.form ??
+														""
+													}
+												>
+													<TimmyButton
+														timmysrc="/timmy/10.png"
+														flex={1}
+														display={{
+															base: "none",
+															md: null,
+														}}
+													>
+														Apply Now
+													</TimmyButton>
+												</NextChakraLink>
+											</Stack>
+											<Box
+												bg="#858DF1"
+												rounded={25}
+												px={10}
+												py={6}
+												textAlign="left"
+											>
+												{selectedPosition.description}
+											</Box>
+										</VStack>
+									</motion.div>
+								) : null}
+							</AnimatePresence>
 						</SimpleGrid>
 					</VStack>
 				</ContainerInside>
