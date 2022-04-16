@@ -8,6 +8,7 @@ import {
 	Select,
 	SimpleGrid,
 	Stack,
+	StackDivider,
 	StackProps,
 	Text,
 	useBreakpointValue,
@@ -19,7 +20,7 @@ import Container from "@components/container";
 import ContainerBackground from "@components/containerBackground";
 import ContainerInside from "@components/containerInside";
 import NextChakraLink from "@components/nextChakra";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { JobPosting } from "types";
 
@@ -197,21 +198,12 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 				bg="linear-gradient(180deg, #7683E7 0%, #A8B2FF 100%)"
 			>
 				<ContainerInside>
-					<VStack spacing={10} align="stretch">
+					<VStack
+						spacing={10}
+						align="stretch"
+						divider={<StackDivider borderColor="white" />}
+					>
 						<VStack spacing={5} bg="#A8B2FF88" rounded={25} p={6}>
-							<Center>
-								<Button
-									bg="#5a60adcc"
-									disabled={!rank && !area && !program}
-									onClick={() => {
-										setRank("");
-										setArea("");
-										setProgram("");
-									}}
-								>
-									Reset Filters
-								</Button>
-							</Center>
 							<Stack
 								direction={{ base: "column", md: "row" }}
 								spacing={5}
@@ -220,7 +212,7 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 									<Heading size="sm">Rank</Heading>
 									<Select
 										placeholder={defaultOption}
-										bg="#5a60adcc"
+										bg="brand.darkerBlue"
 										border="none"
 										value={rank}
 										onChange={(e) =>
@@ -295,12 +287,26 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 									</Select>
 								</VStack>
 							</Stack>
+							<Center>
+								<Button
+									bg="brand.darkerBlue"
+									disabled={!rank && !area && !program}
+									onClick={() => {
+										setRank("");
+										setArea("");
+										setProgram("");
+									}}
+									size="sm"
+								>
+									Reset Filters
+								</Button>
+							</Center>
 						</VStack>
 
 						<SimpleGrid
 							columns={{ base: 1, md: 2 }}
 							spacing={8}
-							h="100vh"
+							h="90vh"
 							maxW="100%"
 							overflowX={{ base: "hidden", md: null }}
 							position="relative"
@@ -390,7 +396,7 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 													base: "column",
 													md: "row",
 												}}
-												bg="#858DF1"
+												bg="brand.darkerBlue"
 												rounded={25}
 												px={10}
 												py={6}
@@ -431,7 +437,7 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 												</NextChakraLink>
 											</Stack>
 											<Box
-												bg="#858DF1"
+												bg="brand.darkerBlue"
 												rounded={25}
 												px={10}
 												py={6}
