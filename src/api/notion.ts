@@ -766,14 +766,19 @@ export async function getLeadership(): Promise<ExecutiveGroup[]> {
 
 export async function getResearchOpportunities(): Promise<{
 	opportunities: Opportunity[];
-	dictionary: Record<string, { humanName: string; isMulti: boolean }>;
+	dictionary: Record<
+		string,
+		{ humanName: string; isMulti: boolean; values: string[] }
+	>;
 }> {
 	const response = await notion.databases.query({
 		database_id: "c298fbbd933349a9a9614575d25cc1f7",
 	});
 
-	const dictionary: Record<string, { humanName: string; isMulti: boolean }> =
-		{};
+	const dictionary: Record<
+		string,
+		{ humanName: string; isMulti: boolean; values: string[] }
+	> = {};
 	const opportunities = response.results.map(
 		// @ts-ignore
 		(page: { properties: Record<string, any> }): Opportunity => {
@@ -813,16 +818,28 @@ export async function getResearchOpportunities(): Promise<{
 						.toLowerCase()
 						.replaceAll(/\s+/g, "_");
 
-					// check if prop key has already been added to dictionary
-					if (!dictionary[propKey]) {
-						dictionary[propKey] = { humanName, isMulti };
-					}
-
 					// put data into opportunities
 					opportunity[propKey] =
 						page.properties[key].multi_select?.map(
 							(value: { name: string }) => value.name
 						) ?? null;
+
+					// check if prop key has already been added to dictionary
+					if (!dictionary[propKey]) {
+						dictionary[propKey] = {
+							humanName,
+							isMulti,
+							values: opportunity[propKey],
+						};
+					} else if (dictionary[propKey].values) {
+						// otherwise, add all unique values
+						opportunity[propKey].forEach((value: string) => {
+							if (!dictionary[propKey].values.includes(value))
+								dictionary[propKey].values.push(value);
+						});
+					} else {
+						dictionary[propKey].values = opportunity[propKey];
+					}
 				}
 			}
 

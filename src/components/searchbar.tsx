@@ -36,14 +36,24 @@ export default function Searchbar({
 			{/* size={props.size} is already included */}
 			<InputLeftElement
 				pointerEvents="none"
-				children={<Icon as={FaSearch} boxSize={5} />}
+				children={
+					<Icon
+						as={FaSearch}
+						boxSize={
+							functionlessProps.size === "lg" ||
+							functionlessProps.size === "xl"
+								? 5
+								: 3
+						}
+					/>
+				}
 				height="100%"
 			/>
 			<Input
 				placeholder="Search"
 				bg="brand.transparent"
 				borderRadius="full"
-				size="lg"
+				size={functionlessProps.size ?? "lg"}
 				onChange={(e) => {
 					if (searchWait) clearTimeout(searchWait);
 					setLoading.on();

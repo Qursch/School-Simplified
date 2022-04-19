@@ -5,7 +5,6 @@ import {
 	AccordionIcon,
 	AccordionItem,
 	AccordionPanel,
-	Box,
 	Button,
 	Checkbox,
 	CheckboxGroup,
@@ -22,17 +21,23 @@ import {
 	Text,
 	VStack,
 } from "@chakra-ui/react";
+import { StringOrNumber } from "@chakra-ui/utils";
 import TimmyButton from "@components/button";
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
 import NextChakraLink from "@components/nextChakra";
-import { useMemo, useState } from "react";
+import Searchbar from "@components/searchbar";
+import { filter } from "fuzzaldrin-plus";
+import { useMemo, useReducer, useState } from "react";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import { Opportunity } from "types";
 
 type ResearchProps = {
 	opportunities: Opportunity[];
-	dictionary: Record<string, { humanName: string; isMulti: boolean }>;
+	dictionary: Record<
+		string,
+		{ humanName: string; isMulti: boolean; values: string[] }
+	>;
 };
 
 export default function Research({
@@ -71,16 +76,59 @@ export default function Research({
 	);
 }
 
+function selectedReducer(
+	oldSelectedItems: Record<string, StringOrNumber | StringOrNumber[]>,
+	{ key, values }: { key: string; values: StringOrNumber | StringOrNumber[] }
+) {
+	const copy = Object.assign({}, oldSelectedItems);
+	copy[key] = values;
+
+	console.log("new selected:", copy);
+	return copy;
+}
+
 function ResearchViewPane({
 	opportunities,
 	dictionary,
 }: ResearchProps): JSX.Element {
+	const [selected, setSelected] = useReducer(selectedReducer, {});
+	const [searchTerm, setSearchTerm] = useState("");
+
 	const matchedOpportunities = useMemo(() => {
-		return opportunities;
-	}, [opportunities]);
+		const preFilter = searchTerm.length
+			? filter(opportunities, searchTerm, { key: "title" })
+			: opportunities;
+		return preFilter.filter((opportunity) => {
+			for (const category in selected) {
+				// if(!opportunity[category].includes()) {
+				// 	return false;
+				// }
+				// check if this is a single item
+				if (
+					typeof opportunity[category] === "string" ||
+					typeof opportunity[category] === "number"
+				) {
+					if (opportunity[category] !== selected[category])
+						return false;
+				} else {
+					// must be a list item
+					// @ts-ignore
+					const list: StringOrNumber[] = selected[category];
+					if (
+						list.length &&
+						!opportunity[category].some((item: StringOrNumber) =>
+							list.includes(item)
+						)
+					)
+						return false;
+				}
+			}
+			return true;
+		});
+	}, [opportunities, selected, searchTerm]);
 	const [page, setPage] = useState(0);
 
-	console.log("dictionary", dictionary);
+	// console.log("dictionary", dictionary);
 
 	const numPages = Math.ceil(matchedOpportunities.length / 12);
 	return (
@@ -96,44 +144,92 @@ function ResearchViewPane({
 							bgColor="brand.darkerBlue"
 							allowMultiple
 							allowToggle
+							defaultIndex={[]}
 						>
-							<AccordionItem>
-								<AccordionButton>
-									<HStack>
-										<Input placeholder="Text field" />
-										<AccordionIcon />
-									</HStack>
-								</AccordionButton>
-								<AccordionPanel>
-									<CheckboxGroup>
-										<VStack>
-											<Checkbox value="a">A</Checkbox>
-											<Checkbox value="b">B</Checkbox>
-										</VStack>
-									</CheckboxGroup>
-								</AccordionPanel>
-							</AccordionItem>
-							<AccordionItem>
-								<AccordionButton>
-									<HStack>
-										<Input placeholder="Text field 2" />
-										<AccordionIcon />
-									</HStack>
-								</AccordionButton>
-								<AccordionPanel>
-									<RadioGroup>
-										<VStack>
-											<Radio value="c">C</Radio>
-											<Radio value="d">D</Radio>
-										</VStack>
-									</RadioGroup>
-								</AccordionPanel>
-							</AccordionItem>
+							{Object.keys(dictionary).map((key) => {
+								const entry = dictionary[key];
+								return (
+									<AccordionItem key={entry.humanName}>
+										<AccordionButton>
+											<HStack>
+												<Input
+													placeholder={
+														entry.humanName
+													}
+												/>
+												<AccordionIcon />
+											</HStack>
+										</AccordionButton>
+										<AccordionPanel>
+											{entry.isMulti ? (
+												<CheckboxGroup
+													onChange={(values) =>
+														setSelected({
+															key,
+															values,
+														})
+													}
+												>
+													<VStack
+														align="flex-start"
+														textAlign="left"
+													>
+														{entry.values.map(
+															(value) => (
+																<Checkbox
+																	value={
+																		value
+																	}
+																	key={value}
+																>
+																	{value}
+																</Checkbox>
+															)
+														)}
+													</VStack>
+												</CheckboxGroup>
+											) : (
+												<RadioGroup
+													onChange={(value) =>
+														setSelected({
+															key,
+															values: value,
+														})
+													}
+												>
+													<VStack
+														align="flex-start"
+														textAlign="left"
+													>
+														{entry.values.map(
+															(value) => (
+																<Radio
+																	value={
+																		value
+																	}
+																	key={value}
+																>
+																	{value}
+																</Radio>
+															)
+														)}
+													</VStack>
+												</RadioGroup>
+											)}
+										</AccordionPanel>
+									</AccordionItem>
+								);
+							})}
 						</Accordion>
 					</VStack>
 					<VStack flex="1 1" spacing={15} align="stretch">
 						<HStack>
-							<Input placeholder="Type to Search" flex={2} />
+							<Searchbar
+								placeholder="Type to Search"
+								flex={2}
+								callback={setSearchTerm}
+								size="sm"
+							/>
 							<Spacer maxW={50} />
 							<Heading size="xs">Sort By</Heading>
 							<Select placeholder="None" w="fit-content">
