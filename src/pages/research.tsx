@@ -2,6 +2,7 @@ import { getResearchOpportunities } from "@api/notion";
 import {
 	Accordion,
 	AccordionButton,
+	AccordionIcon,
 	AccordionItem,
 	AccordionPanel,
 	Box,
@@ -12,6 +13,10 @@ import {
 	HStack,
 	Icon,
 	Image,
+	Input,
+	Radio,
+	RadioGroup,
+	Select,
 	SimpleGrid,
 	Spacer,
 	Text,
@@ -27,10 +32,12 @@ import { Opportunity } from "types";
 
 type ResearchProps = {
 	opportunities: Opportunity[];
+	dictionary: Record<string, { humanName: string; isMulti: boolean }>;
 };
 
 export default function Research({
 	opportunities,
+	dictionary,
 }: ResearchProps): JSX.Element {
 	// console.log("opportunities:", JSON.stringify(opportunities, null, 2));
 	// return <UnderConstruction />;
@@ -56,17 +63,26 @@ export default function Research({
 					</HStack>
 				</ContainerInside>
 			</Container>
-			<ResearchViewPane opportunities={opportunities} />
+			<ResearchViewPane
+				opportunities={opportunities}
+				dictionary={dictionary}
+			/>
 		</>
 	);
 }
 
-function ResearchViewPane({ opportunities }: ResearchProps): JSX.Element {
+function ResearchViewPane({
+	opportunities,
+	dictionary,
+}: ResearchProps): JSX.Element {
 	const matchedOpportunities = useMemo(() => {
 		return opportunities;
 	}, [opportunities]);
 	const [page, setPage] = useState(0);
 
+	console.log("dictionary", dictionary);
+
+	const numPages = Math.ceil(matchedOpportunities.length / 12);
 	return (
 		<Container>
 			<ContainerInside>
@@ -83,8 +99,10 @@ function ResearchViewPane({ opportunities }: ResearchProps): JSX.Element {
 						>
 							<AccordionItem>
 								<AccordionButton>
-									Textfield
-									<AccordionItem />
+									<HStack>
+										<Input placeholder="Text field" />
+										<AccordionIcon />
+									</HStack>
 								</AccordionButton>
 								<AccordionPanel>
 									<CheckboxGroup>
@@ -95,14 +113,34 @@ function ResearchViewPane({ opportunities }: ResearchProps): JSX.Element {
 									</CheckboxGroup>
 								</AccordionPanel>
 							</AccordionItem>
+							<AccordionItem>
+								<AccordionButton>
+									<HStack>
+										<Input placeholder="Text field 2" />
+										<AccordionIcon />
+									</HStack>
+								</AccordionButton>
+								<AccordionPanel>
+									<RadioGroup>
+										<VStack>
+											<Radio value="c">C</Radio>
+											<Radio value="d">D</Radio>
+										</VStack>
+									</RadioGroup>
+								</AccordionPanel>
+							</AccordionItem>
 						</Accordion>
 					</VStack>
 					<VStack flex="1 1" spacing={15} align="stretch">
 						<HStack>
-							<Box>Type to Search</Box>
-							<Spacer />
+							<Input placeholder="Type to Search" flex={2} />
+							<Spacer maxW={50} />
 							<Heading size="xs">Sort By</Heading>
-							<Box>Dropdown</Box>
+							<Select placeholder="None" w="fit-content">
+								<option value="deadline_early">
+									Earliest Deadline
+								</option>
+							</Select>
 						</HStack>
 						<SimpleGrid columns={3} spacing={5}>
 							{matchedOpportunities
@@ -110,14 +148,14 @@ function ResearchViewPane({ opportunities }: ResearchProps): JSX.Element {
 								.map((opportunity) => (
 									<OpportunityCard
 										opportunity={opportunity}
+										key={opportunity.link}
 									/>
 								))}
 						</SimpleGrid>
 						<Spacer />
 						<HStack alignSelf="flex-end">
 							<Text>
-								Page {page + 1} of{" "}
-								{Math.ceil(matchedOpportunities.length / 12)}
+								Page {page + 1} of {numPages}
 							</Text>
 							<Button
 								onClick={() => setPage(page - 1)}
@@ -128,13 +166,7 @@ function ResearchViewPane({ opportunities }: ResearchProps): JSX.Element {
 							</Button>
 							<Button
 								onClick={() => setPage(page + 1)}
-								disabled={
-									page ===
-									Math.ceil(
-										matchedOpportunities.length / 12
-									) -
-										1
-								}
+								disabled={page === numPages - 1}
 								background="transparent!important"
 							>
 								<Icon as={FaLongArrowAltRight} />
@@ -195,8 +227,6 @@ function OpportunityCard({ opportunity }: CardProps): JSX.Element {
 }
 
 export async function getStaticProps() {
-	const props: ResearchProps = {
-		opportunities: await getResearchOpportunities(),
-	};
+	const props: ResearchProps = await getResearchOpportunities();
 	return { props, revalidate: 360 };
 }

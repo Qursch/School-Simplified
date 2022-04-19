@@ -274,7 +274,7 @@ export type Opportunity = {
 	 * The city that this opportunity is located in.
 	 * (Is multiple choice (?))
 	 */
-	"city (mc)": string[];
+	city: string[];
 	/**
 	 * The deadline for applying to this opportunity
 	 */
@@ -294,11 +294,11 @@ export type Opportunity = {
 	/**
 	 * A general timeframe of when this opportunity will take place
 	 */
-	"semester (mc)": string[];
+	semester: string[];
 	/**
 	 * The state/region that this research opportunity will take place
 	 */
-	"state (mc)": string[];
+	state: string[];
 	/**
 	 * Tags that relate to the status of this opportunity.
 	 * e.g. in-person or virtual, cost

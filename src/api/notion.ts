@@ -764,28 +764,34 @@ export async function getLeadership(): Promise<ExecutiveGroup[]> {
 	return output;
 }
 
-export async function getResearchOpportunities(): Promise<Opportunity[]> {
+export async function getResearchOpportunities(): Promise<{
+	opportunities: Opportunity[];
+	dictionary: Record<string, { humanName: string; isMulti: boolean }>;
+}> {
 	const response = await notion.databases.query({
 		database_id: "c298fbbd933349a9a9614575d25cc1f7",
 	});
 
-	return response.results.map(
+	const dictionary: Record<string, { humanName: string; isMulti: boolean }> =
+		{};
+	const opportunities = response.results.map(
 		// @ts-ignore
 		(page: { properties: Record<string, any> }): Opportunity => {
 			const opportunity: Opportunity = {
 				title: "",
-				"city (mc)": [],
+				city: [],
 				deadline: [],
 				description: "",
 				grade: [],
 				link: "",
-				"semester (mc)": [],
-				"state (mc)": [],
+				semester: [],
+				state: [],
 				status: [],
 				topic: [],
 				type: [],
 			};
 			for (const key in page.properties) {
+				// check for special non-sorting cases
 				if (key === "Title") {
 					opportunity.title =
 						page.properties.Title.title?.[0]?.plain_text?.trim() ??
@@ -798,7 +804,22 @@ export async function getResearchOpportunities(): Promise<Opportunity[]> {
 						page.properties.Description.rich_text?.[0]?.plain_text?.trim() ??
 						null;
 				} else {
-					opportunity[key.toLowerCase()] =
+					// convert key into property key and human readable name
+					const isMulti = key.endsWith("(mc)");
+					const humanName = (
+						isMulti ? key.substring(0, key.length - 4) : key
+					).trim();
+					const propKey = humanName
+						.toLowerCase()
+						.replaceAll(/\s+/g, "_");
+
+					// check if prop key has already been added to dictionary
+					if (!dictionary[propKey]) {
+						dictionary[propKey] = { humanName, isMulti };
+					}
+
+					// put data into opportunities
+					opportunity[propKey] =
 						page.properties[key].multi_select?.map(
 							(value: { name: string }) => value.name
 						) ?? null;
@@ -808,4 +829,6 @@ export async function getResearchOpportunities(): Promise<Opportunity[]> {
 			return opportunity;
 		}
 	);
+
+	return { opportunities, dictionary };
 }
