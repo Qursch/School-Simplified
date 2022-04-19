@@ -50,7 +50,7 @@ export default function Searchbar({
 				height="100%"
 			/>
 			<Input
-				placeholder="Search"
+				placeholder={functionlessProps.placeholder ?? "Search"}
 				bg="brand.transparent"
 				borderRadius="full"
 				size={functionlessProps.size ?? "lg"}

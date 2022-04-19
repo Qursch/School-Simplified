@@ -313,3 +313,8 @@ export type Opportunity = {
 	 */
 	type: string[];
 };
+export type ResearchCategory = {
+	humanName: string;
+	isMulti: boolean;
+	values: string[];
+};

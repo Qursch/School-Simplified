@@ -12,7 +12,6 @@ import {
 	HStack,
 	Icon,
 	Image,
-	Input,
 	Radio,
 	RadioGroup,
 	Select,
@@ -30,14 +29,11 @@ import Searchbar from "@components/searchbar";
 import { filter } from "fuzzaldrin-plus";
 import { useMemo, useReducer, useState } from "react";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
-import { Opportunity } from "types";
+import { Opportunity, ResearchCategory } from "types";
 
 type ResearchProps = {
 	opportunities: Opportunity[];
-	dictionary: Record<
-		string,
-		{ humanName: string; isMulti: boolean; values: string[] }
-	>;
+	dictionary: Record<string, ResearchCategory>;
 };
 
 export default function Research({
@@ -76,8 +72,10 @@ export default function Research({
 	);
 }
 
+type AllSelection = Record<string, StringOrNumber | StringOrNumber[]>;
+
 function selectedReducer(
-	oldSelectedItems: Record<string, StringOrNumber | StringOrNumber[]>,
+	oldSelectedItems: AllSelection,
 	{ key, values }: { key: string; values: StringOrNumber | StringOrNumber[] }
 ) {
 	const copy = Object.assign({}, oldSelectedItems);
@@ -95,11 +93,23 @@ function ResearchViewPane({
 	const [searchTerm, setSearchTerm] = useState("");
 
 	const matchedOpportunities = useMemo(() => {
+		// filter by search term
 		const preFilter = searchTerm.length
 			? filter(opportunities, searchTerm, { key: "title" })
 			: opportunities;
+
+		// filter by sidebar
 		return preFilter.filter((opportunity) => {
 			for (const category in selected) {
+				// if (opportunity.title === "Dear Asian Youth") {
+				// 	console.log(
+				// 		"(DAY) checking",
+				// 		opportunity[category],
+				// 		"vs",
+				// 		selected[category]
+				// 	);
+				// }
+
 				// if(!opportunity[category].includes()) {
 				// 	return false;
 				// }
@@ -122,6 +132,8 @@ function ResearchViewPane({
 					)
 						return false;
 				}
+
+				// console.log("pass");
 			}
 			return true;
 		});
@@ -129,6 +141,12 @@ function ResearchViewPane({
 	const [page, setPage] = useState(0);
 
 	// console.log("dictionary", dictionary);
+	console.log(
+		"DAY deadline (view pane):",
+		opportunities.find(
+			(opportunity) => opportunity.title === "Dear Asian Youth"
+		).deadline
+	);
 
 	const numPages = Math.ceil(matchedOpportunities.length / 12);
 	return (
@@ -149,75 +167,13 @@ function ResearchViewPane({
 							{Object.keys(dictionary).map((key) => {
 								const entry = dictionary[key];
 								return (
-									<AccordionItem key={entry.humanName}>
-										<AccordionButton>
-											<HStack>
-												<Input
-													placeholder={
-														entry.humanName
-													}
-												/>
-												<AccordionIcon />
-											</HStack>
-										</AccordionButton>
-										<AccordionPanel>
-											{entry.isMulti ? (
-												<CheckboxGroup
-													onChange={(values) =>
-														setSelected({
-															key,
-															values,
-														})
-													}
-												>
-													<VStack
-														align="flex-start"
-														textAlign="left"
-													>
-														{entry.values.map(
-															(value) => (
-																<Checkbox
-																	value={
-																		value
-																	}
-																	key={value}
-																>
-																	{value}
-																</Checkbox>
-															)
-														)}
-													</VStack>
-												</CheckboxGroup>
-											) : (
-												<RadioGroup
-													onChange={(value) =>
-														setSelected({
-															key,
-															values: value,
-														})
-													}
-												>
-													<VStack
-														align="flex-start"
-														textAlign="left"
-													>
-														{entry.values.map(
-															(value) => (
-																<Radio
-																	value={
-																		value
-																	}
-																	key={value}
-																>
-																	{value}
-																</Radio>
-															)
-														)}
-													</VStack>
-												</RadioGroup>
-											)}
-										</AccordionPanel>
-									</AccordionItem>
+									<FilterGroup
+										entry={entry}
+										onSelected={(values) =>
+											setSelected({ key, values })
+										}
+										key={entry.humanName}
+									/>
 								);
 							})}
 						</Accordion>
@@ -249,25 +205,29 @@ function ResearchViewPane({
 								))}
 						</SimpleGrid>
 						<Spacer />
-						<HStack alignSelf="flex-end">
-							<Text>
-								Page {page + 1} of {numPages}
-							</Text>
-							<Button
-								onClick={() => setPage(page - 1)}
-								disabled={page === 0}
-								background="transparent!important"
-							>
-								<Icon as={FaLongArrowAltLeft} />
-							</Button>
-							<Button
-								onClick={() => setPage(page + 1)}
-								disabled={page === numPages - 1}
-								background="transparent!important"
-							>
-								<Icon as={FaLongArrowAltRight} />
-							</Button>
-						</HStack>
+						{matchedOpportunities?.length ? (
+							<HStack alignSelf="flex-end">
+								<Text>
+									Page {page + 1} of {numPages}
+								</Text>
+								<Button
+									onClick={() => setPage(page - 1)}
+									disabled={page === 0}
+									background="transparent!important"
+								>
+									<Icon as={FaLongArrowAltLeft} />
+								</Button>
+								<Button
+									onClick={() => setPage(page + 1)}
+									disabled={page === numPages - 1}
+									background="transparent!important"
+								>
+									<Icon as={FaLongArrowAltRight} />
+								</Button>
+							</HStack>
+						) : (
+							<Text as="i">No results found!</Text>
+						)}
 					</VStack>
 				</HStack>
 			</ContainerInside>
@@ -275,10 +235,53 @@ function ResearchViewPane({
 	);
 }
 
+type FilterGroupProps = {
+	entry: ResearchCategory;
+	onSelected: (selected: StringOrNumber | StringOrNumber[]) => void;
+};
+function FilterGroup({ entry, onSelected }: FilterGroupProps): JSX.Element {
+	return (
+		<AccordionItem>
+			<AccordionButton>
+				<HStack>
+					<Searchbar placeholder={entry.humanName} size="xs" />
+					<AccordionIcon />
+				</HStack>
+			</AccordionButton>
+			<AccordionPanel py={3}>
+				{entry.isMulti ? (
+					<CheckboxGroup onChange={onSelected}>
+						<VStack align="flex-start" textAlign="left">
+							{entry.values.map((value) => (
+								<Checkbox value={value} key={value}>
+									{value}
+								</Checkbox>
+							))}
+						</VStack>
+					</CheckboxGroup>
+				) : (
+					<RadioGroup onChange={onSelected}>
+						<VStack align="flex-start" textAlign="left">
+							{entry.values.map((value) => (
+								<Radio value={value} key={value}>
+									{value}
+								</Radio>
+							))}
+						</VStack>
+					</RadioGroup>
+				)}
+			</AccordionPanel>
+		</AccordionItem>
+	);
+}
+
 type CardProps = { opportunity: Opportunity };
 
 function OpportunityCard({ opportunity }: CardProps): JSX.Element {
 	const { title, deadline, link } = opportunity;
+	if (title === "Dear Asian Youth") {
+		console.log("DAY deadline (card):", deadline);
+	}
 	return (
 		<NextChakraLink href={link}>
 			<VStack
@@ -289,7 +292,7 @@ function OpportunityCard({ opportunity }: CardProps): JSX.Element {
 				overflow="hidden"
 				rounded={5}
 			>
-				<Image
+				{/* <Image
 					src="/timmy/1.png"
 					h="50%"
 					objectFit="cover"
@@ -297,13 +300,6 @@ function OpportunityCard({ opportunity }: CardProps): JSX.Element {
 					bg="white"
 					rounded={5}
 					style={{ aspectRatio: "3" }}
-				/>
-				{/* <Box
-					bgImg="/timmy/1.png"
-					bgSize="cover"
-					bgPos="center"
-					h="100%"
-					rounded={5}
 				/> */}
 				<VStack
 					align="stretch"
@@ -324,5 +320,11 @@ function OpportunityCard({ opportunity }: CardProps): JSX.Element {
 
 export async function getStaticProps() {
 	const props: ResearchProps = await getResearchOpportunities();
+	console.log(
+		"DAY deadline (static props):",
+		props.opportunities.find(
+			(opportunity) => opportunity.title === "Dear Asian Youth"
+		).deadline
+	);
 	return { props, revalidate: 360 };
 }
