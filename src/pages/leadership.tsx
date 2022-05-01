@@ -227,7 +227,7 @@ type PeopleGroup = {
 const corporateOfficers: Person[] = [
 	{
 		name: "Ethan Hsu",
-		title: "Chief Executive Officer & President",
+		title: "Chief Executive Officer",
 		img: "/staff/EthanHsu.jpg",
 	},
 	{
@@ -240,11 +240,11 @@ const corporateOfficers: Person[] = [
 	// 	title: "Chief of Staff & Corporate Secretary ",
 	// 	img: "/staff/LaurenHsieh.jpg",
 	// },
-	{
-		name: "Param Patil",
-		title: "Chief Advancements Officer",
-		img: "/staff/ParamPatil.jpg",
-	},
+	// {
+	// 	name: "Param Patil",
+	// 	title: "Chief Advancements Officer",
+	// 	img: "/staff/ParamPatil.jpg",
+	// },
 	{
 		name: "Harry Chow",
 		title: "Chief Marketing Officer",
@@ -266,9 +266,29 @@ const corporateOfficers: Person[] = [
 	// 	img: "/staff/DianaZheng.jpg",
 	// },
 	{
+		name: "Brandon Woo",
+		title: "Chief Information Officer",
+		img: "/staff/BrandonWoo.jpg",
+	},
+	{
 		name: "Sabrina Zhang",
 		title: "Executive Assisstant to CEO",
 		img: "/staff/SabrinaZhang.jpg",
+	},
+	{
+		name: "Jed Wang",
+		title: "President of Programming Simplified",
+		img: "/staff/JedWang.jpg",
+	},
+	{
+		name: "David Sun",
+		title: "President of National Chapters",
+		img: "/staff/DavidSun.jpg",
+	},
+	{
+		name: "Maya Murry",
+		title: "President of Research Simplified",
+		img: "/staff/MayaMurry.jpg",
 	},
 	{
 		name: "Annette Lin",
@@ -280,16 +300,11 @@ const corporateOfficers: Person[] = [
 	// 	title: "President of School Simplified Digital",
 	// 	img: "/staff/ZachMartin.jpg",
 	// },
-	{
-		name: "Brandon Woo",
-		title: "Chief Information Officer",
-		img: "/staff/BrandonWoo.jpg",
-	},
-	{
-		name: "Kyle Chen",
-		title: "Chief Financial Officer",
-		img: "/staff/KyleChen.jpg",
-	},
+	// {
+	// 	name: "Kyle Chen",
+	// 	title: "Chief Financial Officer",
+	// 	img: "/staff/KyleChen.jpg",
+	// },
 	// {
 	// 	name: "Krishanu Datta",
 	// 	title: "Senior Vice President of IT",
@@ -297,135 +312,145 @@ const corporateOfficers: Person[] = [
 	// },
 ];
 
-	// const divisionPresidents: Person[] = [
-	//	{
-	//		name: "Bhavyasri Suggula",
-	//		title: "Executive Projects Director",
-	//		img: "/staff/BhavyasriSuggula.jpg",
-	//	},
-	//	{
-	//		name: "Hazim Arafa",
-	//		title: "President of Programming Simplified",
-	//		img: "/staff/HazimArafa.jpg",
-	//	},
-	//	{
-	//		name: "David Sun",
-	//		title: "President of National Chapters",
-	//		img: "/staff/DavidSun.jpg",
-	//	},
-	//	{
-	//		name: "Aarush Goradia",
-	//		title: "President of Student Activities",
-	//		img: "/staff/AarushGoradia.jpg",
-	//	},
-	//	{
-	//		name: "Maya Murry",
-	//		title: "President of Research Simplified",
-	//		img: "/staff/MayaMurry.jpg",
-	//	},
-	// {
-	// 	name: "Jiahao Zhang",
-	// 	title: "Global Vice President of Advancement",
-	// 	img: "/staff/JiahaoZhang.jpg",
-	// },
-	// {
-	// 	name: "Yasmeen Elkheir",
-	// 	title: "Vice President of Operations, Programming Simplified",
-	// 	img: "/staff/YasmeenElkheir.jpg",
-	// },
-	// {
-	// 	name: "Isamar Zhu",
-	// 	title: "Vice President of Staff, Programming Simplified",
-	// 	img: "/staff/IsamarZhu.jpg",
-	// },
-	// {
-	// 	name: "Josh Schram",
-	// 	// name: "Josh Schram",
-	// 	title: "Vice President of Academics, Digital",
-	// 	img: "/staff/JoshSchram.jpg",
-	// },
-	// {
-	// 	name: "Rohit Choudhary",
-	// 	title: "Vice President of Academics, Digital",
-	// 	img: "/staff/RohitChoudhary.jpg",
-	// },
+// const divisionPresidents: Person[] = [
+//	{
+//		name: "Bhavyasri Suggula",
+//		title: "Executive Projects Director",
+//		img: "/staff/BhavyasriSuggula.jpg",
+//	},
+//	{
+//		name: "Hazim Arafa",
+//		title: "President of Programming Simplified",
+//		img: "/staff/HazimArafa.jpg",
+//	},
+//	{
+//		name: "David Sun",
+//		title: "President of National Chapters",
+//		img: "/staff/DavidSun.jpg",
+//	},
+//	{
+//		name: "Aarush Goradia",
+//		title: "President of Student Activities",
+//		img: "/staff/AarushGoradia.jpg",
+//	},
+//	{
+//		name: "Maya Murry",
+//		title: "President of Research Simplified",
+//		img: "/staff/MayaMurry.jpg",
+//	},
+// {
+// 	name: "Jiahao Zhang",
+// 	title: "Global Vice President of Advancement",
+// 	img: "/staff/JiahaoZhang.jpg",
+// },
+// {
+// 	name: "Yasmeen Elkheir",
+// 	title: "Vice President of Operations, Programming Simplified",
+// 	img: "/staff/YasmeenElkheir.jpg",
+// },
+// {
+// 	name: "Isamar Zhu",
+// 	title: "Vice President of Staff, Programming Simplified",
+// 	img: "/staff/IsamarZhu.jpg",
+// },
+// {
+// 	name: "Josh Schram",
+// 	// name: "Josh Schram",
+// 	title: "Vice President of Academics, Digital",
+// 	img: "/staff/JoshSchram.jpg",
+// },
+// {
+// 	name: "Rohit Choudhary",
+// 	title: "Vice President of Academics, Digital",
+// 	img: "/staff/RohitChoudhary.jpg",
+// },
 
-	// {
-	// 	name: "Rohit Penta",
-	// 	title: "Vice President of Technology, Digital",
-	// 	img: "/staff/RohitPenta.jpg",
-	// },
-	// {
-	// 	name: "Max Konzerowsky",
-	// 	title: "Vice President of Information-Technology, School Simplified Digital",
-	// 	img: "/staff/MaxKonzerowsky.jpg",
-	// },
-	// {
-	// 	name: "Nicholas Zhang",
-	// 	title: "Vice President of Information-Technology, School Simplified Digital",
-	// 	img: "/staff/NicholasZhang.jpg",
-	// },
+// {
+// 	name: "Rohit Penta",
+// 	title: "Vice President of Technology, Digital",
+// 	img: "/staff/RohitPenta.jpg",
+// },
+// {
+// 	name: "Max Konzerowsky",
+// 	title: "Vice President of Information-Technology, School Simplified Digital",
+// 	img: "/staff/MaxKonzerowsky.jpg",
+// },
+// {
+// 	name: "Nicholas Zhang",
+// 	title: "Vice President of Information-Technology, School Simplified Digital",
+// 	img: "/staff/NicholasZhang.jpg",
+// },
 
-	// {
-	// 	name: "Sophia Bhatia",
-	// 	title: "Vice President of Community Engagement",
-	// 	img: "/staff/soape.jpg",
-	// },
-	// {
-	// 	name: "Noah Bondi",
-	// 	title: "National VP of Communications (Chapters)",
-	// 	img: "/staff/NoahBondi.jpg",
-	// },
-	// {
-	// 	name: "Vivek Anandh",
-	// 	title: "Vice President of Information-Technology, National Chapters",
-	// 	img: "/staff/VivekAnandh.jpg",
-	// },
-	// {
-	// 	name: "Gavin Hecock",
-	// 	title: "Vice President of Student Activities",
-	// 	img: "/staff/GavinHecock.jpg",
-	// },
-	// {
-	// 	name: "Christina Dong",
-	// 	title: "Vice President of Marketing, National Chapters",
-	// 	img: "/staff/ChristinaDong.jpg",
-	// },
-	// {
-	// 	name: "Adrian Sucahyo",
-	// 	title: "Vice President of Operations, Chapters",
-	// 	img: "/staff/AdrianSucahyo.jpg",
-	// },
+// {
+// 	name: "Sophia Bhatia",
+// 	title: "Vice President of Community Engagement",
+// 	img: "/staff/soape.jpg",
+// },
+// {
+// 	name: "Noah Bondi",
+// 	title: "National VP of Communications (Chapters)",
+// 	img: "/staff/NoahBondi.jpg",
+// },
+// {
+// 	name: "Vivek Anandh",
+// 	title: "Vice President of Information-Technology, National Chapters",
+// 	img: "/staff/VivekAnandh.jpg",
+// },
+// {
+// 	name: "Gavin Hecock",
+// 	title: "Vice President of Student Activities",
+// 	img: "/staff/GavinHecock.jpg",
+// },
+// {
+// 	name: "Christina Dong",
+// 	title: "Vice President of Marketing, National Chapters",
+// 	img: "/staff/ChristinaDong.jpg",
+// },
+// {
+// 	name: "Adrian Sucahyo",
+// 	title: "Vice President of Operations, Chapters",
+// 	img: "/staff/AdrianSucahyo.jpg",
+// },
 //];
 
 const peopleGroups: PeopleGroup[] = [
-	{ name: "Corporate Officers", people: corporateOfficers }
+	{ name: "Corporate Officers", people: corporateOfficers },
 ];
 
 const boardOfDirectors: Person[] = [
 	{
-		name: "Ethan Hsu",
+		name: "Isaias Vilato",
 		title: "Chairperson",
 		img: "/staff/default.png",
 	},
 	{
-		name: "Nathanael Ma",
-		title: "Lead Director",
+		name: "Ethan Hsu",
+		title: "Chief Executive Officer",
 		img: "/staff/default.png",
 	},
-	{
-		name: "Madison Li",
-		title: "Lead Director",
-		img: "/staff/default.png",
-	},
+	// {
+	// 	name: "Nathanael Ma",
+	// 	title: "Lead Director",
+	// 	img: "/staff/default.png",
+	// },
+	// {
+	// 	name: "Madison Li",
+	// 	title: "Lead Director",
+	// 	img: "/staff/default.png",
+	// },
 	{
 		name: "Lauren Hsieh",
 		title: "Secretary",
 		img: "/staff/default.png",
 	},
 	{
+		name: "Paul Kramer",
+		title: "Independent Director, CEO of Institute for Youth In Policy",
+		img: "/staff/default.png",
+	},
+	{
 		name: "Diana Zheng",
-		title: "Director",
+		title: "Independent Director",
 		img: "/staff/default.png",
 	},
 	{
