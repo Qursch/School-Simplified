@@ -78,6 +78,10 @@ function selectedReducer(
 	oldSelectedItems: AllSelection,
 	{ key, values }: { key: string; values: StringOrNumber | StringOrNumber[] }
 ) {
+	// special case: key is reset (reset the storage)
+	if (key === "reset") return {};
+
+	// standard operation: setting a certain key to a value
 	const copy = Object.assign({}, oldSelectedItems);
 	copy[key] = values;
 
@@ -93,6 +97,8 @@ function ResearchViewPane({
 	const [searchTerm, setSearchTerm] = useState("");
 
 	const matchedOpportunities = useMemo(() => {
+		// console.log("ayo");
+
 		// filter by search term
 		const preFilter = searchTerm.length
 			? filter(opportunities, searchTerm, { key: "title" })
@@ -101,18 +107,8 @@ function ResearchViewPane({
 		// filter by sidebar
 		return preFilter.filter((opportunity) => {
 			for (const category in selected) {
-				// if(!opportunity[category].includes()) {
-				// 	return false;
-				// }
-
 				// check if this is a single item
-				if (
-					typeof opportunity[category] === "string" ||
-					typeof opportunity[category] === "number"
-				) {
-					if (opportunity[category] !== selected[category])
-						return false;
-				} else {
+				if (dictionary[category].isMulti) {
 					// must be a list item
 					// @ts-ignore
 					const list: StringOrNumber[] = selected[category];
@@ -121,15 +117,20 @@ function ResearchViewPane({
 						!opportunity[category].some((item: StringOrNumber) =>
 							list.includes(item)
 						)
-					)
+					) {
 						return false;
+					}
+				} else {
+					if (!opportunity[category].includes(selected[category])) {
+						return false;
+					}
 				}
 
 				// console.log("pass");
 			}
 			return true;
 		});
-	}, [opportunities, selected, searchTerm]);
+	}, [opportunities, selected, searchTerm, dictionary]);
 	const [page, setPage] = useState(0);
 
 	const numPages = Math.ceil(matchedOpportunities.length / 12);
@@ -140,14 +141,16 @@ function ResearchViewPane({
 					<VStack flex="0 0" spacing={0} align="stretch">
 						<HStack spacing={5} p={5}>
 							{/* <TimmyButton minW={100}>Filter</TimmyButton> */}
-							<TimmyButton minW={200}>Clear All</TimmyButton>
+							<TimmyButton
+								onClick={() =>
+									setSelected({ key: "reset", values: null })
+								}
+								minW={200}
+							>
+								Clear All
+							</TimmyButton>
 						</HStack>
-						<Accordion
-							bgColor="brand.darkerBlue"
-							allowMultiple
-							allowToggle
-							defaultIndex={[]}
-						>
+						<Accordion bgColor="brand.darkerBlue" allowToggle>
 							{Object.entries(dictionary).map((entry) => {
 								const [key, value] = entry;
 								return (
@@ -156,6 +159,7 @@ function ResearchViewPane({
 										onSelected={(values) =>
 											setSelected({ key, values })
 										}
+										selectedItems={selected[key]}
 										key={value.humanName}
 									/>
 								);
@@ -178,39 +182,43 @@ function ResearchViewPane({
 								</option>
 							</Select>
 						</HStack>
-						<SimpleGrid columns={3} spacing={5}>
-							{matchedOpportunities
-								.slice(page * 12, (page + 1) * 12)
-								.map((opportunity) => (
-									<OpportunityCard
-										opportunity={opportunity}
-										key={opportunity.link}
-									/>
-								))}
-						</SimpleGrid>
-						<Spacer />
 						{matchedOpportunities?.length ? (
-							<HStack alignSelf="flex-end">
-								<Text>
-									Page {page + 1} of {numPages}
-								</Text>
-								<Button
-									onClick={() => setPage(page - 1)}
-									disabled={page === 0}
-									background="transparent!important"
-								>
-									<Icon as={FaLongArrowAltLeft} />
-								</Button>
-								<Button
-									onClick={() => setPage(page + 1)}
-									disabled={page === numPages - 1}
-									background="transparent!important"
-								>
-									<Icon as={FaLongArrowAltRight} />
-								</Button>
-							</HStack>
+							<>
+								<SimpleGrid columns={3} spacing={5}>
+									{matchedOpportunities
+										.slice(page * 12, (page + 1) * 12)
+										.map((opportunity) => (
+											<OpportunityCard
+												opportunity={opportunity}
+												key={opportunity.link}
+											/>
+										))}
+								</SimpleGrid>
+								<Spacer />
+								<HStack alignSelf="flex-end">
+									<Text>
+										Page {page + 1} of {numPages}
+									</Text>
+									<Button
+										onClick={() => setPage(page - 1)}
+										disabled={page === 0}
+										background="transparent!important"
+									>
+										<Icon as={FaLongArrowAltLeft} />
+									</Button>
+									<Button
+										onClick={() => setPage(page + 1)}
+										disabled={page === numPages - 1}
+										background="transparent!important"
+									>
+										<Icon as={FaLongArrowAltRight} />
+									</Button>
+								</HStack>
+							</>
 						) : (
-							<Text as="i">No results found!</Text>
+							<Text as="i" py={20}>
+								No results found!
+							</Text>
 						)}
 					</VStack>
 				</HStack>
@@ -222,8 +230,56 @@ function ResearchViewPane({
 type FilterGroupProps = {
 	entry: ResearchCategory;
 	onSelected: (selected: StringOrNumber | StringOrNumber[]) => void;
+	selectedItems: StringOrNumber | StringOrNumber[];
 };
-function FilterGroup({ entry, onSelected }: FilterGroupProps): JSX.Element {
+function FilterGroup({
+	entry,
+	onSelected,
+	selectedItems,
+}: FilterGroupProps): JSX.Element {
+	const inputGroup: JSX.Element = useMemo(() => {
+		console.log("update", entry.humanName, selectedItems);
+
+		if (entry.isMulti) {
+			// has to be a list
+			// @ts-ignore
+			const items: StringOrNumber[] = selectedItems;
+			return (
+				<CheckboxGroup onChange={onSelected} value={items}>
+					<VStack align="flex-start" textAlign="left">
+						{entry.values.map((value) => (
+							<Checkbox value={value} key={value}>
+								{value}
+								{items}
+							</Checkbox>
+						))}
+					</VStack>
+				</CheckboxGroup>
+			);
+		} else {
+			// has to be a single
+			// @ts-ignore
+			const item: StringOrNumber = selectedItems;
+
+			return (
+				<RadioGroup onChange={onSelected} value={item}>
+					<VStack align="flex-start" textAlign="left">
+						{entry.values.map((value) => (
+							<Radio
+								value={value}
+								key={value}
+								defaultChecked={value === item}
+							>
+								{value}
+								{item}
+							</Radio>
+						))}
+					</VStack>
+				</RadioGroup>
+			);
+		}
+	}, [selectedItems, onSelected, entry]);
+
 	return (
 		<AccordionItem>
 			<AccordionButton>
@@ -232,29 +288,7 @@ function FilterGroup({ entry, onSelected }: FilterGroupProps): JSX.Element {
 					<AccordionIcon />
 				</HStack>
 			</AccordionButton>
-			<AccordionPanel py={3}>
-				{entry.isMulti ? (
-					<CheckboxGroup onChange={onSelected}>
-						<VStack align="flex-start" textAlign="left">
-							{entry.values.map((value) => (
-								<Checkbox value={value} key={value}>
-									{value}
-								</Checkbox>
-							))}
-						</VStack>
-					</CheckboxGroup>
-				) : (
-					<RadioGroup onChange={onSelected}>
-						<VStack align="flex-start" textAlign="left">
-							{entry.values.map((value) => (
-								<Radio value={value} key={value}>
-									{value}
-								</Radio>
-							))}
-						</VStack>
-					</RadioGroup>
-				)}
-			</AccordionPanel>
+			<AccordionPanel py={3}>{inputGroup}</AccordionPanel>
 		</AccordionItem>
 	);
 }

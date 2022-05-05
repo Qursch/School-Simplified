@@ -842,7 +842,7 @@ export async function getResearchOpportunities(): Promise<{
 							dictionary[propKey].values.push(value);
 					}
 				} else {
-					dictionary[propKey].values = opportunity[propKey].slice();
+					dictionary[propKey].values = opportunity[propKey];
 				}
 			}
 		}
