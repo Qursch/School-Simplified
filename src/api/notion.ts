@@ -807,9 +807,6 @@ export async function getResearchOpportunities(): Promise<{
 				opportunity.title =
 					page.properties.Title.title?.[0]?.plain_text?.trim() ??
 					null;
-				// if (opportunity.title === "Dear Asian Youth") {
-				// 	console.log("Found the DAY page:", page.id);
-				// }
 			} else if (key === "Link") {
 				const file0 = page.properties.Link.files?.[0];
 				opportunity.link = file0 ? getFile(file0).url : null;
@@ -824,10 +821,6 @@ export async function getResearchOpportunities(): Promise<{
 					isMulti ? key.substring(0, key.length - 4) : key
 				).trim();
 				const propKey = humanName.toLowerCase().replaceAll(/\s+/g, "_");
-
-				// if (page.id === "292f1c69-825b-4b77-8ccc-a300e0a98802") {
-				// 	console.log("Writing to DAY's", propKey);
-				// }
 
 				// put data into opportunities
 				opportunity[propKey] =
@@ -854,31 +847,8 @@ export async function getResearchOpportunities(): Promise<{
 			}
 		}
 
-		// if (opportunity.title.includes("Dear Asian Youth")) {
-		// 	// console.log(
-		// 	// 	JSON.stringify(page, null, 2),
-		// 	// 	"=>",
-		// 	// 	JSON.stringify(opportunity, null, 2)
-		// 	// );
-		// 	console.log("DAY deadline (notion.map):", opportunity.deadline);
-		// 	console.log(page.id);
-		// }
-
 		opportunities.push(opportunity);
 	}
-
-	// console.log(
-	// 	"DAY deadline (notion):",
-	// 	opportunities.find((opportunity) =>
-	// 		opportunity.title.includes("Dear Asian Youth")
-	// 	).deadline
-	// );
-	// console.log("compared to", dictionary.deadline.values);
-	// console.log(
-	// 	opportunities.filter(
-	// 		(opportunity) => opportunity.title === "Dear Asian Youth"
-	// 	).length
-	// );
 
 	return { opportunities, dictionary };
 }

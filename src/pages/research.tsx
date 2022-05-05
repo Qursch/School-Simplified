@@ -101,18 +101,10 @@ function ResearchViewPane({
 		// filter by sidebar
 		return preFilter.filter((opportunity) => {
 			for (const category in selected) {
-				// if (opportunity.title === "Dear Asian Youth") {
-				// 	console.log(
-				// 		"(DAY) checking",
-				// 		opportunity[category],
-				// 		"vs",
-				// 		selected[category]
-				// 	);
-				// }
-
 				// if(!opportunity[category].includes()) {
 				// 	return false;
 				// }
+
 				// check if this is a single item
 				if (
 					typeof opportunity[category] === "string" ||
@@ -140,14 +132,6 @@ function ResearchViewPane({
 	}, [opportunities, selected, searchTerm]);
 	const [page, setPage] = useState(0);
 
-	// console.log("dictionary", dictionary);
-	// console.log(
-	// 	"DAY deadline (view pane):",
-	// 	opportunities.find((opportunity) =>
-	// 		opportunity.title.includes("Dear Asian Youth")
-	// 	).deadline
-	// );
-
 	const numPages = Math.ceil(matchedOpportunities.length / 12);
 	return (
 		<Container>
@@ -155,8 +139,8 @@ function ResearchViewPane({
 				<HStack spacing={5} align="stretch" py={7}>
 					<VStack flex="0 0" spacing={0} align="stretch">
 						<HStack spacing={5} p={5}>
-							<TimmyButton minW={100}>Filter</TimmyButton>
-							<TimmyButton minW={100}>Clear All</TimmyButton>
+							{/* <TimmyButton minW={100}>Filter</TimmyButton> */}
+							<TimmyButton minW={200}>Clear All</TimmyButton>
 						</HStack>
 						<Accordion
 							bgColor="brand.darkerBlue"
@@ -164,15 +148,15 @@ function ResearchViewPane({
 							allowToggle
 							defaultIndex={[]}
 						>
-							{Object.keys(dictionary).map((key) => {
-								const entry = dictionary[key];
+							{Object.entries(dictionary).map((entry) => {
+								const [key, value] = entry;
 								return (
 									<FilterGroup
-										entry={entry}
+										entry={value}
 										onSelected={(values) =>
 											setSelected({ key, values })
 										}
-										key={entry.humanName}
+										key={value.humanName}
 									/>
 								);
 							})}
@@ -279,9 +263,7 @@ type CardProps = { opportunity: Opportunity };
 
 function OpportunityCard({ opportunity }: CardProps): JSX.Element {
 	const { title, deadline, link } = opportunity;
-	// if (title.includes("Dear Asian Youth")) {
-	// 	console.log("DAY deadline (card):", deadline);
-	// }
+
 	return (
 		<NextChakraLink href={link}>
 			<VStack
@@ -320,11 +302,5 @@ function OpportunityCard({ opportunity }: CardProps): JSX.Element {
 
 export async function getStaticProps() {
 	const props: ResearchProps = await getResearchOpportunities();
-	// console.log(
-	// 	"DAY deadline (static props):",
-	// 	props.opportunities.find((opportunity) =>
-	// 		opportunity.title.includes("Dear Asian Youth")
-	// 	).deadline
-	// );
 	return { props, revalidate: 360 };
 }
