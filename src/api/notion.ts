@@ -779,100 +779,101 @@ export async function getResearchOpportunities(): Promise<{
 		string,
 		{ humanName: string; isMulti: boolean; values: string[] }
 	> = {};
-	const opportunities = response.results.map(
+	const opportunities: Opportunity[] = [];
+	for (const p of response.results) {
+		// Notion library is bonked
 		// @ts-ignore
-		(page: {
+		const page: {
 			id: string;
 			properties: Record<string, any>;
-		}): Opportunity => {
-			const opportunity: Opportunity = {
-				title: "",
-				city: [],
-				deadline: [],
-				description: "",
-				grade: [],
-				link: "",
-				semester: [],
-				state: [],
-				status: [],
-				topic: [],
-				type: [],
-			};
-			for (const key in page.properties) {
-				// check for special non-sorting cases
-				if (key === "Title") {
-					opportunity.title =
-						page.properties.Title.title?.[0]?.plain_text?.trim() ??
-						null;
-					// if (opportunity.title === "Dear Asian Youth") {
-					// 	console.log("Found the DAY page:", page.id);
-					// }
-				} else if (key === "Link") {
-					const file0 = page.properties.Link.files?.[0];
-					opportunity.link = file0 ? getFile(file0).url : null;
-				} else if (key === "Description") {
-					opportunity.description =
-						page.properties.Description.rich_text?.[0]?.plain_text?.trim() ??
-						null;
-				} else {
-					// convert key into property key and human readable name
-					const isMulti = key.endsWith("(mc)");
-					const humanName = (
-						isMulti ? key.substring(0, key.length - 4) : key
-					).trim();
-					const propKey = humanName
-						.toLowerCase()
-						.replaceAll(/\s+/g, "_");
+		} = p;
 
-					// if (page.id === "292f1c69-825b-4b77-8ccc-a300e0a98802") {
-					// 	console.log("Writing to DAY's", propKey);
-					// }
+		const opportunity: Opportunity = {
+			title: null,
+			city: null,
+			deadline: null,
+			description: null,
+			grade: null,
+			link: null,
+			semester: null,
+			state: null,
+			status: null,
+			topic: null,
+			type: null,
+		};
+		for (const key in page.properties) {
+			// check for special non-sorting cases
+			if (key === "Title") {
+				opportunity.title =
+					page.properties.Title.title?.[0]?.plain_text?.trim() ??
+					null;
+				// if (opportunity.title === "Dear Asian Youth") {
+				// 	console.log("Found the DAY page:", page.id);
+				// }
+			} else if (key === "Link") {
+				const file0 = page.properties.Link.files?.[0];
+				opportunity.link = file0 ? getFile(file0).url : null;
+			} else if (key === "Description") {
+				opportunity.description =
+					page.properties.Description.rich_text?.[0]?.plain_text?.trim() ??
+					null;
+			} else {
+				// convert key into property key and human readable name
+				const isMulti = key.endsWith("(mc)");
+				const humanName = (
+					isMulti ? key.substring(0, key.length - 4) : key
+				).trim();
+				const propKey = humanName.toLowerCase().replaceAll(/\s+/g, "_");
 
-					// put data into opportunities
-					opportunity[propKey] =
-						page.properties[key].multi_select?.map(
-							(value: { name: string }) => value.name
-						) ?? null;
+				// if (page.id === "292f1c69-825b-4b77-8ccc-a300e0a98802") {
+				// 	console.log("Writing to DAY's", propKey);
+				// }
 
-					// check if prop key has already been added to dictionary
-					if (!dictionary[propKey]) {
-						dictionary[propKey] = {
-							humanName,
-							isMulti,
-							values: opportunity[propKey],
-						};
-					} else if (dictionary[propKey].values) {
-						// otherwise, add all unique values
-						for (const value of opportunity[propKey]) {
-							if (!dictionary[propKey].values.includes(value))
-								dictionary[propKey].values.push(value);
-						}
-					} else {
-						dictionary[propKey].values = opportunity[propKey];
+				// put data into opportunities
+				opportunity[propKey] =
+					page.properties[key].multi_select?.map(
+						(value: { name: string }) => value.name
+					) ?? null;
+
+				// check if prop key has already been added to dictionary
+				if (!dictionary[propKey]) {
+					dictionary[propKey] = {
+						humanName,
+						isMulti,
+						values: opportunity[propKey].slice(),
+					};
+				} else if (dictionary[propKey].values) {
+					// otherwise, add all unique values
+					for (const value of opportunity[propKey]) {
+						if (!dictionary[propKey].values.includes(value))
+							dictionary[propKey].values.push(value);
 					}
+				} else {
+					dictionary[propKey].values = opportunity[propKey].slice();
 				}
 			}
-
-			if (opportunity.title === "Dear Asian Youth") {
-				// console.log(
-				// 	JSON.stringify(page, null, 2),
-				// 	"=>",
-				// 	JSON.stringify(opportunity, null, 2)
-				// );
-				console.log("DAY deadline (notion.map):", opportunity.deadline);
-				console.log(page.id);
-			}
-
-			return opportunity;
 		}
-	);
+
+		if (opportunity.title.includes("Dear Asian Youth")) {
+			// console.log(
+			// 	JSON.stringify(page, null, 2),
+			// 	"=>",
+			// 	JSON.stringify(opportunity, null, 2)
+			// );
+			console.log("DAY deadline (notion.map):", opportunity.deadline);
+			console.log(page.id);
+		}
+
+		opportunities.push(opportunity);
+	}
 
 	console.log(
 		"DAY deadline (notion):",
-		opportunities.find(
-			(opportunity) => opportunity.title === "Dear Asian Youth"
+		opportunities.find((opportunity) =>
+			opportunity.title.includes("Dear Asian Youth")
 		).deadline
 	);
+	console.log("compared to", dictionary.deadline.values);
 	// console.log(
 	// 	opportunities.filter(
 	// 		(opportunity) => opportunity.title === "Dear Asian Youth"

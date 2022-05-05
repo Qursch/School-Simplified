@@ -141,12 +141,12 @@ function ResearchViewPane({
 	const [page, setPage] = useState(0);
 
 	// console.log("dictionary", dictionary);
-	console.log(
-		"DAY deadline (view pane):",
-		opportunities.find(
-			(opportunity) => opportunity.title === "Dear Asian Youth"
-		).deadline
-	);
+	// console.log(
+	// 	"DAY deadline (view pane):",
+	// 	opportunities.find((opportunity) =>
+	// 		opportunity.title.includes("Dear Asian Youth")
+	// 	).deadline
+	// );
 
 	const numPages = Math.ceil(matchedOpportunities.length / 12);
 	return (
@@ -279,9 +279,9 @@ type CardProps = { opportunity: Opportunity };
 
 function OpportunityCard({ opportunity }: CardProps): JSX.Element {
 	const { title, deadline, link } = opportunity;
-	if (title === "Dear Asian Youth") {
-		console.log("DAY deadline (card):", deadline);
-	}
+	// if (title.includes("Dear Asian Youth")) {
+	// 	console.log("DAY deadline (card):", deadline);
+	// }
 	return (
 		<NextChakraLink href={link}>
 			<VStack
@@ -320,11 +320,11 @@ function OpportunityCard({ opportunity }: CardProps): JSX.Element {
 
 export async function getStaticProps() {
 	const props: ResearchProps = await getResearchOpportunities();
-	console.log(
-		"DAY deadline (static props):",
-		props.opportunities.find(
-			(opportunity) => opportunity.title === "Dear Asian Youth"
-		).deadline
-	);
+	// console.log(
+	// 	"DAY deadline (static props):",
+	// 	props.opportunities.find((opportunity) =>
+	// 		opportunity.title.includes("Dear Asian Youth")
+	// 	).deadline
+	// );
 	return { props, revalidate: 360 };
 }
