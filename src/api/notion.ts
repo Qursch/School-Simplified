@@ -854,26 +854,26 @@ export async function getResearchOpportunities(): Promise<{
 			}
 		}
 
-		if (opportunity.title.includes("Dear Asian Youth")) {
-			// console.log(
-			// 	JSON.stringify(page, null, 2),
-			// 	"=>",
-			// 	JSON.stringify(opportunity, null, 2)
-			// );
-			console.log("DAY deadline (notion.map):", opportunity.deadline);
-			console.log(page.id);
-		}
+		// if (opportunity.title.includes("Dear Asian Youth")) {
+		// 	// console.log(
+		// 	// 	JSON.stringify(page, null, 2),
+		// 	// 	"=>",
+		// 	// 	JSON.stringify(opportunity, null, 2)
+		// 	// );
+		// 	console.log("DAY deadline (notion.map):", opportunity.deadline);
+		// 	console.log(page.id);
+		// }
 
 		opportunities.push(opportunity);
 	}
 
-	console.log(
-		"DAY deadline (notion):",
-		opportunities.find((opportunity) =>
-			opportunity.title.includes("Dear Asian Youth")
-		).deadline
-	);
-	console.log("compared to", dictionary.deadline.values);
+	// console.log(
+	// 	"DAY deadline (notion):",
+	// 	opportunities.find((opportunity) =>
+	// 		opportunity.title.includes("Dear Asian Youth")
+	// 	).deadline
+	// );
+	// console.log("compared to", dictionary.deadline.values);
 	// console.log(
 	// 	opportunities.filter(
 	// 		(opportunity) => opportunity.title === "Dear Asian Youth"
