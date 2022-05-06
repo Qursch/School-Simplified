@@ -26,7 +26,7 @@ const qaPairs = [
 		question: "What if I don't have a team?",
 		answer: [
 			{
-				text: "No worries! There will be a session at the beginning of the hackathon for team formation. A team can have a maximum of 4 people.",
+				text: "No worries! You can participate alone, and there will be a session at the beginning of the hackathon for team formation. A team can have a maximum of 4 people.",
 				link: "",
 			},
 		],
@@ -44,7 +44,7 @@ const qaPairs = [
 		question: "When does Simplihacks take place?",
 		answer: [
 			{
-				text: "Simplihacks will take place from June 12-13, and will last 24 hours!",
+				text: "SimpliHacks2.0 will take place from June 24-26 2022, and will last 48 hours!",
 				link: "",
 			},
 		],
@@ -71,8 +71,8 @@ const qaPairs = [
 		question: "Is there a Code of Conduct?",
 		answer: [
 			{
-				text: "Yes, there is! Although we are not affiliated with MLH, we will abide by the MLH Code of Conduct during this event.",
-				link: "",
+				text: "Yes, there is! We will be following the MLH Code of Conduct” Link the text to that page, please",
+				link: "https://static.mlh.io/docs/mlh-code-of-conduct.pdf",
 			},
 		],
 	},
@@ -89,8 +89,8 @@ const qaPairs = [
 		question: "What if I have another question?",
 		answer: [
 			{
-				text: "Feel free to ask questions at any time! Send us an email at marketing@schoolsimplified.org",
-				link: "",
+				text: "Feel free to ask questions at any time! Send us an email at aviel.hernandez@schoolsimplified.org",
+				link: "mailto:aviel.hernandez@schoolsimplified.org",
 			},
 		],
 	},
