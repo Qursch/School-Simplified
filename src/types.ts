@@ -108,6 +108,7 @@ export type ScholarshipProps = {
 	open_date: string;
 	closing_date: string;
 	notes: string;
+	key: string;
 };
 
 export type VolunteerPanelProps = {
@@ -208,4 +209,112 @@ export type JobPosting = {
 	 * The name of the job for this posting, as a string
 	 */
 	name: string;
+};
+
+/**
+ * A type that represents an executive of School Simplified.
+ * Contains all data that is necessary to display to the /leadership page
+ */
+export type Executive = {
+	// ID is not included
+	/**
+	 * Their name, likely as a title case string in Latin letters
+	 */
+	name: string;
+	/**
+	 * Their title (e.g. Director or President of Research Simplified)
+	 */
+	title: string;
+	/**
+	 * A file for their image
+	 * Try to keep this as a SS website link for optimal loading
+	 */
+	image?: FileObj;
+	/**
+	 * A copy/paste of the Notino-style rich text object that compose their tagline
+	 */
+	// tagline?: any[];
+	/**
+	 * An email that is connected with this person, if applicable
+	 */
+	email?: string;
+	/**
+	 * A URL that leads to this person's LinkedIn, if applicable.
+	 */
+	linkedin?: string;
+	/**
+	 * A copy/paste of the Notion-style rich text objects that compose their bio
+	 */
+	biography?: any[];
+};
+
+/**
+ * A group of executives
+ */
+export type ExecutiveGroup = {
+	/**
+	 * The name of this group/category
+	 */
+	name: string;
+	/**
+	 * A list of executives under this group/category
+	 */
+	executives: Executive[];
+};
+
+/**
+ * A research opportunity, displayed on /research
+ */
+export type Opportunity = {
+	/**
+	 * The title given to this opportunity.
+	 */
+	title: string;
+	/**
+	 * The city that this opportunity is located in.
+	 * (Is multiple choice (?))
+	 */
+	city: string[];
+	/**
+	 * The deadline for applying to this opportunity
+	 */
+	deadline: string[];
+	/**
+	 * A brief description of this opportunity
+	 */
+	description: string;
+	/**
+	 * The age/grade range that this opportunity is catered to
+	 */
+	grade: string[];
+	/**
+	 * A link to more information or the application for this opportunity
+	 */
+	link: string;
+	/**
+	 * A general timeframe of when this opportunity will take place
+	 */
+	semester: string[];
+	/**
+	 * The state/region that this research opportunity will take place
+	 */
+	state: string[];
+	/**
+	 * Tags that relate to the status of this opportunity.
+	 * e.g. in-person or virtual, cost
+	 */
+	status: string[];
+	/**
+	 * A list of topics that this opportunity falls into
+	 */
+	topic: string[];
+	/**
+	 * A list of tags that categorize this research opportunity further
+	 */
+	type: string[];
+};
+export type ResearchCategory = {
+	humanName: string;
+	isMulti: boolean;
+	values: string[];
 };

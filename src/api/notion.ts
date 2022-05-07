@@ -1,3 +1,4 @@
+import { Client } from "@notionhq/client";
 import axios from "axios";
 import {
 	AllSubjects,
@@ -7,12 +8,15 @@ import {
 	BlogListing,
 	BlogPage,
 	Class,
+	Executive,
+	ExecutiveGroup,
 	FileObj,
 	GovernanceDocument,
 	GovernanceSection,
 	JobPosting,
 	LinkButtonProps,
 	NotesProps,
+	Opportunity,
 	QAPair,
 	QASection,
 	ScholarshipProps,
@@ -28,6 +32,10 @@ export const notionConfig = {
 		"Notion-Version": "2021-08-16",
 	},
 };
+
+export const notion = new Client({
+	auth: process.env.NOTION_API_KEY,
+});
 
 export async function getAllSubjects(): Promise<AllSubjects> {
 	// fetch from main database
@@ -541,8 +549,9 @@ export async function getScholarshipData(): Promise<ScholarshipProps[]> {
 	//@ts-ignore
 	for (const entry of data.results) {
 		// for each category in the entry
-		output.push({
+		const item = {
 			title: parseAppropriateData(entry, "Name", "title"),
+			key: parseAppropriateData(entry, "Name", "title"),
 			link: parseAppropriateData(entry, "Link", "url"),
 			value: parseAppropriateData(entry, "Value", "rich_text"),
 			international_or_domestic: parseAppropriateData(
@@ -567,7 +576,8 @@ export async function getScholarshipData(): Promise<ScholarshipProps[]> {
 				"Additional Things to Note",
 				"rich_text"
 			),
-		});
+		};
+		output.push(item);
 	}
 
 	return output;
@@ -691,26 +701,154 @@ export async function getLinkButtons(): Promise<LinkButtonProps[]> {
 }
 
 export async function getJobPostings(): Promise<JobPosting[]> {
+	const response = await notion.databases.query({
+		database_id: "221eb8e2d21b4094976a1038e8e03506",
+	});
+
+	return response.results.map(
+		// @ts-ignore
+		(page: { properties: Record<string, any> }): JobPosting => {
+			const file0 = page.properties.Image.files[0];
+			const programs = page.properties.Program.multi_select.map(
+				({ name }) => name
+			);
+			return {
+				description:
+					page.properties.Description.rich_text?.[0]?.plain_text ??
+					null,
+				rank: page.properties.Rank.select?.name ?? null,
+				form: page.properties.Form.url ?? null,
+				programs,
+				image: file0 ? getFile(file0) : null,
+				area: page.properties.Area.select?.name ?? null,
+				name: page.properties.Name.title?.[0]?.plain_text ?? null,
+			};
+		}
+	);
+}
+
+export async function getLeadership(): Promise<ExecutiveGroup[]> {
 	const { data } = await axios.post(
-		"https://api.notion.com/v1/databases/221eb8e2d21b4094976a1038e8e03506/query",
+		"https://api.notion.com/v1/databases/c32136aa4541462d9c81ba4fe33efbcd/query",
 		{},
 		notionConfig
 	);
 
-	return data.results.map((page: any): JobPosting => {
-		const file0 = page.properties.Image.files[0];
-		const programs = page.properties.Program.multi_select.map(
-			({ name }) => name
-		);
-		return {
-			description:
-				page.properties.Description.rich_text?.[0]?.plain_text ?? null,
-			rank: page.properties.Rank.select?.name ?? null,
-			form: page.properties.Form.url ?? null,
-			programs,
+	const allExecs = data.results.sort(
+		(obj1: any, obj2: any) =>
+			obj1.properties.ID.number - obj2.properties.ID.number
+	);
+	const output: ExecutiveGroup[] = [];
+
+	for (const exec of allExecs) {
+		const file0 = exec.properties.Image.files?.[0];
+		const newExec: Executive = {
+			name: exec.properties.Name.title?.[0]?.plain_text ?? null,
+			title: exec.properties.Title.rich_text?.[0]?.plain_text ?? null,
+			email: exec.properties.Email.email,
+			linkedin: exec.properties.LinkedIn.url,
+			biography: exec.properties.Biography.rich_text,
 			image: file0 ? getFile(file0) : null,
-			area: page.properties.Area.select?.name ?? null,
-			name: page.properties.Name.title?.[0]?.plain_text ?? null,
 		};
+
+		for (const category of exec.properties.Categories.multi_select) {
+			const group = output.find((group) => group.name === category.name);
+			if (group) {
+				group.executives.push(newExec);
+			} else {
+				output.push({ name: category.name, executives: [newExec] });
+			}
+		}
+	}
+
+	return output;
+}
+
+export async function getResearchOpportunities(): Promise<{
+	opportunities: Opportunity[];
+	dictionary: Record<
+		string,
+		{ humanName: string; isMulti: boolean; values: string[] }
+	>;
+}> {
+	const response = await notion.databases.query({
+		database_id: "c298fbbd933349a9a9614575d25cc1f7",
 	});
+
+	const dictionary: Record<
+		string,
+		{ humanName: string; isMulti: boolean; values: string[] }
+	> = {};
+	const opportunities: Opportunity[] = [];
+	for (const p of response.results) {
+		// Notion library is bonked
+		// @ts-ignore
+		const page: {
+			id: string;
+			properties: Record<string, any>;
+		} = p;
+
+		const opportunity: Opportunity = {
+			title: null,
+			city: null,
+			deadline: null,
+			description: null,
+			grade: null,
+			link: null,
+			semester: null,
+			state: null,
+			status: null,
+			topic: null,
+			type: null,
+		};
+		for (const key in page.properties) {
+			// check for special non-sorting cases
+			if (key === "Title") {
+				opportunity.title =
+					page.properties.Title.title?.[0]?.plain_text?.trim() ??
+					null;
+			} else if (key === "Link") {
+				const file0 = page.properties.Link.files?.[0];
+				opportunity.link = file0 ? getFile(file0).url : null;
+			} else if (key === "Description") {
+				opportunity.description =
+					page.properties.Description.rich_text?.[0]?.plain_text?.trim() ??
+					null;
+			} else {
+				// convert key into property key and human readable name
+				const isMulti = key.endsWith("(mc)");
+				const humanName = (
+					isMulti ? key.substring(0, key.length - 4) : key
+				).trim();
+				const propKey = humanName.toLowerCase().replaceAll(/\s+/g, "_");
+
+				// put data into opportunities
+				opportunity[propKey] =
+					page.properties[key].multi_select?.map(
+						(value: { name: string }) => value.name
+					) ?? null;
+
+				// check if prop key has already been added to dictionary
+				if (!dictionary[propKey]) {
+					dictionary[propKey] = {
+						humanName,
+						isMulti,
+						values: opportunity[propKey].slice(),
+					};
+				} else if (dictionary[propKey].values) {
+					// otherwise, add all unique values
+					for (const value of opportunity[propKey]) {
+						if (!dictionary[propKey].values.includes(value))
+							dictionary[propKey].values.push(value);
+					}
+				} else {
+					dictionary[propKey].values = opportunity[propKey];
+				}
+			}
+		}
+
+		opportunities.push(opportunity);
+	}
+
+	return { opportunities, dictionary };
 }
