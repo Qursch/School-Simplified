@@ -1,4 +1,4 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Heading, Text, Link } from "@chakra-ui/react";
 import FaqList from "@components/contact/faq-list";
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
@@ -26,7 +26,7 @@ const qaPairs = [
 		question: "What if I don't have a team?",
 		answer: [
 			{
-				text: "No worries! You can participate alone, and there will be a session at the beginning of the hackathon for team formation. A team can have a maximum of 4 people.",
+				text: "Any student currently enrolled in high school or middle school can participate! Sign up on the Google Form and join our Discord Server!",
 				link: "",
 			},
 		],
@@ -35,16 +35,16 @@ const qaPairs = [
 		question: "Does this cost money?",
 		answer: [
 			{
-				text: "No! Participating in Simplihacks is 100% free for everyone!",
+				text: "No! Participating in SimpliHacks is 100% free for everyone!",
 				link: "",
 			},
 		],
 	},
 	{
-		question: "When does Simplihacks take place?",
+		question: "When does SimpliHacks take place?",
 		answer: [
 			{
-				text: "SimpliHacks2.0 will take place from June 24-26 2022, and will last 48 hours!",
+				text: "SimpliHacks 2.0 will take place from June 24-26 2022, and will last 48 hours!",
 				link: "",
 			},
 		],
@@ -71,7 +71,15 @@ const qaPairs = [
 		question: "Is there a Code of Conduct?",
 		answer: [
 			{
-				text: "Yes, there is! We will be following the MLH Code of Conduct” Link the text to that page, please",
+				text: (
+					<Text>
+						Yes, there is! We will be following the{" "}
+						<Link href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
+							MLH Code of Conduct
+						</Link>
+						.
+					</Text>
+				),
 				link: "https://static.mlh.io/docs/mlh-code-of-conduct.pdf",
 			},
 		],
@@ -89,7 +97,15 @@ const qaPairs = [
 		question: "What if I have another question?",
 		answer: [
 			{
-				text: "Feel free to ask questions at any time! Send us an email at aviel.hernandez@schoolsimplified.org",
+				text: (
+					<Text>
+						Feel free to ask questions at any time! Send us an email
+						at{" "}
+						<Link href="mailto:aviel.hernandez@schoolsimplified.org">
+							aviel.hernandez@schoolsimplified.org
+						</Link>
+					</Text>
+				),
 				link: "mailto:aviel.hernandez@schoolsimplified.org",
 			},
 		],

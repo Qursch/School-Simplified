@@ -37,13 +37,27 @@ export default function Hero(): JSX.Element {
 						<VStack align="start">
 							<Heading fontSize={40}>SimpliHacks 2.0</Heading>
 							<Text textAlign="left" fontSize="22px">
-								Want to take your coding skills to the next level? Want to compete to win awesome prizes and internship opportunities? Want to learn to build amazing websites and apps?
+								Want to take your coding skills to the next
+								level? Want to compete to win awesome prizes and
+								internship opportunities? Want to learn to build
+								amazing websites and apps?
 								{<br />}
 								{<br />}
-								We can help you do just that with SimpliHacks 2.0!
+								We can help you do just that with SimpliHacks
+								2.0!
 								{<br />}
 								{<br />}
-								SimpliHacks 2.0 is School Simplified’s second annual 48-hour virtual hackathon. Programmers of all levels are welcome to attend! Whether you’ve never written a ‘Hello World’ script or if you’re building the next Google! As a developer in SimpliHacks, you can create projects to enter a wide variety of judging categories to possibly win some awesome prizes! The Hackathon is also a great place to pick up new skills, as we plan to run two days packed with interesting workshops and events with the help of our sponsors!{" "}
+								SimpliHacks 2.0 is School Simplified’s second
+								annual 48-hour virtual hackathon. Programmers of
+								all levels are welcome to attend! Whether you’ve
+								never written a ‘Hello World’ script or if
+								you’re building the next Google! As a developer
+								in SimpliHacks, you can create projects to enter
+								a wide variety of judging categories to possibly
+								win some awesome prizes! The Hackathon is also a
+								great place to pick up new skills, as we plan to
+								run two days packed with interesting workshops
+								and events with the help of our sponsors!{" "}
 							</Text>
 							<Stack direction={{ base: "column", md: "row" }}>
 								{buttons.map((button, i: number) => {
