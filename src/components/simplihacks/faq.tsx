@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Link } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import FaqList from "@components/contact/faq-list";
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
@@ -71,15 +71,16 @@ const qaPairs = [
 		question: "Is there a Code of Conduct?",
 		answer: [
 			{
-				text: (
-					<Text>
-						Yes, there is! We will be following the{" "}
-						<Link href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
-							MLH Code of Conduct
-						</Link>
-						.
-					</Text>
-				),
+				text: "Yes, there is! We will be following the MLH Code of Conduct.",
+				// text: (
+				// 	<Text>
+				// 		Yes, there is! We will be following the{" "}
+				// 		<Link href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
+				// 			MLH Code of Conduct
+				// 		</Link>
+				// 		.
+				// 	</Text>
+				// ),
 				link: "https://static.mlh.io/docs/mlh-code-of-conduct.pdf",
 			},
 		],
@@ -97,15 +98,16 @@ const qaPairs = [
 		question: "What if I have another question?",
 		answer: [
 			{
-				text: (
-					<Text>
-						Feel free to ask questions at any time! Send us an email
-						at{" "}
-						<Link href="mailto:aviel.hernandez@schoolsimplified.org">
-							aviel.hernandez@schoolsimplified.org
-						</Link>
-					</Text>
-				),
+				text: "Feel free to ask questions at any time! Send us an email at aviel.hernandez@schoolsimplified.org",
+				// text: (
+				// 	<Text>
+				// 		Feel free to ask questions at any time! Send us an email
+				// 		at{" "}
+				// 		<Link href="mailto:aviel.hernandez@schoolsimplified.org">
+				// 			aviel.hernandez@schoolsimplified.org
+				// 		</Link>
+				// 	</Text>
+				// ),
 				link: "mailto:aviel.hernandez@schoolsimplified.org",
 			},
 		],
