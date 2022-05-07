@@ -820,7 +820,9 @@ export async function getResearchOpportunities(): Promise<{
 				const humanName = (
 					isMulti ? key.substring(0, key.length - 4) : key
 				).trim();
+				console.log(`Attempting to convert "${humanName}"`);
 				const propKey = humanName.toLowerCase().replaceAll(/\s+/g, "_");
+				console.log(`to "${propKey}"`);
 
 				// put data into opportunities
 				opportunity[propKey] =
