@@ -394,7 +394,7 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 											<Stack
 												direction={{
 													base: "column",
-													md: "row",
+													lg: "row",
 												}}
 												bg="brand.darkerBlue"
 												rounded={25}
@@ -427,10 +427,6 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 													<TimmyButton
 														timmysrc="/timmy/10.png"
 														flex={1}
-														display={{
-															base: "none",
-															md: null,
-														}}
 													>
 														Apply Now
 													</TimmyButton>
