@@ -1,4 +1,12 @@
+<<<<<<< Updated upstream
 import { Heading, Text } from "@chakra-ui/react";
+=======
+<<<<<<< HEAD
+import { Heading, SimpleGrid, Text } from "@chakra-ui/react";
+=======
+import { Heading, Text } from "@chakra-ui/react";
+>>>>>>> 3789726289f2c5aeb0591a22b6659a97fc23eb81
+>>>>>>> Stashed changes
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
 
@@ -91,9 +99,19 @@ export default function Staff(): JSX.Element {
 			<Container my="50px">
 				<ContainerInside>
 					<Heading m={5}>Staff</Heading>
+<<<<<<< Updated upstream
 					<Text textAlign="center" fontSize="22px">
 						To be Determined
 					</Text>
+=======
+<<<<<<< HEAD
+					<Text>To be determined</Text>
+=======
+					<Text textAlign="center" fontSize="22px">
+						To be Determined
+					</Text>
+>>>>>>> 3789726289f2c5aeb0591a22b6659a97fc23eb81
+>>>>>>> Stashed changes
 					{/* <SimpleGrid
 						w={{ base: "auto", md: "850px" }}
 						columns={{ base: 2, md: 4 }}

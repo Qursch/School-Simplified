@@ -1,4 +1,4 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Heading, Text, Link } from "@chakra-ui/react";
 import FaqList from "@components/contact/faq-list";
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
@@ -17,7 +17,7 @@ const qaPairs = [
 		question: "Who can participate?",
 		answer: [
 			{
-				text: "How do I join? Any high school or middle school students can participate! Sign up on the TypeForm and join our Discord Server! (Note: Sign Ups are currently not open)",
+				text: "Any student currently enrolled in high school or middle school can participate! Sign up on the Google Form and join our Discord Server!",
 				link: "",
 			},
 		],
@@ -35,16 +35,24 @@ const qaPairs = [
 		question: "Does this cost money?",
 		answer: [
 			{
-				text: "No! Participating in Simplihacks is 100% free for everyone!",
+				text: "No! Participating in SimpliHacks is 100% free for everyone!",
 				link: "",
 			},
 		],
 	},
 	{
-		question: "When does Simplihacks take place?",
+		question: "When does SimpliHacks 2.0 take place?",
 		answer: [
 			{
+<<<<<<< Updated upstream
 				text: "SimpliHacks2.0 will take place from June 24-26 2022, and will last 48 hours!",
+=======
+<<<<<<< HEAD
+				text: "SimpliHacks 2.0 will take place from June 24-26th 2022, and will last 48 hours!",
+=======
+				text: "SimpliHacks2.0 will take place from June 24-26 2022, and will last 48 hours!",
+>>>>>>> 3789726289f2c5aeb0591a22b6659a97fc23eb81
+>>>>>>> Stashed changes
 				link: "",
 			},
 		],
@@ -71,8 +79,25 @@ const qaPairs = [
 		question: "Is there a Code of Conduct?",
 		answer: [
 			{
+<<<<<<< Updated upstream
 				text: "Yes, there is! We will be following the MLH Code of Conduct” Link the text to that page, please",
 				link: "https://static.mlh.io/docs/mlh-code-of-conduct.pdf",
+=======
+<<<<<<< HEAD
+				text: (
+					<Text>
+						Yes, there is! We will be following the{" "}
+						<Link href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
+							MLH Code of Conduct
+						</Link>
+					</Text>
+				),
+				link: "",
+=======
+				text: "Yes, there is! We will be following the MLH Code of Conduct” Link the text to that page, please",
+				link: "https://static.mlh.io/docs/mlh-code-of-conduct.pdf",
+>>>>>>> 3789726289f2c5aeb0591a22b6659a97fc23eb81
+>>>>>>> Stashed changes
 			},
 		],
 	},
@@ -89,8 +114,26 @@ const qaPairs = [
 		question: "What if I have another question?",
 		answer: [
 			{
+<<<<<<< Updated upstream
 				text: "Feel free to ask questions at any time! Send us an email at aviel.hernandez@schoolsimplified.org",
 				link: "mailto:aviel.hernandez@schoolsimplified.org",
+=======
+<<<<<<< HEAD
+				text: (
+					<Text>
+						Feel free to ask questions at any time! Send us an email
+						at{" "}
+						<Link href="mailto:aviel.hernandez@schoolsimplified.org">
+							aviel.hernandez@schoolsimplified.org
+						</Link>
+					</Text>
+				),
+				link: "",
+=======
+				text: "Feel free to ask questions at any time! Send us an email at aviel.hernandez@schoolsimplified.org",
+				link: "mailto:aviel.hernandez@schoolsimplified.org",
+>>>>>>> 3789726289f2c5aeb0591a22b6659a97fc23eb81
+>>>>>>> Stashed changes
 			},
 		],
 	},
