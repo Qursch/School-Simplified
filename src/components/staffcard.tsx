@@ -145,6 +145,7 @@ export default function StaffCard({
 										<Image
 											alt={"Picture of " + name}
 											objectFit="cover"
+											style={{ aspectRatio: "1" }}
 											src={
 												image?.url ??
 												"/staff/default.png"
