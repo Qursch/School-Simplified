@@ -823,6 +823,7 @@ export async function getResearchOpportunities(): Promise<{
 				console.log(
 					`Attempting to convert "${humanName}" (${typeof humanName})`
 				);
+				console.log(String.prototype.replaceAll);
 				const propKey = humanName.toLowerCase().replaceAll(/\s+/g, "_");
 				console.log(`to "${propKey}"`);
 
