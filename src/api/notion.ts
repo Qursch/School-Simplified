@@ -37,6 +37,27 @@ export const notion = new Client({
 	auth: process.env.NOTION_API_KEY,
 });
 
+/**
+ * String.prototype.replaceAll() polyfill
+ * https://gomakethings.com/how-to-replace-a-section-of-a-string-with-another-one-with-vanilla-js/
+ * @author Chris Ferdinandi
+ * @license MIT
+ */
+if (!String.prototype.replaceAll) {
+	String.prototype.replaceAll = function (str, newStr) {
+		// If a regex pattern
+		if (
+			Object.prototype.toString.call(str).toLowerCase() ===
+			"[object regexp]"
+		) {
+			return this.replace(str, newStr);
+		}
+
+		// If a string
+		return this.replace(new RegExp(str, "g"), newStr);
+	};
+}
+
 export async function getAllSubjects(): Promise<AllSubjects> {
 	// fetch from main database
 	const { data } = await axios.post(
@@ -820,12 +841,12 @@ export async function getResearchOpportunities(): Promise<{
 				const humanName = (
 					isMulti ? key.substring(0, key.length - 4) : key
 				).trim();
-				console.log(
-					`Attempting to convert "${humanName}" (${typeof humanName})`
-				);
-				console.log(String.prototype.replaceAll);
+				// console.log(
+				// 	`Attempting to convert "${humanName}" (${typeof humanName})`
+				// );
+				// console.log(String.prototype.replaceAll);
 				const propKey = humanName.toLowerCase().replaceAll(/\s+/g, "_");
-				console.log(`to "${propKey}"`);
+				// console.log(`to "${propKey}"`);
 
 				// put data into opportunities
 				opportunity[propKey] =
