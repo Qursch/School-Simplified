@@ -1,4 +1,4 @@
-import { Box, Heading, Link } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import FaqList from "@components/contact/faq-list";
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
@@ -17,7 +17,7 @@ const qaPairs = [
 		question: "Who can participate?",
 		answer: [
 			{
-				text: "Any student or staff currently enrolled in middle school, high school, or college can participate! Sign up on the sign up button above!",
+				text: "How do I join? Any high school or middle school students can participate! Sign up on the TypeForm and join our Discord Server! (Note: Sign Ups are currently not open)",
 				link: "",
 			},
 		],
@@ -26,7 +26,7 @@ const qaPairs = [
 		question: "What if I don't have a team?",
 		answer: [
 			{
-				text: "Do not worry! We will have a team formation section in the beginning.",
+				text: "Any student currently enrolled in high school or middle school can participate! Sign up on the Google Form and join our Discord Server!",
 				link: "",
 			},
 		],
@@ -67,26 +67,25 @@ const qaPairs = [
 			},
 		],
 	},
-	// | pls fix
-	// V
-// {
-//	 	question: "Is there a Code of Conduct?",
-//	 	answer: [
-//	 		{
-//
-//				 text: (
-//				 	<Text>
-//				 		"Yes, there is! We will be following the{""}
-//				 		<Link href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
-//				 			MLH Code of Conduct
-//				        </Link>
-//				 		.
-//				 	</Text>
-//				 ),
-//			},
-//		],
-//	},
-//	{
+	{
+		question: "Is there a Code of Conduct?",
+		answer: [
+			{
+				text: "Yes, there is! We will be following the MLH Code of Conduct.",
+				// text: (
+				// 	<Text>
+				// 		Yes, there is! We will be following the{" "}
+				// 		<Link href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
+				// 			MLH Code of Conduct
+				// 		</Link>
+				// 		.
+				// 	</Text>
+				// ),
+				link: "https://static.mlh.io/docs/mlh-code-of-conduct.pdf",
+			},
+		],
+	},
+	{
 		question: "Are there prizes?",
 		answer: [
 			{

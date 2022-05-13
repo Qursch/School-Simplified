@@ -35,8 +35,7 @@ export default function Hero(): JSX.Element {
 				<ContainerInside>
 					<HStack>
 						<Box position="absolute" top="10" left="10" boxSize={150}>
-						<Image src="/logos/mlh-trust-badge-2022-white.png"
-						/>
+						<Image src="/logos/mlh-trust-badge.png"/>
 						</Box>
 						<VStack align="start">
 							<Heading fontSize={40}>SimpliHacks 2.0</Heading>

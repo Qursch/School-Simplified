@@ -8,12 +8,11 @@ import {
 	MenuButton,
 	MenuItem,
 	MenuList,
-	useDisclosure
+	useDisclosure,
 } from "@chakra-ui/react";
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
 import NextLink from "@components/nextChakra";
-
 
 type MenuItem = {
 	name: string;
@@ -21,7 +20,6 @@ type MenuItem = {
 	href?: string;
 	isBold?: boolean;
 };
-
 
 const menuItems: MenuItem[] = [
 	// {
@@ -152,7 +150,6 @@ export default function Header(): JSX.Element {
 				backdropFilter="blur(12px)"
 				// filter="blur(24px)"
 			>
-				
 				<ContainerInside>
 					<Flex
 						justify="space-between"
