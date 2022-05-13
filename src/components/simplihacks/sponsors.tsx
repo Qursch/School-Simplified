@@ -19,13 +19,13 @@ const sponsors: Sponsor[] = [
 		image: "/simplihacks/sponsors/slingshotlogo.png",
 		link: "https://slingshotahead.com/",
 	},
+    {
+	 	image: "/simplihacks/sponsors/replitdark.svg",
+		link: "https://replit.com/",
+    },
 	// {
 	// 	image: "/simplihacks/sponsors/echoar.png",
 	// 	link: "https://www.echoar.xyz/",
-	// },
-	// {
-	// 	image: "/simplihacks/sponsors/replitdark.svg",
-	// 	link: "https://replit.com/",
 	// },
 	{
 		image: "/simplihacks/sponsors/AoPSLogo.png",
