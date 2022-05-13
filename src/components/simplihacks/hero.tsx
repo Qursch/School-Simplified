@@ -1,4 +1,4 @@
-import { Heading, HStack, Image, Stack, Text, VStack } from "@chakra-ui/react";
+import { Heading, HStack, Image, Stack, Text, VStack, Box } from "@chakra-ui/react";
 import Button from "@components/button";
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
@@ -34,6 +34,10 @@ export default function Hero(): JSX.Element {
 			<Container p="50px">
 				<ContainerInside>
 					<HStack>
+						<Box position="absolute" top="10" left="10" boxSize={150}>
+						<Image src="/logos/mlh-trust-badge-2022-white.png"
+						/>
+						</Box>
 						<VStack align="start">
 							<Heading fontSize={40}>SimpliHacks 2.0</Heading>
 							<Text textAlign="left" fontSize="22px">
