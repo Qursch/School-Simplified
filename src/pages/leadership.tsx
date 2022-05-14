@@ -150,7 +150,7 @@ export default function Leadership({
 						</Thead>
 						<Tbody>
 							{boardOfDirectors.executives.map((staff) => {
-								console.log(`staff: "${staff.title}"`);
+								// console.log(`staff: "${staff.title}"`);
 								return (
 									<Tr key={staff.name} fontSize={20}>
 										<Td fontWeight="bold">{staff.name}</Td>
