@@ -136,8 +136,10 @@ export function replaceNewlines(text: string): JSX.Element {
 	const elements: JSX.Element[] = [];
 
 	for (const segment of text.split(/[\n\r]+/g)) {
-		elements.push(<>{segment}</>);
-		elements.push(<br />);
+		elements.push(cloneElement(<>{segment}</>, { key: segment }));
+		elements.push(<br key={segment + "br"} />);
+		// elements.push(<>{segment}</>);
+		// elements.push(<br />);
 	}
 	elements.pop();
 	// console.log("elements: ", elements);
