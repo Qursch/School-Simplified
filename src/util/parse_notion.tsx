@@ -155,13 +155,7 @@ export function replaceNewlines(text: string): JSX.Element {
  */
 export function parsePlainText(text: any[]): JSX.Element {
 	return (
-		<Text>
-			{text.map((block) =>
-				cloneElement(replaceNewlines(block.plain_text), {
-					key: block.plain_text,
-				})
-			)}
-		</Text>
+		<Text>{text.map((block) => replaceNewlines(block.plain_text))}</Text>
 	);
 }
 
