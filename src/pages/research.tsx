@@ -27,8 +27,7 @@ import ContainerInside from "@components/containerInside";
 import NextChakraLink from "@components/nextChakra";
 import Searchbar from "@components/searchbar";
 import { filter } from "fuzzaldrin-plus";
-import { useEffect } from "react";
-import { useMemo, useReducer, useState } from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import { Opportunity, ResearchCategory } from "types";
 
@@ -42,7 +41,6 @@ export default function Research({
 	dictionary,
 }: ResearchProps): JSX.Element {
 	// console.log("opportunities:", JSON.stringify(opportunities, null, 2));
-	// return <UnderConstruction />;
 	return (
 		<>
 			<Container bgColor="brand.darkerBlue">
@@ -110,25 +108,6 @@ function ResearchViewPane({
 		// filter by sidebar
 		return preFilter.filter((opportunity) => {
 			for (const category in selected) {
-				// // check if this is a single item
-				// if (dictionary[category].isMulti) {
-				// 	// must be a list item
-				// 	// @ts-ignore
-				// 	const list: StringOrNumber[] = selected[category];
-				// 	if (
-				// 		list.length &&
-				// 		!opportunity[category].some((item: StringOrNumber) =>
-				// 			list.includes(item)
-				// 		)
-				// 	) {
-				// 		return false;
-				// 	}
-				// } else {
-				// 	if (!opportunity[category].includes(selected[category])) {
-				// 		return false;
-				// 	}
-				// }
-
 				if (
 					selected[category].length &&
 					!opportunity[category].some((item: StringOrNumber) =>
@@ -164,17 +143,6 @@ function ResearchViewPane({
 						</HStack>
 						<Accordion bgColor="brand.darkerBlue" allowToggle>
 							{Object.entries(dictionary).map(([key, value]) => {
-								// return (
-								// 	<FilterGroup
-								// 		entry={value}
-								// 		onSelected={(values) =>
-								// 			setSelected({ key, values })
-								// 		}
-								// 		selectedItems={selected[key]}
-								// 		key={value.humanName}
-								// 	/>
-								// );
-
 								// console.log(
 								// 	"is",
 								// 	value.humanName,
@@ -191,6 +159,7 @@ function ResearchViewPane({
 											setSelected({ key, values })
 										}
 										isEmpty={!selected[key]?.length}
+										key={value.humanName}
 									/>
 								) : (
 									<RadioFilterGroup
@@ -199,6 +168,7 @@ function ResearchViewPane({
 											setSelected({ key, values })
 										}
 										isEmpty={!selected[key]?.length}
+										key={value.humanName}
 									/>
 								);
 							})}
@@ -264,72 +234,6 @@ function ResearchViewPane({
 		</Container>
 	);
 }
-
-// type FilterGroupProps = {
-// 	entry: ResearchCategory;
-// 	onSelected: (selected: StringOrNumber | StringOrNumber[]) => void;
-// 	selectedItems: StringOrNumber | StringOrNumber[];
-// };
-// function FilterGroup({
-// 	entry,
-// 	onSelected,
-// 	selectedItems,
-// }: FilterGroupProps): JSX.Element {
-// 	const inputGroup: JSX.Element = useMemo(() => {
-// 		console.log("update", entry.humanName, selectedItems);
-
-// 		if (entry.isMulti) {
-// 			// has to be a list
-// 			// @ts-ignore
-// 			const items: StringOrNumber[] = selectedItems;
-// 			return (
-// 				<CheckboxGroup onChange={onSelected} value={items}>
-// 					<VStack align="flex-start" textAlign="left">
-// 						{entry.values.map((value) => (
-// 							<Checkbox value={value} key={value}>
-// 								{value}
-// 								{items}
-// 							</Checkbox>
-// 						))}
-// 					</VStack>
-// 				</CheckboxGroup>
-// 			);
-// 		} else {
-// 			// has to be a single
-// 			// @ts-ignore
-// 			const item: StringOrNumber = selectedItems;
-
-// 			return (
-// 				<RadioGroup onChange={onSelected} value={item}>
-// 					<VStack align="flex-start" textAlign="left">
-// 						{entry.values.map((value) => (
-// 							<Radio
-// 								value={value}
-// 								key={value}
-// 								defaultChecked={value === item}
-// 							>
-// 								{value}
-// 								{item}
-// 							</Radio>
-// 						))}
-// 					</VStack>
-// 				</RadioGroup>
-// 			);
-// 		}
-// 	}, [selectedItems, onSelected, entry]);
-
-// 	return (
-// 		<AccordionItem>
-// 			<AccordionButton>
-// 				<HStack>
-// 					<Searchbar placeholder={entry.humanName} size="xs" />
-// 					<AccordionIcon />
-// 				</HStack>
-// 			</AccordionButton>
-// 			<AccordionPanel py={3}>{inputGroup}</AccordionPanel>
-// 		</AccordionItem>
-// 	);
-// }
 
 // the props to pass the filter group
 type FilterGroupProps = {
