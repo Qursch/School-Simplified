@@ -41,8 +41,8 @@ export default function PartnersPage() {
 								</Heading>
 								<Text my={5}>
 									Connect with us, take advantage of our
-									resources, and together we can build a
-									brighter future.
+									resources, and build a brighter future with
+									us.
 								</Text>
 								{/* <NextLink href="/notes">
 							<Button>Get Free Help</Button>
@@ -217,10 +217,12 @@ const productPartners: Partner[] = [
 	{
 		name: "Tech Soup",
 		src: "https://www.techsoup.org/_layouts/15/TechSoupRWD/ui/images/tslogo.svg",
+		link: "https://www.techsoup.org/",
 	},
 	{
 		name: "Grammarly",
 		src: "https://www.grammarly.com/press/media-resources/docs/logo-grammarly.png",
+		link: "https://www.grammarly.com/",
 	},
 	{
 		name: "Deloitte",
