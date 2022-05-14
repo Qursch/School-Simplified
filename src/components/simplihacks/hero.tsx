@@ -1,4 +1,4 @@
-import { Heading, HStack, Image, Stack, Text, VStack, Box } from "@chakra-ui/react";
+import { Heading, HStack, Image, Stack, Text, VStack } from "@chakra-ui/react";
 import Button from "@components/button";
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
@@ -33,23 +33,26 @@ export default function Hero(): JSX.Element {
 		<>
 			<Container p="50px">
 				<ContainerInside>
-					<HStack>
-						<Box position="absolute" top="10" left="10" boxSize={150}>
-						<Image src="/logos/mlh-trust-badge.png"/>
-						</Box>
-						<VStack align="start">
-							<Heading fontSize={40}>SimpliHacks 2.0</Heading>
+					<HStack spacing={20}>
+						<VStack align="stretch" spacing={22}>
+							<HStack justify="space-between">
+								<Heading fontSize={40}>SimpliHacks 2.0</Heading>
+								<Image
+									src="/logos/mlh-trust-badge.png"
+									maxH={150}
+								/>
+							</HStack>
 							<Text textAlign="left" fontSize="22px">
 								Want to take your coding skills to the next
 								level? Want to compete to win awesome prizes and
 								internship opportunities? Want to learn to build
 								amazing websites and apps?
-								{<br />}
-								{<br />}
+							</Text>
+							<Text textAlign="left" fontSize="22px">
 								We can help you do just that with SimpliHacks
 								2.0!
-								{<br />}
-								{<br />}
+							</Text>
+							<Text textAlign="left" fontSize="22px">
 								SimpliHacks 2.0 is School Simplified’s second
 								annual 48-hour virtual hackathon. Programmers of
 								all levels are welcome to attend! Whether you’ve
@@ -60,7 +63,7 @@ export default function Hero(): JSX.Element {
 								win some awesome prizes! The Hackathon is also a
 								great place to pick up new skills, as we plan to
 								run two days packed with interesting workshops
-								and events with the help of our sponsors!{" "}
+								and events with the help of our sponsors!
 							</Text>
 							<Stack direction={{ base: "column", md: "row" }}>
 								{buttons.map((button, i: number) => {

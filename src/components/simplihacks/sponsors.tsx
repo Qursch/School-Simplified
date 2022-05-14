@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable sonarjs/no-duplicate-string */
-import { Flex, Heading, Image } from "@chakra-ui/react";
+import { Heading, Image, Wrap, WrapItem } from "@chakra-ui/react";
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
 import NextLink from "@components/nextChakra";
@@ -19,10 +19,10 @@ const sponsors: Sponsor[] = [
 		image: "/simplihacks/sponsors/slingshotlogo.png",
 		link: "https://slingshotahead.com/",
 	},
-    {
-	 	image: "/simplihacks/sponsors/replitdark.svg",
+	{
+		image: "/simplihacks/sponsors/replitdark.svg",
 		link: "https://replit.com/",
-    },
+	},
 	// {
 	// 	image: "/simplihacks/sponsors/echoar.png",
 	// 	link: "https://www.echoar.xyz/",
@@ -61,7 +61,7 @@ const sponsors: Sponsor[] = [
 	// },
 	{
 		image: "/simplihacks/sponsors/hyperx.png",
-		link: "ttps://www.hyperxgaming.com/unitedstates/us",
+		link: "https://www.hyperxgaming.com/unitedstates/us",
 	},
 	// {
 	// 	image: "/simplihacks/sponsors/producthunt.png",
@@ -77,27 +77,19 @@ export default function Sponsors(): JSX.Element {
 					<Heading as="h1" m={5}>
 						Event Sponsors
 					</Heading>
-					<Flex justify="center" flexWrap="wrap">
-						{sponsors.map((sponsor, i: number) => {
-							return (
-								<Flex
-									flexDir="column"
-									p="15px"
-									align="center"
-									justify="center"
-								>
-									<NextLink href={sponsor.link}>
-										<Image
-											display="block"
-											width="300px"
-											src={sponsor.image}
-											key={i}
-										/>
-									</NextLink>
-								</Flex>
-							);
-						})}
-					</Flex>
+					<Wrap justify="center" spacing={8}>
+						{sponsors.map((sponsor) => (
+							<WrapItem key={sponsor.image}>
+								<NextLink href={sponsor.link}>
+									<Image
+										display="block"
+										width="300px"
+										src={sponsor.image}
+									/>
+								</NextLink>
+							</WrapItem>
+						))}
+					</Wrap>
 				</ContainerInside>
 			</Container>
 		</>
