@@ -227,10 +227,9 @@ export default function Header(): JSX.Element {
 						>
 							{menuItems.map((menuItem) =>
 								menuItem.children ? (
-									<DropdownMenu
-										menuItem={menuItem}
-										key={menuItem.name}
-									/>
+									<Box key={menuItem.name}>
+										<DropdownMenu menuItem={menuItem} />
+									</Box>
 								) : (
 									<NextLink
 										href={menuItem.href}

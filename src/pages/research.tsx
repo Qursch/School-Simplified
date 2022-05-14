@@ -270,11 +270,26 @@ function RadioFilterGroup({
 		if (isEmpty) setSelectedItem("");
 	}, [isEmpty]);
 
+	// the search term entered by the user
+	const [searchTerm, setSearchTerm] = useState("");
+	// any matching entries
+	const matches = useMemo(
+		() =>
+			searchTerm?.length
+				? filter(entry.values, searchTerm)
+				: entry.values,
+		[entry, searchTerm]
+	);
+
 	return (
 		<AccordionItem>
 			<AccordionButton>
 				<HStack>
-					<Searchbar placeholder={entry.humanName} size="xs" />
+					<Searchbar
+						placeholder={entry.humanName}
+						callback={setSearchTerm}
+						size="xs"
+					/>
 					<AccordionIcon />
 				</HStack>
 			</AccordionButton>
@@ -288,12 +303,26 @@ function RadioFilterGroup({
 					as={VStack}
 					align="flex-start"
 					textAlign="left"
+					spacing={1}
 				>
-					{entry.values.map((value) => (
-						<Radio value={value} key={value}>
+					{matches.map((value) => (
+						<Radio value={value} size="sm" key={value}>
 							{value}
 						</Radio>
 					))}
+					{entry.values
+						.filter((e) => !matches.includes(e))
+						.sort()
+						.map((value) => (
+							<Radio
+								value={value}
+								size="sm"
+								isDisabled
+								key={value}
+							>
+								{value}
+							</Radio>
+						))}
 				</RadioGroup>
 			</AccordionPanel>
 		</AccordionItem>
@@ -329,15 +358,30 @@ function CheckboxFilterGroup({
 		if (isEmpty) setSelectedItems([]);
 	}, [isEmpty]);
 
+	// the search term entered by the user
+	const [searchTerm, setSearchTerm] = useState("");
+	// any matching entries
+	const matches = useMemo(
+		() =>
+			searchTerm?.length
+				? filter(entry.values, searchTerm)
+				: entry.values,
+		[entry, searchTerm]
+	);
+
 	return (
 		<AccordionItem>
 			<AccordionButton>
 				<HStack>
-					<Searchbar placeholder={entry.humanName} size="xs" />
+					<Searchbar
+						placeholder={entry.humanName}
+						callback={setSearchTerm}
+						size="xs"
+					/>
 					<AccordionIcon />
 				</HStack>
 			</AccordionButton>
-			<AccordionPanel py={3}>
+			<AccordionPanel>
 				<CheckboxGroup
 					onChange={(selected) => {
 						setSelectedItems(selected);
@@ -345,12 +389,25 @@ function CheckboxFilterGroup({
 					}}
 					value={selectedItems}
 				>
-					<VStack align="flex-start" textAlign="left">
-						{entry.values.map((value) => (
-							<Checkbox value={value} key={value}>
+					<VStack align="flex-start" textAlign="left" spacing={1}>
+						{matches.map((value) => (
+							<Checkbox value={value} size="sm" key={value}>
 								{value}
 							</Checkbox>
 						))}
+						{entry.values
+							.filter((e) => !matches.includes(e))
+							.sort()
+							.map((value) => (
+								<Checkbox
+									value={value}
+									size="sm"
+									isDisabled
+									key={value}
+								>
+									{value}
+								</Checkbox>
+							))}
 					</VStack>
 				</CheckboxGroup>
 			</AccordionPanel>
