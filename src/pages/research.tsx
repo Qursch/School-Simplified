@@ -27,6 +27,7 @@ import ContainerInside from "@components/containerInside";
 import NextChakraLink from "@components/nextChakra";
 import Searchbar from "@components/searchbar";
 import { filter } from "fuzzaldrin-plus";
+import { useEffect } from "react";
 import { useMemo, useReducer, useState } from "react";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import { Opportunity, ResearchCategory } from "types";
@@ -72,11 +73,11 @@ export default function Research({
 	);
 }
 
-type AllSelection = Record<string, StringOrNumber | StringOrNumber[]>;
+type AllSelection = Record<string, StringOrNumber[]>;
 
 function selectedReducer(
 	oldSelectedItems: AllSelection,
-	{ key, values }: { key: string; values: StringOrNumber | StringOrNumber[] }
+	{ key, values }: { key: string; values: StringOrNumber[] }
 ) {
 	// special case: key is reset (reset the storage)
 	if (key === "reset") return {};
@@ -96,6 +97,8 @@ function ResearchViewPane({
 	const [selected, setSelected] = useReducer(selectedReducer, {});
 	const [searchTerm, setSearchTerm] = useState("");
 
+	// useEffect(() => console.log("new selected:", selected), [selected]);
+
 	const matchedOpportunities = useMemo(() => {
 		// console.log("ayo");
 
@@ -107,23 +110,32 @@ function ResearchViewPane({
 		// filter by sidebar
 		return preFilter.filter((opportunity) => {
 			for (const category in selected) {
-				// check if this is a single item
-				if (dictionary[category].isMulti) {
-					// must be a list item
-					// @ts-ignore
-					const list: StringOrNumber[] = selected[category];
-					if (
-						list.length &&
-						!opportunity[category].some((item: StringOrNumber) =>
-							list.includes(item)
-						)
-					) {
-						return false;
-					}
-				} else {
-					if (!opportunity[category].includes(selected[category])) {
-						return false;
-					}
+				// // check if this is a single item
+				// if (dictionary[category].isMulti) {
+				// 	// must be a list item
+				// 	// @ts-ignore
+				// 	const list: StringOrNumber[] = selected[category];
+				// 	if (
+				// 		list.length &&
+				// 		!opportunity[category].some((item: StringOrNumber) =>
+				// 			list.includes(item)
+				// 		)
+				// 	) {
+				// 		return false;
+				// 	}
+				// } else {
+				// 	if (!opportunity[category].includes(selected[category])) {
+				// 		return false;
+				// 	}
+				// }
+
+				if (
+					selected[category].length &&
+					!opportunity[category].some((item: StringOrNumber) =>
+						selected[category].includes(item)
+					)
+				) {
+					return false;
 				}
 
 				// console.log("pass");
@@ -151,16 +163,42 @@ function ResearchViewPane({
 							</TimmyButton>
 						</HStack>
 						<Accordion bgColor="brand.darkerBlue" allowToggle>
-							{Object.entries(dictionary).map((entry) => {
-								const [key, value] = entry;
-								return (
-									<FilterGroup
+							{Object.entries(dictionary).map(([key, value]) => {
+								// return (
+								// 	<FilterGroup
+								// 		entry={value}
+								// 		onSelected={(values) =>
+								// 			setSelected({ key, values })
+								// 		}
+								// 		selectedItems={selected[key]}
+								// 		key={value.humanName}
+								// 	/>
+								// );
+
+								// console.log(
+								// 	"is",
+								// 	value.humanName,
+								// 	"(",
+								// 	selected[key],
+								// 	") empty?\n",
+								// 	!selected[key]?.length
+								// );
+
+								return value.isMulti ? (
+									<CheckboxFilterGroup
 										entry={value}
 										onSelected={(values) =>
 											setSelected({ key, values })
 										}
-										selectedItems={selected[key]}
-										key={value.humanName}
+										isEmpty={!selected[key]?.length}
+									/>
+								) : (
+									<RadioFilterGroup
+										entry={value}
+										onSelected={(values) =>
+											setSelected({ key, values })
+										}
+										isEmpty={!selected[key]?.length}
 									/>
 								);
 							})}
@@ -227,58 +265,106 @@ function ResearchViewPane({
 	);
 }
 
+// type FilterGroupProps = {
+// 	entry: ResearchCategory;
+// 	onSelected: (selected: StringOrNumber | StringOrNumber[]) => void;
+// 	selectedItems: StringOrNumber | StringOrNumber[];
+// };
+// function FilterGroup({
+// 	entry,
+// 	onSelected,
+// 	selectedItems,
+// }: FilterGroupProps): JSX.Element {
+// 	const inputGroup: JSX.Element = useMemo(() => {
+// 		console.log("update", entry.humanName, selectedItems);
+
+// 		if (entry.isMulti) {
+// 			// has to be a list
+// 			// @ts-ignore
+// 			const items: StringOrNumber[] = selectedItems;
+// 			return (
+// 				<CheckboxGroup onChange={onSelected} value={items}>
+// 					<VStack align="flex-start" textAlign="left">
+// 						{entry.values.map((value) => (
+// 							<Checkbox value={value} key={value}>
+// 								{value}
+// 								{items}
+// 							</Checkbox>
+// 						))}
+// 					</VStack>
+// 				</CheckboxGroup>
+// 			);
+// 		} else {
+// 			// has to be a single
+// 			// @ts-ignore
+// 			const item: StringOrNumber = selectedItems;
+
+// 			return (
+// 				<RadioGroup onChange={onSelected} value={item}>
+// 					<VStack align="flex-start" textAlign="left">
+// 						{entry.values.map((value) => (
+// 							<Radio
+// 								value={value}
+// 								key={value}
+// 								defaultChecked={value === item}
+// 							>
+// 								{value}
+// 								{item}
+// 							</Radio>
+// 						))}
+// 					</VStack>
+// 				</RadioGroup>
+// 			);
+// 		}
+// 	}, [selectedItems, onSelected, entry]);
+
+// 	return (
+// 		<AccordionItem>
+// 			<AccordionButton>
+// 				<HStack>
+// 					<Searchbar placeholder={entry.humanName} size="xs" />
+// 					<AccordionIcon />
+// 				</HStack>
+// 			</AccordionButton>
+// 			<AccordionPanel py={3}>{inputGroup}</AccordionPanel>
+// 		</AccordionItem>
+// 	);
+// }
+
+// the props to pass the filter group
 type FilterGroupProps = {
 	entry: ResearchCategory;
-	onSelected: (selected: StringOrNumber | StringOrNumber[]) => void;
-	selectedItems: StringOrNumber | StringOrNumber[];
+	onSelected: (selected: StringOrNumber[]) => void;
+	isEmpty: boolean;
 };
-function FilterGroup({
+/**
+ * Creates a JSX element that represents a sidebar filter section/group in the research page with radio buttons
+ * @param {RadioFilterGroupProps} props the props to pass this filter group
+ * @param {ResearchCategory} props.entry a category that contains its name and possible values to filter by
+ * @param {(selected: StringOrNumber[]) => void} props.onSelected a callback for when a new value is selected
+ * @param {boolean} props.isEmpty whether this filter group should be cleared
+ * @returns the JSX element that represents the filter group
+ */
+function RadioFilterGroup({
 	entry,
 	onSelected,
-	selectedItems,
+	isEmpty,
 }: FilterGroupProps): JSX.Element {
-	const inputGroup: JSX.Element = useMemo(() => {
-		console.log("update", entry.humanName, selectedItems);
+	// an intermediate state to store the value to filter for this particular category
+	const [selectedItem, setSelectedItem] = useState<string>(null);
+	// an effect hook to clear the state if isEmpty is pulled to true
+	useEffect(() => {
+		// console.log(
+		// 	"!is",
+		// 	entry.humanName,
+		// 	"(",
+		// 	selectedItem,
+		// 	") empty?\n",
+		// 	isEmpty
+		// );
 
-		if (entry.isMulti) {
-			// has to be a list
-			// @ts-ignore
-			const items: StringOrNumber[] = selectedItems;
-			return (
-				<CheckboxGroup onChange={onSelected} value={items}>
-					<VStack align="flex-start" textAlign="left">
-						{entry.values.map((value) => (
-							<Checkbox value={value} key={value}>
-								{value}
-								{items}
-							</Checkbox>
-						))}
-					</VStack>
-				</CheckboxGroup>
-			);
-		} else {
-			// has to be a single
-			// @ts-ignore
-			const item: StringOrNumber = selectedItems;
-
-			return (
-				<RadioGroup onChange={onSelected} value={item}>
-					<VStack align="flex-start" textAlign="left">
-						{entry.values.map((value) => (
-							<Radio
-								value={value}
-								key={value}
-								defaultChecked={value === item}
-							>
-								{value}
-								{item}
-							</Radio>
-						))}
-					</VStack>
-				</RadioGroup>
-			);
-		}
-	}, [selectedItems, onSelected, entry]);
+		if (isEmpty) setSelectedItem("");
+	}, [isEmpty]);
 
 	return (
 		<AccordionItem>
@@ -288,7 +374,82 @@ function FilterGroup({
 					<AccordionIcon />
 				</HStack>
 			</AccordionButton>
-			<AccordionPanel py={3}>{inputGroup}</AccordionPanel>
+			<AccordionPanel py={3}>
+				<RadioGroup
+					onChange={(nextValue: string) => {
+						setSelectedItem(nextValue);
+						onSelected([nextValue]);
+					}}
+					value={selectedItem}
+					as={VStack}
+					align="flex-start"
+					textAlign="left"
+				>
+					{entry.values.map((value) => (
+						<Radio value={value} key={value}>
+							{value}
+						</Radio>
+					))}
+				</RadioGroup>
+			</AccordionPanel>
+		</AccordionItem>
+	);
+}
+
+/**
+ * Creates a JSX element that represents a sidebar filter section/group in the research page with checkboxes
+ * @param {RadioFilterGroupProps} props the props to pass this filter group
+ * @param {ResearchCategory} props.entry a category that contains its name and possible values to filter by
+ * @param {(selected: StringOrNumber[]) => void} props.onSelected a callback for when new values are selected
+ * @param {boolean} props.isEmpty whether this filter group should be cleared
+ * @returns the JSX element that represents the filter group
+ */
+function CheckboxFilterGroup({
+	entry,
+	onSelected,
+	isEmpty,
+}: FilterGroupProps): JSX.Element {
+	// an intermediate state to store the value to filter for this particular category
+	const [selectedItems, setSelectedItems] = useState<StringOrNumber[]>([]);
+	// an effect hook to clear the state if isEmpty is pulled to true
+	useEffect(() => {
+		// console.log(
+		// 	"!is",
+		// 	entry.humanName,
+		// 	"(",
+		// 	selectedItems,
+		// 	") empty?\n",
+		// 	isEmpty
+		// );
+
+		if (isEmpty) setSelectedItems([]);
+	}, [isEmpty]);
+
+	return (
+		<AccordionItem>
+			<AccordionButton>
+				<HStack>
+					<Searchbar placeholder={entry.humanName} size="xs" />
+					<AccordionIcon />
+				</HStack>
+			</AccordionButton>
+			<AccordionPanel py={3}>
+				<CheckboxGroup
+					onChange={(selected) => {
+						setSelectedItems(selected);
+						onSelected(selected);
+					}}
+					value={selectedItems}
+				>
+					<VStack align="flex-start" textAlign="left">
+						{entry.values.map((value) => (
+							<Checkbox value={value} key={value}>
+								{value}
+							</Checkbox>
+						))}
+					</VStack>
+				</CheckboxGroup>
+			</AccordionPanel>
 		</AccordionItem>
 	);
 }
