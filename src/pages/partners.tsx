@@ -208,11 +208,11 @@ type Partner = {
 
 const productPartners: Partner[] = [
 	{
-		name: "Versatile Node",
+		name: "WinterNode",
 		description:
-			"Versatile Node is an organization geared towards providing cheap, fast and reliable hosting for all your needs! Versatile offers resources range from minecraft hosting, VPS hosting, to web hosting.",
-		src: "/partners/versatile.png",
-		link: "https://versatilenode.com/",
+			"WinterNode is an organization geared towards providing cheap, fast and reliable hosting for all your needs! WinterNode offers resources range from Minecraft hosting, VPS hosting, to web hosting.",
+		src: "/partners/winternode.svg",
+		link: "https://winternode.com/",
 	},
 	{
 		name: "Tech Soup",
