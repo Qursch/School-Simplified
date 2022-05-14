@@ -126,7 +126,7 @@ export function parseText(text: any): JSX.Element {
  * @param text the text to convert to a JSX psuedoelement
  * @returns the converted element
  */
-function replaceNewlines(text: string): JSX.Element {
+export function replaceNewlines(text: string): JSX.Element {
 	// console.log('called with "' + text + '".');
 
 	// no newlines

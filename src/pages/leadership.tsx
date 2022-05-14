@@ -28,6 +28,7 @@ import StaffCard from "@components/staffcard";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { ExecutiveGroup, GovernanceDocument, GovernanceSection } from "types";
+import { replaceNewlines } from "util/parse_notion";
 
 type LeadershipPageProps = {
 	governance: GovernanceSection[];
@@ -148,14 +149,17 @@ export default function Leadership({
 							</Tr>
 						</Thead>
 						<Tbody>
-							{boardOfDirectors.executives.map((staff) => (
-								<Tr key={staff.name}>
-									<Td fontWeight="bold" fontSize={20}>
-										{staff.name}
-									</Td>
-									<Td fontSize={20}>{staff.title}</Td>
-								</Tr>
-							))}
+							{boardOfDirectors.executives.map((staff) => {
+								console.log(`staff: "${staff.title}"`);
+								return (
+									<Tr key={staff.name} fontSize={20}>
+										<Td fontWeight="bold">{staff.name}</Td>
+										<Td lineHeight={1.4}>
+											{replaceNewlines(staff.title)}
+										</Td>
+									</Tr>
+								);
+							})}
 						</Tbody>
 					</Table>
 					<Divider bg="white" />
