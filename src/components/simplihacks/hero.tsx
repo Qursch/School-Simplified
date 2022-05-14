@@ -66,12 +66,12 @@ export default function Hero(): JSX.Element {
 								and events with the help of our sponsors!
 							</Text>
 							<Stack direction={{ base: "column", md: "row" }}>
-								{buttons.map((button, i: number) => {
+								{buttons.map((button) => {
 									return (
 										<NextLink
 											href={button.link}
 											target="_blank"
-											key={i}
+											key={button.text}
 										>
 											<Button
 												m={3}
@@ -85,7 +85,7 @@ export default function Hero(): JSX.Element {
 							</Stack>
 						</VStack>
 						<Image
-							maxW="350px"
+							maxW={350}
 							src="/timmy/timmy_shocked.png"
 							display={{ base: "none", md: "block" }}
 							alt="Timmy shocked"
