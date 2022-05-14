@@ -1,5 +1,6 @@
 import {
 	Box,
+	Button,
 	Flex,
 	Heading,
 	HStack,
@@ -8,11 +9,15 @@ import {
 	MenuButton,
 	MenuItem,
 	MenuList,
+	Spacer,
+	Text,
+	useBreakpointValue,
 	useDisclosure,
 } from "@chakra-ui/react";
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
 import NextLink from "@components/nextChakra";
+import { useState } from "react";
 
 type MenuItem = {
 	name: string;
@@ -142,8 +147,44 @@ const menuItems: MenuItem[] = [
 
 // eslint-disable-next-line import/no-default-export
 export default function Header(): JSX.Element {
+	const height = useHeaderHeight();
+	const [bannerVisible, setBannerVisible] = useState(true);
+
 	return (
 		<>
+			{bannerVisible && (
+				<Flex
+					bgColor="#FFAC33"
+					color="black"
+					py={1}
+					px={2}
+					w="100%"
+					position="fixed"
+					zIndex={1000}
+					top={0}
+				>
+					<Spacer />
+					<Text as="b">
+						SimpliHacks 2.0 Registration is Officially Open!{" "}
+						<NextLink
+							href="/simplihacks"
+							_hover={{ color: "white" }}
+						>
+							Click here to sign up!
+						</NextLink>
+					</Text>
+					<Spacer />
+					<Button
+						justifySelf="flex-end"
+						p={0}
+						style={{ aspectRatio: "1" }}
+						size="xs"
+						onClick={() => setBannerVisible(false)}
+					>
+						X
+					</Button>
+				</Flex>
+			)}
 			<Container
 				as="header"
 				py={3}
@@ -152,6 +193,7 @@ export default function Header(): JSX.Element {
 				zIndex={1000}
 				bg="brand.transparent"
 				backdropFilter="blur(12px)"
+				top={bannerVisible ? 8 : 0}
 				// filter="blur(24px)"
 			>
 				<ContainerInside>
@@ -206,10 +248,13 @@ export default function Header(): JSX.Element {
 					</Flex>
 				</ContainerInside>
 			</Container>
-			<Box h={{ base: 84, sm: 94, md: 83, lg: 54 }} />
+			<Box h={bannerVisible ? height + 32 : height} />
 		</>
 	);
 }
+
+export const useHeaderHeight: () => number = () =>
+	useBreakpointValue({ base: 84, sm: 94, md: 83, lg: 54 });
 
 const graceTime = 50;
 
