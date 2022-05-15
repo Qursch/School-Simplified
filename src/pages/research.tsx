@@ -27,6 +27,7 @@ import ContainerInside from "@components/containerInside";
 import NextChakraLink from "@components/nextChakra";
 import Searchbar from "@components/searchbar";
 import { filter } from "fuzzaldrin-plus";
+import { useCallback } from "react";
 import { useEffect, useMemo, useReducer, useState } from "react";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import { Opportunity, ResearchCategory } from "types";
@@ -124,6 +125,60 @@ function ResearchViewPane({
 	}, [opportunities, selected, searchTerm, dictionary]);
 	const [page, setPage] = useState(0);
 
+	const [accordionIndex, setAccordionIndex] = useState(-1);
+	const onToggle = useCallback(
+		(idx) => {
+			console.log("toggling", idx);
+			console.time("accordion index");
+			if (accordionIndex === idx) setAccordionIndex(-1);
+			else setAccordionIndex(idx);
+			console.timeLog("accordion index", "method end");
+		},
+		[accordionIndex, setAccordionIndex]
+	);
+	useEffect(() => {
+		console.timeEnd("accordion index");
+	}, [accordionIndex]);
+
+	const panelContents = useMemo(() => {
+		return Object.entries(dictionary).map(([key, value], idx) => {
+			// console.log(
+			// 	"is",
+			// 	value.humanName,
+			// 	"(",
+			// 	selected[key],
+			// 	") empty?\n",
+			// 	!selected[key]?.length
+			// );
+
+			return value.isMulti ? (
+				<CheckboxFilterGroup
+					entry={value}
+					onSelected={(values) => setSelected({ key, values })}
+					onOpen={() => setAccordionIndex(idx)}
+					onToggle={() => {
+						onToggle(idx);
+					}}
+					isEmpty={!selected[key]?.length}
+					key={value.humanName}
+				/>
+			) : (
+				<RadioFilterGroup
+					entry={value}
+					onSelected={(values) => setSelected({ key, values })}
+					onOpen={() => setAccordionIndex(idx)}
+					onToggle={() => {
+						onToggle(idx);
+					}}
+					isEmpty={!selected[key]?.length}
+					key={value.humanName}
+				/>
+			);
+		});
+	}, [dictionary, selected, setSelected, setAccordionIndex, onToggle]);
+
+	console.log("rerender");
+
 	const numPages = Math.ceil(matchedOpportunities.length / 12);
 	return (
 		<Container>
@@ -141,37 +196,13 @@ function ResearchViewPane({
 								Clear All
 							</TimmyButton>
 						</HStack>
-						<Accordion bgColor="brand.darkerBlue" allowToggle>
-							{Object.entries(dictionary).map(([key, value]) => {
-								// console.log(
-								// 	"is",
-								// 	value.humanName,
-								// 	"(",
-								// 	selected[key],
-								// 	") empty?\n",
-								// 	!selected[key]?.length
-								// );
-
-								return value.isMulti ? (
-									<CheckboxFilterGroup
-										entry={value}
-										onSelected={(values) =>
-											setSelected({ key, values })
-										}
-										isEmpty={!selected[key]?.length}
-										key={value.humanName}
-									/>
-								) : (
-									<RadioFilterGroup
-										entry={value}
-										onSelected={(values) =>
-											setSelected({ key, values })
-										}
-										isEmpty={!selected[key]?.length}
-										key={value.humanName}
-									/>
-								);
-							})}
+						<Accordion
+							bgColor="brand.darkerBlue"
+							index={accordionIndex}
+							// onChange={console.info}
+							allowToggle
+						>
+							{panelContents}
 						</Accordion>
 					</VStack>
 					<VStack flex="1 1" spacing={15} align="stretch">
@@ -239,6 +270,8 @@ function ResearchViewPane({
 type FilterGroupProps = {
 	entry: ResearchCategory;
 	onSelected: (selected: StringOrNumber[]) => void;
+	onOpen: () => void;
+	onToggle: () => void;
 	isEmpty: boolean;
 };
 /**
@@ -246,12 +279,16 @@ type FilterGroupProps = {
  * @param {RadioFilterGroupProps} props the props to pass this filter group
  * @param {ResearchCategory} props.entry a category that contains its name and possible values to filter by
  * @param {(selected: StringOrNumber[]) => void} props.onSelected a callback for when a new value is selected
+ * @param {() => void} props.onOpen a callback for when this accordion item should be opened
+ * @param {() => void} props.onToggle a callback for when this accordion item should be toggled
  * @param {boolean} props.isEmpty whether this filter group should be cleared
  * @returns the JSX element that represents the filter group
  */
 function RadioFilterGroup({
 	entry,
 	onSelected,
+	onOpen,
+	onToggle,
 	isEmpty,
 }: FilterGroupProps): JSX.Element {
 	// an intermediate state to store the value to filter for this particular category
@@ -283,11 +320,16 @@ function RadioFilterGroup({
 
 	return (
 		<AccordionItem>
-			<AccordionButton>
+			<AccordionButton onClick={onToggle}>
 				<HStack>
 					<Searchbar
 						placeholder={entry.humanName}
 						callback={setSearchTerm}
+						onClick={(e) => {
+							e.preventDefault();
+							e.stopPropagation();
+							onOpen();
+						}}
 						size="xs"
 					/>
 					<AccordionIcon />
@@ -334,12 +376,16 @@ function RadioFilterGroup({
  * @param {RadioFilterGroupProps} props the props to pass this filter group
  * @param {ResearchCategory} props.entry a category that contains its name and possible values to filter by
  * @param {(selected: StringOrNumber[]) => void} props.onSelected a callback for when new values are selected
+ * @param {() => void} props.onOpen a callback for when this accordion item should be opened
+ * @param {() => void} props.onToggle a callback for when this accordion item should be toggled
  * @param {boolean} props.isEmpty whether this filter group should be cleared
  * @returns the JSX element that represents the filter group
  */
 function CheckboxFilterGroup({
 	entry,
 	onSelected,
+	onOpen,
+	onToggle,
 	isEmpty,
 }: FilterGroupProps): JSX.Element {
 	// an intermediate state to store the value to filter for this particular category
@@ -371,17 +417,22 @@ function CheckboxFilterGroup({
 
 	return (
 		<AccordionItem>
-			<AccordionButton>
+			<AccordionButton onClick={onToggle}>
 				<HStack>
 					<Searchbar
 						placeholder={entry.humanName}
 						callback={setSearchTerm}
+						onClick={(e) => {
+							e.preventDefault();
+							e.stopPropagation();
+							onOpen();
+						}}
 						size="xs"
 					/>
 					<AccordionIcon />
 				</HStack>
 			</AccordionButton>
-			<AccordionPanel>
+			<AccordionPanel py={3}>
 				<CheckboxGroup
 					onChange={(selected) => {
 						setSelectedItems(selected);
