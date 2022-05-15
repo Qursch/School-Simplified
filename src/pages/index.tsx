@@ -3,7 +3,6 @@ import {
 	AcademicServices,
 	Blog,
 	Chapters,
-	Clubs,
 	GettingStarted,
 	Intro,
 	ProgrammingSimplified,
@@ -35,7 +34,6 @@ export default function Home({ listing }: { listing: BlogListing[] }) {
 			<Projects />
 			<Chapters />
 			<ProgrammingSimplified />
-			<Clubs />
 			<Testimonial />
 		</>
 	);

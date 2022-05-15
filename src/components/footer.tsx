@@ -345,10 +345,6 @@ const programs = [
 		link: "/chapter",
 	},
 	{
-		name: "Student Activities",
-		link: "/activities",
-	},
-	{
 		name: "Programming Simplified",
 		link: "/programming",
 	},
