@@ -2,10 +2,11 @@
 
 ## _Through learning, we empower the next generation to revolutionize the future._
 
-Come visit us at <https://schoolsimplified.org/> !
+Come visit us at <https://schoolsimplified.org/>!
 
 ### Powered by
 
+-   Node.js
 -   Typescript
 -   Chakra UI
 -   NextJS

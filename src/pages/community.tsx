@@ -111,7 +111,7 @@ export default function Community({
 							</Text>
 							<Text textAlign="justify" py={3}>
 								Communication is through text, voice calls, and
-								other methods!s
+								other methods!
 							</Text>
 							<NextChakraLink
 								href="/discord"
@@ -220,7 +220,7 @@ export default function Community({
 							boxShadow="lg"
 							justify="center"
 						>
-							<Heading>Daily</Heading>
+							<Heading>Daily:</Heading>
 							<Text>
 								We post daily opportunities and entertainment
 								such as:
