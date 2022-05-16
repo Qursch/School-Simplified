@@ -8,7 +8,7 @@ import {
 	ProgrammingSimplified,
 	Projects,
 	Testimonial,
-} from "@components/home/index";
+} from "@components/home";
 import { fadeIn } from "@styles/animations";
 import { motion } from "framer-motion";
 import Head from "next/head";

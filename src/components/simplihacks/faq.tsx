@@ -2,8 +2,9 @@ import { Box, Heading } from "@chakra-ui/react";
 import FaqList from "@components/contact/faq-list";
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
+import { QAPair } from "types";
 
-const qaPairs = [
+const qaPairs: QAPair[] = [
 	{
 		question: "What is a Hackathon?",
 		answer: [
@@ -67,25 +68,20 @@ const qaPairs = [
 			},
 		],
 	},
-	// | pls fix
-	// V
-// {
-//	 	question: "Is there a Code of Conduct?",
-//	 	answer: [
-//	 		{
-//
-//				 text: (
-//				 	<Text>
-//				 		"Yes, there is! We will be following the{""}
-//				 		<Link href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">
-//				 			MLH Code of Conduct
-//				        </Link>
-//				 		.
-//				 	</Text>
-//				 ),
-//			},
-//		],
-//	},
+	{
+		question: "Is there a Code of Conduct?",
+		answer: [
+			{
+				text: "Yes, there is! We will be following the ",
+				link: "",
+			},
+			{
+				text: "MLH Code of Conduct",
+				link: "https://static.mlh.io/docs/mlh-code-of-conduct.pdf",
+			},
+			{ text: ".", link: "" },
+		],
+	},
 	{
 		question: "Are there prizes?",
 		answer: [
@@ -95,24 +91,19 @@ const qaPairs = [
 			},
 		],
 	},
-	// {
-// 		question: "What if I have another question?",
-// 		answer: [
-// 			{
-// 				text: "Feel free to ask questions at any time! Send us an email at aviel.hernandez@schoolsimplified.org",
- 				// text: (
- 				// 	<Text>
- 				// 		Feel free to ask questions at any time! Send us an email
- 				// 		at{" "}
- 				// 		<Link href="mailto:aviel.hernandez@schoolsimplified.org">
-				// 			aviel.hernandez@schoolsimplified.org
-				// 		</Link>
- 				// 	</Text>
-				// ),
-// 				link: "mailto:aviel.hernandez@schoolsimplified.org",
-// 			},
-// 		],
-// 	},
+	{
+		question: "What if I have another question?",
+		answer: [
+			{
+				text: "Feel free to ask questions at any time! Send us an email at ",
+				link: "",
+			},
+			{
+				text: "aviel.hernandez@schoolsimplified.org",
+				link: "mailto:aviel.hernandex@schoolsimplified.org",
+			},
+		],
+	},
 ];
 
 export default function FAQ(): JSX.Element {
