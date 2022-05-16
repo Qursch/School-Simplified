@@ -1,7 +1,7 @@
 /* eslint-disable import/no-default-export */
-import { TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import {
 	AccordionButton,
+	AccordionIcon,
 	AccordionItem,
 	AccordionPanel,
 	Flex,
@@ -12,13 +12,11 @@ import { AnswerPart } from "types";
 type FaqItemProps = {
 	question: string;
 	answers: AnswerPart[];
-	open: boolean;
 };
 
 export default function FaqItem({
 	question,
 	answers,
-	open,
 }: FaqItemProps): JSX.Element {
 	return (
 		<AccordionItem
@@ -38,19 +36,15 @@ export default function FaqItem({
 				<Flex textAlign="left" flex="1" fontWeight="bold">
 					{question}
 				</Flex>
-				{open ? (
-					<TriangleUpIcon color="#424242" />
-				) : (
-					<TriangleDownIcon color="#424242" />
-				)}
+				<AccordionIcon color="#424242" />
 			</AccordionButton>
 			<AccordionPanel pb={4}>
-				{answers.map((answer: AnswerPart, idx: number) => {
+				{answers.map((answer: AnswerPart) => {
 					if (answer.link) {
 						return (
 							<NextLink
 								href={answer.link}
-								key={"link_" + idx}
+								key={answer.text}
 								color="brand.gold2"
 							>
 								{answer.text}

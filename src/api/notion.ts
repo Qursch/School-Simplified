@@ -386,7 +386,6 @@ export async function getFaqInfo(): Promise<QASection[]> {
 		title: string = "",
 		list: QAPair[] = [];
 	// console.log(data);
-	//@ts-ignore
 	for (const block of data.results) {
 		if (block.type.startsWith("heading")) {
 			const headingText = block[block.type].text;
@@ -428,8 +427,10 @@ export async function getFaqInfo(): Promise<QASection[]> {
 								link: textBlocks[i].href,
 							});
 						} else {
-							// @ts-expect-error no link
-							answers.push({ text: textBlocks[i].plain_text });
+							answers.push({
+								text: textBlocks[i].plain_text,
+								link: null,
+							});
 						}
 					}
 				}
