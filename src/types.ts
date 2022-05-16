@@ -56,6 +56,11 @@ export type QASection = {
 	list: QAPair[];
 };
 
+/**
+ * A text fragment of the FAQ page
+ * @property {string} text the text that the text fragment should be rendered as
+ * @property {string} link the URL that the text should hyperlink to. If this is an empty string, this text fragment should not be rendered as a link
+ */
 export type AnswerPart = {
 	text: string;
 	link: string;
