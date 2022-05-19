@@ -29,7 +29,7 @@ export default function Home({ listing }: { listing: BlogListing[] }) {
 				<Intro />
 			</motion.div>
 			<GettingStarted />
-			<Blog listing={listing} />
+			{/* <Blog listing={listing} /> */}
 			<AcademicServices />
 			<Projects />
 			<Chapters />
