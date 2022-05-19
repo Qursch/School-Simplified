@@ -1,7 +1,6 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import AcademicServices from "./academicServices";
-import Blog from "./blog";
 import Chapters from "./chapters";
 import Code from "./code";
 import GettingStarted from "./gettingStarted";
@@ -35,7 +34,6 @@ function MotionDiv({ children, ...props }) {
 
 export {
 	AcademicServices,
-	Blog,
 	Chapters,
 	Code,
 	GettingStarted,

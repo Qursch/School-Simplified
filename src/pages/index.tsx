@@ -11,7 +11,6 @@ import {
 import { fadeIn } from "@styles/animations";
 import { motion } from "framer-motion";
 import Head from "next/head";
-// import { BlogListing } from "types"; { listing }: { listing: BlogListing[] }
 
 export default function Home() {
 	return (
@@ -28,7 +27,6 @@ export default function Home() {
 				<Intro />
 			</motion.div>
 			<GettingStarted />
-			{/* <Blog listing={listing} /> */}
 			<AcademicServices />
 			<Projects />
 			<Chapters />
