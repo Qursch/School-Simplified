@@ -67,6 +67,10 @@ const sponsors: Sponsor[] = [
 	// 	image: "/simplihacks/sponsors/producthunt.png",
 	// 	link: "https://www.producthunt.com/",
 	// },
+	{
+		image: "/simplihacks/sponsors/echo3D.png",
+		link: "https://www.echo3d.co/",
+	},
 ];
 
 export default function Sponsors(): JSX.Element {

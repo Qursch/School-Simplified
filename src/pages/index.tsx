@@ -1,7 +1,6 @@
-import { getBlogListing } from "@api/notion";
+// import { getBlogListing } from "@api/notion";
 import {
 	AcademicServices,
-	Blog,
 	Chapters,
 	GettingStarted,
 	Intro,
@@ -12,9 +11,9 @@ import {
 import { fadeIn } from "@styles/animations";
 import { motion } from "framer-motion";
 import Head from "next/head";
-import { BlogListing } from "types";
+// import { BlogListing } from "types"; { listing }: { listing: BlogListing[] }
 
-export default function Home({ listing }: { listing: BlogListing[] }) {
+export default function Home() {
 	return (
 		<>
 			<Head>
@@ -39,13 +38,13 @@ export default function Home({ listing }: { listing: BlogListing[] }) {
 	);
 }
 
-export async function getStaticProps() {
-	const listing: BlogListing[] = (await getBlogListing())
-		.sort(
-			(a, b) =>
-				new Date(b.created_time).getTime() -
-				new Date(a.created_time).getTime()
-		)
-		.slice(0, 3);
-	return { props: { listing }, revalidate: 60 };
-}
+// export async function getStaticProps() {
+// 	const listing: BlogListing[] = (await getBlogListing())
+// 		.sort(
+// 			(a, b) =>
+// 				new Date(b.created_time).getTime() -
+// 				new Date(a.created_time).getTime()
+// 		)
+// 		.slice(0, 3);
+// 	return { props: { listing }, revalidate: 60 };
+// }
