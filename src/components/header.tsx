@@ -162,7 +162,7 @@ export default function Header(): JSX.Element {
 				// top={bannerVisible ? { base: 14, md: 8 } : 0}
 				// filter="blur(24px)"
 			>
-				<ContainerInside mx={0}>
+				<ContainerInside maxW="none" mx={0}>
 					{bannerVisible && (
 						<Flex
 							bgColor="#FFAC33"
@@ -187,6 +187,7 @@ export default function Header(): JSX.Element {
 							<Spacer />
 							<Button
 								justifySelf="flex-end"
+								bgColor="transparent"
 								p={0}
 								style={{ aspectRatio: "1" }}
 								size="xs"
@@ -201,7 +202,9 @@ export default function Header(): JSX.Element {
 						align="center"
 						flexDir={{ base: "column", lg: "row" }}
 						py={3}
-						mx="25px"
+						px="25px"
+						mx="auto"
+						maxW="1200px"
 					>
 						<NextLink href="/" mb={{ base: 2, lg: 0 }}>
 							<Flex justify="center" align="center">
