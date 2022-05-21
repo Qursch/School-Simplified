@@ -1,5 +1,5 @@
 //@ts-ignore
-module.exports = {
+const config = {
 	async redirects() {
 		return [
 			{
@@ -12,3 +12,8 @@ module.exports = {
 	// rust compiler (5x faster build times)
 	swcMinify: false,
 };
+
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+	enabled: process.env.ANALYZE === "true",
+});
+module.exports = withBundleAnalyzer(config);
