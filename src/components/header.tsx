@@ -152,55 +152,56 @@ export default function Header(): JSX.Element {
 
 	return (
 		<>
-			{bannerVisible && (
-				<Flex
-					bgColor="#FFAC33"
-					color="black"
-					py={1}
-					px={2}
-					w="100%"
-					position="fixed"
-					zIndex={1000}
-					top={0}
-				>
-					<Spacer />
-					<Text as="b">
-						SimpliHacks 2.0 Registration is Officially Open!{" "}
-						<NextLink
-							href="/simplihacks"
-							_hover={{ color: "white" }}
-						>
-							Click here to sign up!
-						</NextLink>
-					</Text>
-					<Spacer />
-					<Button
-						justifySelf="flex-end"
-						p={0}
-						style={{ aspectRatio: "1" }}
-						size="xs"
-						onClick={() => setBannerVisible(false)}
-					>
-						X
-					</Button>
-				</Flex>
-			)}
 			<Container
 				as="header"
-				py={3}
 				w="100%"
 				position="fixed"
 				zIndex={1000}
 				bg="brand.transparent"
 				backdropFilter="blur(12px)"
-				top={bannerVisible ? 8 : 0}
+				// top={bannerVisible ? { base: 14, md: 8 } : 0}
 				// filter="blur(24px)"
 			>
-				<ContainerInside>
+				<ContainerInside mx={0}>
+					{bannerVisible && (
+						<Flex
+							bgColor="#FFAC33"
+							color="black"
+							py={1}
+							px={2}
+							w="100%"
+							// position="fixed"
+							zIndex={1000}
+							// top={0}
+						>
+							<Spacer />
+							<Text as="b">
+								SimpliHacks 2.0 Registration is Officially Open!{" "}
+								<NextLink
+									href="/simplihacks"
+									_hover={{ color: "white" }}
+								>
+									Click here to sign up!
+								</NextLink>
+							</Text>
+							<Spacer />
+							<Button
+								justifySelf="flex-end"
+								p={0}
+								style={{ aspectRatio: "1" }}
+								size="xs"
+								onClick={() => setBannerVisible(false)}
+							>
+								X
+							</Button>
+						</Flex>
+					)}
 					<Flex
 						justify="space-between"
 						align="center"
 						flexDir={{ base: "column", lg: "row" }}
+						py={3}
+						mx="25px"
 					>
 						<NextLink href="/" mb={{ base: 2, lg: 0 }}>
 							<Flex justify="center" align="center">
