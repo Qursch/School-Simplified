@@ -595,10 +595,11 @@ export async function getBlogListing(): Promise<BlogListing[]> {
 			// console.log("Inside 'then'");
 			const results = data.results;
 			return results.map((result: any): BlogListing => {
-				const authorObjects: any[] = result.properties.Author?.people,
-					titleText = result.properties.Name?.title,
-					linkText = result.properties.Link?.rich_text,
-					category = result.properties.Category?.select.name ?? null,
+				const authorObjects: any[] =
+						result.properties.Author?.people ?? null,
+					titleText = result.properties.Name?.title ?? null,
+					linkText = result.properties.Link?.rich_text ?? null,
+					category = result.properties.Category?.select?.name ?? null,
 					icon = result.properties.Icon?.url ?? null;
 
 				let title: string;
