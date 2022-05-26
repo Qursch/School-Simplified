@@ -2,6 +2,7 @@ import { IconType } from "react-icons";
 import { FaDiscord, FaQuestionCircle, FaRegHandshake } from "react-icons/fa";
 import { HiOutlineMail, HiUserGroup } from "react-icons/hi";
 import { MdWebAsset } from "react-icons/md";
+import { BiCodeAlt } from "react-icons/bi";
 
 const iconCache: Record<string, IconType> = {
 	MdWebAsset: MdWebAsset,
@@ -9,6 +10,7 @@ const iconCache: Record<string, IconType> = {
 	HiUserGroup: HiUserGroup,
 	HiOutlineMail: HiOutlineMail,
 	FaRegHandshake: FaRegHandshake,
+	BiCodeAlt: BiCodeAlt,
 };
 
 export default function fetchIcon(iconName: string): IconType {
