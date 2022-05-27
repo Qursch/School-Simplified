@@ -206,7 +206,7 @@ export default function Footer() {
 							<HStack
 								spacing={2}
 								pt={5}
-								justify="left"
+								justify="center"
 								flexWrap={{ base: "wrap", sm: "nowrap" }}
 							>
 								{socials.map((item) => {
