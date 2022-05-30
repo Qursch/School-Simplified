@@ -54,7 +54,7 @@ export default function Chapters(): JSX.Element {
 						>
 							<iframe
 								src="https://www.google.com/maps/d/embed?mid=1FAgyAhinh_vkevQ7EN1HVUxUlS4GG-_4&ehbc=2E312F"
-								width="450"
+								width="100%"
 								height="300"
 								// alt="Chapters Google Maps with States Highlighted"
 							/>
