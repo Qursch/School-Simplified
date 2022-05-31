@@ -1,6 +1,7 @@
 import { Heading, SimpleGrid } from "@chakra-ui/react";
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
+import { Person } from "types";
 import SimplihacksCard from "./simplihackscard";
 
 const staff: Person[] = [
