@@ -35,6 +35,11 @@ const staff: Person[] = [
 		title: "Outreach Head",
 		img: "/simplihacks/staff/Riddhi-Shedge_Outreach-Head.jpeg",
 	},
+	{
+		name: "Kaiyi Wang",
+		title: "Marketing Director",
+		img: "/simplihacks/staff/Kaiyi-Wang_Marketing-Director.jpg",
+	},
 	// {
 	// 	name: "Ahaan Limaye",
 	// 	title: "Lead Organizer",
