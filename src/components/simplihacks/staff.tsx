@@ -10,11 +10,11 @@ const staff: Person[] = [
 		title: "EPD/Lead Organizer",
 		img: "/simplihacks/staff/Aviel-Hernandez_EPDLead-Organizer.jpg",
 	},
-	{
-		name: "Harsh Singh",
-		title: "Lead Organizer",
-		img: "/simplihacks/staff/Harsh-Singh_Lead-Organizer.jpg",
-	},
+	// {
+	// 	name: "Harsh Singh",
+	// 	title: "Lead Organizer",
+	// 	img: "/simplihacks/staff/Harsh-Singh_Lead-Organizer.jpg",
+	// },
 	{
 		name: "Roland Yang",
 		title: "Organizer",
