@@ -47,6 +47,10 @@ const sponsors: Sponsor[] = [
 		image: "/simplihacks/sponsors/wolframsponsor.png",
 		link: "https://www.wolfram.com/language/",
 	},
+	{
+		image: "https://www.stickergiant.com/data/StickerGiant-Logo-Print-Ready-PNG__5d28c91416376.png",
+		link: "https://www.stickergiant.com/event-coupons",
+	},
 	// {
 	// 	image: "/simplihacks/sponsors/gather.png",
 	// 	link: "https://gather.town/",
