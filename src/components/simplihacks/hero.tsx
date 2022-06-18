@@ -1,4 +1,12 @@
-import { Heading, HStack, Image, Stack, Text, VStack } from "@chakra-ui/react";
+import {
+	Box,
+	Heading,
+	HStack,
+	Image,
+	Stack,
+	Text,
+	VStack,
+} from "@chakra-ui/react";
 import Button from "@components/button";
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
@@ -31,10 +39,10 @@ const buttons: ButtonType[] = [
 export default function Hero(): JSX.Element {
 	return (
 		<>
-			<Container p="50px">
-				<ContainerInside>
-					<HStack spacing={20}>
-						<VStack align="stretch" spacing={22}>
+			<Container>
+				<ContainerInside py={50}>
+					<HStack justify="center" spacing={0}>
+						<VStack align="stretch" spacing={22} flex={2}>
 							<HStack justify="space-between">
 								<Heading fontSize={40}>SimpliHacks 2.0</Heading>
 								<Image
@@ -65,7 +73,10 @@ export default function Hero(): JSX.Element {
 								run two days packed with interesting workshops
 								and events with the help of our sponsors!
 							</Text>
-							<Stack direction={{ base: "column", md: "row" }}>
+							<Stack
+								direction={{ base: "column", md: "row" }}
+								spacing={3}
+							>
 								{buttons.map((button) => {
 									return (
 										<NextLink
@@ -73,10 +84,7 @@ export default function Hero(): JSX.Element {
 											target="_blank"
 											key={button.text}
 										>
-											<Button
-												m={3}
-												timmysrc={button.icon}
-											>
+											<Button timmysrc={button.icon}>
 												{button.text}
 											</Button>
 										</NextLink>
@@ -84,12 +92,13 @@ export default function Hero(): JSX.Element {
 								})}
 							</Stack>
 						</VStack>
-						<Image
-							maxW={350}
-							src="/timmy/timmy_shocked.png"
-							display={{ base: "none", md: "block" }}
-							alt="Timmy shocked"
-						/>
+						<Box flex={1} display={{ base: "none", lg: "block" }}>
+							<Image
+								// minW={350}
+								src="/timmy/timmy_shocked.png"
+								alt="Timmy shocked"
+							/>
+						</Box>
 					</HStack>
 				</ContainerInside>
 			</Container>

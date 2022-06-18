@@ -1,4 +1,4 @@
-import { Heading, SimpleGrid } from "@chakra-ui/react";
+import { Heading, Wrap } from "@chakra-ui/react";
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
 import { Person } from "types";
@@ -128,25 +128,22 @@ export default function Staff(): JSX.Element {
 			<Container my="50px">
 				<ContainerInside>
 					<Heading m={5}>Staff</Heading>
-					{/* <Text textAlign="center" fontSize="22px">
-						To be Determined
-					</Text> */}
-					<SimpleGrid
-						w={{ base: "auto", md: "850px" }}
-						columns={{ base: 2, md: 4 }}
-						spacingY="15px"
+					<Wrap
+						justify="center"
+						spacing={4}
+						mx={{ base: 0, lg: 100, xl: 200 }}
 					>
-						{staff.map((member, i: number) => {
+						{staff.map((member) => {
 							return (
 								<SimplihacksCard
 									title={member.title}
 									name={member.name}
 									img={member.img}
-									key={i}
+									key={member.name}
 								/>
 							);
 						})}
-					</SimpleGrid>
+					</Wrap>
 				</ContainerInside>
 			</Container>
 		</>
