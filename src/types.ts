@@ -233,7 +233,7 @@ export type Executive = {
 	 */
 	email?: string;
 	/**
-	 * A URL that leads to this person's Twitter, if applicable.
+	 * A URL that leads to this person's Linkedin, if applicable.
 	 */
 	linkedin?: string;
 	/**
