@@ -60,9 +60,17 @@ export default function Donate() {
 							<iframe
 								src="https://www.donation.dot.ngo/?nonprofitName=.NGO+Charities&formName=School+Simplified+Default"
 								frameBorder="0"
-								width="420px"
-								height="550px"
+								style={{
+									position: "relative",
+									top: "-100px",
+									width: "420px",
+									height: "750px",
+									marginBottom: "-110px",
+								}}
+								// width="420px"
+								// height="550px"
 								scrolling="no"
+								loading="eager"
 							/>
 						</Box>
 					</Center>
