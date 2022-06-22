@@ -230,7 +230,9 @@ export async function getServerSideProps() {
 	const boardIdx = executives.findIndex(
 		(group) => group.name === "Board of Directors"
 	);
-	const boardOfDirectors = executives.splice(boardIdx, 1)[0];
+	const [boardOfDirectors] = executives.splice(boardIdx, 1);
+
+	executives.sort((a, b) => b.name.length - a.name.length);
 
 	const props: LeadershipPageProps = {
 		governance,
