@@ -20,7 +20,12 @@ import {
 	VStack,
 } from "@chakra-ui/react";
 import React from "react";
-import { FaLinkedinIn } from "react-icons/fa";
+import {
+	FaLinkedinIn,
+	FaInstagram,
+	FaTwitter,
+	FaFacebookSquare,
+} from "react-icons/fa";
 import { RiMailFill } from "react-icons/ri";
 import { Executive } from "types";
 import { parseText } from "util/parse_notion";
@@ -33,7 +38,17 @@ type StaffCardProps = {
 } & StackProps;
 
 export default function StaffCard({
-	staff: { name, image, title, email, linkedin, biography },
+	staff: {
+		name,
+		image,
+		title,
+		email,
+		linkedin,
+		biography,
+		twitter,
+		facebook,
+		instagram,
+	},
 	...props
 }: StaffCardProps): JSX.Element {
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -51,6 +66,29 @@ export default function StaffCard({
 	if (linkedin?.length) {
 		contactMeChildren.push(
 			<ContactMeIcon href={linkedin} icon={FaLinkedinIn} key="linkedin" />
+		);
+	}
+	if (instagram?.length) {
+		contactMeChildren.push(
+			<ContactMeIcon
+				href={instagram}
+				icon={FaInstagram}
+				key="instagram"
+			/>
+		);
+	}
+	if (twitter?.length) {
+		contactMeChildren.push(
+			<ContactMeIcon href={twitter} icon={FaTwitter} key="twitter" />
+		);
+	}
+	if (facebook?.length) {
+		contactMeChildren.push(
+			<ContactMeIcon
+				href={facebook}
+				icon={FaFacebookSquare}
+				key="facebook"
+			/>
 		);
 	}
 

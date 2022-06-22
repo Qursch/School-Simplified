@@ -225,7 +225,7 @@ export type Executive = {
 	 */
 	image?: FileObj;
 	/**
-	 * A copy/paste of the Notino-style rich text object that compose their tagline
+	 * A copy/paste of the Notion-style rich text object that compose their tagline
 	 */
 	// tagline?: any[];
 	/**
@@ -236,6 +236,18 @@ export type Executive = {
 	 * A URL that leads to this person's LinkedIn, if applicable.
 	 */
 	linkedin?: string;
+	/**
+	 * A URL that leads to this person's Twitter, if applicable.
+	 */
+	twitter?: string;
+	/**
+	 * A URL that leads to this person's Facebook, if applicable.
+	 */
+	facebook?: string;
+	/**
+	 * A URL that leads to this person's Instagram, if applicable.
+	 */
+	instagram?: string;
 	/**
 	 * A copy/paste of the Notion-style rich text objects that compose their bio
 	 */
