@@ -26,7 +26,7 @@ import {
 	FaTwitter,
 	FaFacebookSquare,
 } from "react-icons/fa";
-import { RiMailFill } from "react-icons/ri";
+import { RiMailFill, RiComputerFill } from "react-icons/ri";
 import { Executive } from "types";
 import { parseText } from "util/parse_notion";
 import Button from "./button";
@@ -48,6 +48,7 @@ export default function StaffCard({
 		twitter,
 		facebook,
 		instagram,
+		personalWebsite,
 	},
 	...props
 }: StaffCardProps): JSX.Element {
@@ -66,6 +67,15 @@ export default function StaffCard({
 	if (linkedin?.length) {
 		contactMeChildren.push(
 			<ContactMeIcon href={linkedin} icon={FaLinkedinIn} key="linkedin" />
+		);
+	}
+	if (personalWebsite?.length) {
+		contactMeChildren.push(
+			<ContactMeIcon
+				href={personalWebsite}
+				icon={RiComputerFill}
+				key="personalWebsite"
+			/>
 		);
 	}
 	if (instagram?.length) {
