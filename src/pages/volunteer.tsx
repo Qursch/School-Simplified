@@ -203,7 +203,7 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 						mb={10}
 					>
 						<VStack flex={1}>
-							<Heading size="sm">Rank</Heading>
+							<Heading size="sm">Volunteer Type</Heading>
 							<Select
 								placeholder={defaultOption}
 								bg="#5a60adcc"
@@ -251,7 +251,7 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 							</Select>
 						</VStack>
 						<VStack flex={1}>
-							<Heading size="sm">Program</Heading>
+							<Heading size="sm">Organization/Program</Heading>
 							<Select
 								placeholder={defaultOption}
 								bg="#5a60adcc"
