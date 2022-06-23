@@ -747,12 +747,12 @@ export async function getLeadership(): Promise<ExecutiveGroup[]> {
 		const newExec: Executive = {
 			name: exec.properties.Name.title?.[0]?.plain_text ?? null,
 			title: exec.properties.Title.rich_text?.[0]?.plain_text ?? null,
-			email: exec.properties.Email.email,
-			linkedin: exec.properties.LinkedIn.url,
-			twitter: exec.properties.Twitter.url,
-			instagram: exec.properties.Instagram.url,
-			facebook: exec.properties.Facebook.url,
-			personalWebsite: exec.properties["personal site"].url,
+			email: exec.properties.Email?.email ?? null,
+			linkedin: exec.properties.LinkedIn?.url ?? null,
+			twitter: exec.properties.Twitter?.url ?? null,
+			instagram: exec.properties.Instagram?.url ?? null,
+			facebook: exec.properties.Facebook?.url ?? null,
+			personalWebsite: exec.properties["Personal Site"]?.url ?? null,
 			biography: exec.properties.Biography.rich_text,
 			image: file0 ? getFile(file0) : null,
 		};
