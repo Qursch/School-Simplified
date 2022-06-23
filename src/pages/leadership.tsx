@@ -63,6 +63,7 @@ export default function Leadership({
 							boxShadow="inset 0px 4px 4px rgba(0, 0, 0, 0.25)"
 							zIndex={0}
 							position="relative"
+							gridTemplateColumns={`repeat(${executives.length}, 1fr)`}
 						>
 							{executives.map((executiveGroup, idx) => (
 								<ExecutiveButton
