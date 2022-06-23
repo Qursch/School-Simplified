@@ -749,6 +749,10 @@ export async function getLeadership(): Promise<ExecutiveGroup[]> {
 			title: exec.properties.Title.rich_text?.[0]?.plain_text ?? null,
 			email: exec.properties.Email.email,
 			linkedin: exec.properties.LinkedIn.url,
+			twitter: exec.properties.Twitter.url,
+			instagram: exec.properties.Instagram.url,
+			facebook: exec.properties.Facebook.url,
+			personalWebsite: exec.properties["personal site"].url,
 			biography: exec.properties.Biography.rich_text,
 			image: file0 ? getFile(file0) : null,
 		};
