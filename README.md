@@ -5,7 +5,8 @@
 Come visit us at <https://schoolsimplified.org/>!
 
 ### Powered by
-npm
+
+-   Node.js
 -   Typescript
 -   Chakra UI
 -   NextJS
@@ -16,7 +17,8 @@ npm
 
 ## Spinning up local instance
 
-0. Ensure you have node.js installed on your machine.
+0. Ensure you have node.js (the latest LTS version is recommended) installed on
+   your machine.
 1. Clone this repository to your machine.
 2. Install all dependencies with `npm i`.
 3. Run the development server with `npm run dev`.

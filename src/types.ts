@@ -1,5 +1,3 @@
-import { FlexProps } from "@chakra-ui/layout";
-
 export type NotesProps = {
 	title: string;
 	file: FileObj;
@@ -58,6 +56,11 @@ export type QASection = {
 	list: QAPair[];
 };
 
+/**
+ * A text fragment of the FAQ page
+ * @property {string} text the text that the text fragment should be rendered as
+ * @property {string} link the URL that the text should hyperlink to. If this is an empty string, this text fragment should not be rendered as a link
+ */
 export type AnswerPart = {
 	text: string;
 	link: string;
@@ -119,15 +122,6 @@ export type VolunteerPanelProps = {
 	link: string;
 	key: string;
 };
-
-export type ActivitySlideProps = {
-	children?: any;
-	src: string;
-	clubName: string;
-	clubDesc: string;
-	link: string;
-	key: string;
-} & FlexProps;
 
 export type BlogListing = {
 	title: string;
@@ -231,7 +225,7 @@ export type Executive = {
 	 */
 	image?: FileObj;
 	/**
-	 * A copy/paste of the Notino-style rich text object that compose their tagline
+	 * A copy/paste of the Notion-style rich text object that compose their tagline
 	 */
 	// tagline?: any[];
 	/**
@@ -239,9 +233,25 @@ export type Executive = {
 	 */
 	email?: string;
 	/**
-	 * A URL that leads to this person's LinkedIn, if applicable.
+	 * A URL that leads to this person's Linkedin, if applicable.
 	 */
 	linkedin?: string;
+	/**
+	 * A URL that leads to this person's Personal Website, if applicable.
+	 */
+	personalWebsite?: string;
+	/**
+	 * A URL that leads to this person's Twitter, if applicable.
+	 */
+	twitter?: string;
+	/**
+	 * A URL that leads to this person's Facebook, if applicable.
+	 */
+	facebook?: string;
+	/**
+	 * A URL that leads to this person's Instagram, if applicable.
+	 */
+	instagram?: string;
 	/**
 	 * A copy/paste of the Notion-style rich text objects that compose their bio
 	 */

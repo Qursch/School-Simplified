@@ -62,7 +62,11 @@ export default function Community({
 						>
 							<Heading size="2xl">Our Community</Heading>
 							<Text fontSize="lg" textAlign="justify">
-							Our organization features a global community of over 60,000 members. You’ll have opportunities to make new friends from all around the world in this diverse, open-minded, and inclusive institution.
+								Our organization features a global community of
+								over 60,000 members. You’ll have opportunities
+								to make new friends from all around the world in
+								this diverse, open-minded, and inclusive
+								institution.
 							</Text>
 							<NextChakraLink href="/discord" display="block">
 								<Button
@@ -99,11 +103,15 @@ export default function Community({
 								Our Discord Server
 							</Heading>
 							<Text textAlign="justify">
-							There are over 60,000 members in our Discord server, many of which are middle school, high school, or college students that help one another with academics, extracurriculars, and life in general.
-
+								There are over 60,000 members in our Discord
+								server, many of which are middle school, high
+								school, or college students that help one
+								another with academics, extracurriculars, and
+								life in general.
 							</Text>
 							<Text textAlign="justify" py={3}>
-							Communication is through text, voice calls, and other methods!
+								Communication is through text, voice calls, and
+								other methods!
 							</Text>
 							<NextChakraLink
 								href="/discord"
@@ -148,10 +156,7 @@ export default function Community({
 							justify="center"
 						>
 							<Heading>Events</Heading>
-							<Text>
-								We organize community events such as:
-
-							</Text>
+							<Text>We organize community events such as:</Text>
 							<Stack pl={10}>
 								<UnorderedList>
 									<ListItem>Competitions</ListItem>
@@ -179,7 +184,8 @@ export default function Community({
 						>
 							<Heading>Music</Heading>
 							<Text>
-							We curate playlists to help you study with genres such as:
+								We curate playlists to help you study with
+								genres such as:
 							</Text>
 							<Stack pl={10}>
 								<UnorderedList>
@@ -216,8 +222,8 @@ export default function Community({
 						>
 							<Heading>Daily:</Heading>
 							<Text>
-							We post daily opportunities and entertainment such as:
-
+								We post daily opportunities and entertainment
+								such as:
 							</Text>
 							<Stack pl={10}>
 								<UnorderedList>

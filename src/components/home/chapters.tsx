@@ -72,10 +72,10 @@ export default function Chapters(): JSX.Element {
 									in their academics.
 								</Text>
 								<Text>
-									Chapters can offer service, tutoring, essay
-									revision, and college resources. Each
-									chapter is free to focus on one or more
-									areas of interest.
+									Chapters can offer any service, including
+									tutoring, essay revision, and college
+									resources. Each chapter is free to focus on
+									one or more areas of interest.
 								</Text>
 								<NextChakraLink
 									href="https://docs.google.com/forms/d/e/1FAIpQLSesSX3Lislu9m6j_Cgwu3eALgAm0RJ1iTvxcGih82B0J0iXmg/viewform?usp=sf_link"

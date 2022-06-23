@@ -34,8 +34,8 @@ export default function GettingStarted() {
 							<Heading size="lg">Getting Started</Heading>
 							<Text>
 								School Simplified is a 501(c)3 nonprofit
-								organization dedicated to learning done equally,
-								fairly and with meaning.
+								organization dedicated to fair, equal, and
+								meaningful learning.
 							</Text>
 							<SimpleGrid
 								columns={{ base: 1, md: 2 }}

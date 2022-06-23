@@ -15,7 +15,7 @@ import {
 	useBreakpointValue,
 	useDisclosure,
 	Wrap,
-	WrapItem,
+	WrapItem
 } from "@chakra-ui/react";
 import StyledButton from "@components/button";
 import Container from "@components/container";
@@ -40,8 +40,9 @@ export default function PartnersPage() {
 									Journey
 								</Heading>
 								<Text my={5}>
-								Connect with us, take advantage of our resources, and build a brighter future with us.
-
+									Connect with us, take advantage of our
+									resources, and build a brighter future with
+									us.
 								</Text>
 								{/* <NextLink href="/notes">
 							<Button>Get Free Help</Button>
@@ -207,21 +208,21 @@ type Partner = {
 
 const productPartners: Partner[] = [
 	{
-		name: "Versatile Node",
+		name: "WinterNode",
 		description:
-			"Versatile Node is an organization geared towards providing cheap, fast and reliable hosting for all your needs! Versatile offers resources range from minecraft hosting, VPS hosting, to web hosting.",
-		src: "/partners/versatile.png",
-		link: "https://versatilenode.com/",
+			"WinterNode is an organization geared towards providing cheap, fast and reliable hosting for all your needs! WinterNode offers resources range from Minecraft hosting, VPS hosting, to web hosting.",
+		src: "/partners/winternode.svg",
+		link: "https://winternode.com/",
 	},
 	{
 		name: "Tech Soup",
 		src: "https://www.techsoup.org/_layouts/15/TechSoupRWD/ui/images/tslogo.svg",
-		link: "https://www.techsoup.org",
+		link: "https://www.techsoup.org/",
 	},
 	{
 		name: "Grammarly",
 		src: "https://www.grammarly.com/press/media-resources/docs/logo-grammarly.png",
-		link: "https://www.grammarly.com",
+		link: "https://www.grammarly.com/",
 	},
 	{
 		name: "Deloitte",

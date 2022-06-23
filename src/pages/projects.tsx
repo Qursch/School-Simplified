@@ -76,13 +76,13 @@ export default function Four(): JSX.Element {
 							>
 								<Questions
 									title="What can my project be?"
-									text="Projects can include almost anything from hackathons, advocacy campaigns, competitive startups, and more!"
+									text="Projects can be almost anything, from hackathons to advocacy campaigns to competitive startups, or more!"
 									image={null}
 									width="100%"
 								/>
 								<Questions
 									title="Do I lead my own project?"
-									text="That is up to you! Once your proposal is approved, you can choose to be the project manager or recommend a friend to take over while you are in the team helping with the project."
+									text="That is up to you! Once your proposal is approved, you can choose to be the project manager or recommend a friend to take over while you are part of the team helping with the project."
 									image={null}
 									width="100%"
 								/>
@@ -101,10 +101,10 @@ export default function Four(): JSX.Element {
 					</Heading>
 					<Text py="15px" fontSize="22px" textAlign="left">
 						An example would be Simplihacks, one of the largest
-						hackathons in the US that earned over $100k in prizes!
-						It is a 2-day virtual hackathon, brought to you by
-						School Simplified, that will re-occur in February of
-						2022 so stay tuned!
+						hackathons in the U.S., which has earned over $100k in
+						prizes! It is a 2-day virtual event, brought to you by
+						School Simplified. We’re bringing it back in February of
+						2022, so stay tuned!
 					</Text>
 					<Stack
 						direction={{ base: "column-reverse", lg: "row" }}
@@ -122,10 +122,9 @@ export default function Four(): JSX.Element {
 							<Text fontSize="22px" textAlign="left">
 								If this is your first hackathon or you have no
 								experience with coding, do not worry!
-								Participants of all levels to compete are
-								welcomed to join our great workshops that can
-								get you started on your computer science
-								journey.
+								Participants from any competition level are
+								welcomed to join our great workshops to get
+								started on your computer science journey.
 								{<br />}
 								{<br />}
 								Want to learn how to make cool websites and

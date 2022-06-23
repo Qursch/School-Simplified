@@ -44,7 +44,7 @@ export const notion = new Client({
  * @license MIT
  */
 if (!String.prototype.replaceAll) {
-	String.prototype.replaceAll = function (str, newStr) {
+	String.prototype.replaceAll = function (str: string | RegExp, newStr: any) {
 		// If a regex pattern
 		if (
 			Object.prototype.toString.call(str).toLowerCase() ===
@@ -407,7 +407,6 @@ export async function getFaqInfo(): Promise<QASection[]> {
 		title: string = "",
 		list: QAPair[] = [];
 	// console.log(data);
-	//@ts-ignore
 	for (const block of data.results) {
 		if (block.type.startsWith("heading")) {
 			const headingText = block[block.type].text;
@@ -449,8 +448,10 @@ export async function getFaqInfo(): Promise<QASection[]> {
 								link: textBlocks[i].href,
 							});
 						} else {
-							// @ts-expect-error no link
-							answers.push({ text: textBlocks[i].plain_text });
+							answers.push({
+								text: textBlocks[i].plain_text,
+								link: null,
+							});
 						}
 					}
 				}
@@ -842,12 +843,7 @@ export async function getResearchOpportunities(): Promise<{
 				const humanName = (
 					isMulti ? key.substring(0, key.length - 4) : key
 				).trim();
-				// console.log(
-				// 	`Attempting to convert "${humanName}" (${typeof humanName})`
-				// );
-				// console.log(String.prototype.replaceAll);
 				const propKey = humanName.toLowerCase().replaceAll(/\s+/g, "_");
-				// console.log(`to "${propKey}"`);
 
 				// put data into opportunities
 				opportunity[propKey] =

@@ -4,7 +4,7 @@ const config = {
 		return [
 			{
 				source: "/discord",
-				destination: "https://discord.gg/gen7eZVzND",
+				destination: "https://discord.gg/school",
 				permanent: true,
 			},
 		];

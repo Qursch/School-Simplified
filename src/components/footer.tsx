@@ -345,10 +345,6 @@ const programs = [
 		link: "/chapter",
 	},
 	{
-		name: "Student Activities",
-		link: "/activities",
-	},
-	{
 		name: "Programming Simplified",
 		link: "/programming",
 	},
@@ -381,7 +377,7 @@ const programs = [
 const advertise = [
 	{
 		name: "Media Kit",
-		link: "https://drive.google.com/file/d/1vM3wyYe4J0x7_wZ91LpH480gISL10FIU/view?usp=sharing",
+		link: "https://drive.google.com/file/d/1nagkyHkEXNQX5SJIzwje4L2ztBQ2b6O4/view?usp=sharing",
 	},
 	{
 		name: "Links",

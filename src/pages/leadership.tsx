@@ -19,7 +19,7 @@ import {
 	Thead,
 	Tr,
 	useBreakpointValue,
-	VStack,
+	VStack
 } from "@chakra-ui/react";
 import Container from "@components/container";
 import ContainerInside from "@components/containerInside";
@@ -64,6 +64,7 @@ export default function Leadership({
 							boxShadow="inset 0px 4px 4px rgba(0, 0, 0, 0.25)"
 							zIndex={0}
 							position="relative"
+							gridTemplateColumns={`repeat(${executives.length}, 1fr)`}
 						>
 							{executives.map((executiveGroup, idx) => (
 								<ExecutiveButton
@@ -149,17 +150,14 @@ export default function Leadership({
 							</Tr>
 						</Thead>
 						<Tbody>
-							{boardOfDirectors.executives.map((staff) => {
-								// console.log(`staff: "${staff.title}"`);
-								return (
+							{boardOfDirectors.executives.map((staff) => 
 									<Tr key={staff.name} fontSize={20}>
 										<Td fontWeight="bold">{staff.name}</Td>
 										<Td lineHeight={1.4}>
 											{replaceNewlines(staff.title)}
 										</Td>
 									</Tr>
-								);
-							})}
+							)}
 						</Tbody>
 					</Table>
 					<Divider bg="white" />
@@ -241,6 +239,7 @@ export async function getServerSideProps() {
 		(group) => group.name === "Board of Directors"
 	);
 	const [boardOfDirectors] = executives.splice(boardIdx, 1);
+	
 	executives.sort((a, b) => order[a.name] - order[b.name]);
 
 	const props: LeadershipPageProps = {

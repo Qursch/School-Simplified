@@ -1,13 +1,12 @@
 import {
 	AcademicServices,
 	Chapters,
-	Clubs,
 	GettingStarted,
 	Intro,
 	ProgrammingSimplified,
 	Projects,
-	Testimonial,
-} from "@components/home/index";
+	Testimonial
+} from "@components/home";
 import { fadeIn } from "@styles/animations";
 import { motion } from "framer-motion";
 import Head from "next/head";
@@ -32,7 +31,6 @@ export default function Home() {
 			<Projects />
 			<Chapters />
 			<ProgrammingSimplified />
-			<Clubs />
 			<Testimonial />
 
 			{/* <Modal
