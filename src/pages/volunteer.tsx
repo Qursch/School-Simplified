@@ -238,7 +238,7 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 									<Heading size="sm">Area of Work</Heading>
 									<Select
 										placeholder={defaultOption}
-										bg="#5a60adcc"
+										bg="brand.darkerBlue"
 										border="none"
 										value={area}
 										onChange={(e) =>
@@ -264,7 +264,7 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 									<Heading size="sm">Program</Heading>
 									<Select
 										placeholder={defaultOption}
-										bg="#5a60adcc"
+										bg="brand.darkerBlue"
 										border="none"
 										value={program}
 										onChange={(e) =>
