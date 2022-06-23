@@ -226,6 +226,12 @@ export default function Leadership({
 	);
 }
 
+const order = {
+	"Corporate Officers": 0,
+	"Vice Presidents": 1,
+	Directors: 2,
+};
+
 export async function getServerSideProps() {
 	const governance = await getGovernanceData();
 	const executives = await getLeadership();
@@ -234,7 +240,8 @@ export async function getServerSideProps() {
 	const boardIdx = executives.findIndex(
 		(group) => group.name === "Board of Directors"
 	);
-	const boardOfDirectors = executives.splice(boardIdx, 1)[0];
+	const [boardOfDirectors] = executives.splice(boardIdx, 1);
+	executives.sort((a, b) => order[a.name] - order[b.name]);
 
 	const props: LeadershipPageProps = {
 		governance,
