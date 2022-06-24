@@ -9,6 +9,15 @@ const config = {
 			},
 		];
 	},
+	images: {
+		domains: [
+			// for local testing purposes
+			"www.schoolsimplified.org",
+			"schoolsimplified.org",
+			// notion-hosted images
+			"s3.us-west-2.amazonaws.com",
+		],
+	},
 	// rust compiler (5x faster build times)
 	swcMinify: false,
 };
