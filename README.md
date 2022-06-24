@@ -28,6 +28,7 @@ Come visit us at <https://schoolsimplified.org/>!
 ## Contributing
 
 If you would like to contribute to our website, place consider joining our web
-team!  
+team! We're actively looking for team members to build even more amazing
+websites.  
 You can find a list of all our open positions
 [here](https://schoolsimplified.org/volunteer).

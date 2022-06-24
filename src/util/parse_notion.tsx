@@ -126,7 +126,7 @@ export function parseText(text: any): JSX.Element {
  * @param text the text to convert to a JSX psuedoelement
  * @returns the converted element
  */
-function replaceNewlines(text: string): JSX.Element {
+export function replaceNewlines(text: string): JSX.Element {
 	// console.log('called with "' + text + '".');
 
 	// no newlines
@@ -136,8 +136,10 @@ function replaceNewlines(text: string): JSX.Element {
 	const elements: JSX.Element[] = [];
 
 	for (const segment of text.split(/[\n\r]+/g)) {
-		elements.push(<>{segment}</>);
-		elements.push(<br />);
+		elements.push(cloneElement(<>{segment}</>, { key: segment }));
+		elements.push(<br key={segment + "br"} />);
+		// elements.push(<>{segment}</>);
+		// elements.push(<br />);
 	}
 	elements.pop();
 	// console.log("elements: ", elements);
@@ -153,13 +155,7 @@ function replaceNewlines(text: string): JSX.Element {
  */
 export function parsePlainText(text: any[]): JSX.Element {
 	return (
-		<Text>
-			{text.map((block) =>
-				cloneElement(replaceNewlines(block.plain_text), {
-					key: block.plain_text,
-				})
-			)}
-		</Text>
+		<Text>{text.map((block) => replaceNewlines(block.plain_text))}</Text>
 	);
 }
 
