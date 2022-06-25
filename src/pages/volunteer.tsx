@@ -457,16 +457,20 @@ export default function Volunteering({ postings }: { postings: JobPosting[] }) {
 	);
 }
 
-export async function getStaticProps() {
-	const props = {
-		postings: (await getJobPostings()).sort((a, b) =>
-			a.name.localeCompare(b.name, "en")
-		),
-	};
-	return {
-		props,
-		revalidate: 360,
-	};
+export async function getServerSideProps() {
+	const postings = await (
+		await getJobPostings()
+	).sort((a, b) => a.name.localeCompare(b.name, "en"));
+	return { props: { postings } };
+	// const props = {
+	// 	postings: (await getJobPostings()).sort((a, b) =>
+	// 		a.name.localeCompare(b.name, "en")
+	// 	),
+	// };
+	// return {
+	// 	props,
+	// 	revalidate: 360,
+	// };
 }
 
 type VolunteerPositionProps = {
